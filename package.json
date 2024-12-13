@@ -4,7 +4,8 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "changeset": "./scripts/changeset-wrapper.sh"
+    "changeset": "./scripts/changeset-wrapper.sh",
+    "codegen": "tsx scripts/liblab-gen.ts"
   },
   "devDependencies": {
     "@changesets/changelog-github": "^0.5.0",
