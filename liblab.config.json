@@ -1,0 +1,40 @@
+{
+  "sdkName": "magicbell-java-client",
+  "specFilePath": "https://site.magicbell.cloud/docs/api/openapi.user.json",
+  "apiName": "magicbell-api",
+  "languages": ["java"],
+  "auth": ["bearer"],
+  "customizations": {
+    "includeOptionalSnippetParameters": true,
+    "authentication": {
+      "access": {
+        "prefix": "Bearer"
+      }
+    },
+    "inferServiceNames": false,
+    "injectedModels": [],
+    "license": {
+      "type": "MIT"
+    },
+    "responseHeaders": false,
+    "retry": {
+      "enabled": true,
+      "maxAttempts": 3,
+      "retryDelay": 150
+    }
+  },
+  "languageOptions": {
+    "java": {
+      "groupId": "com.magicbell.client",
+      "artifactId": "magicbell-java-client",
+      "githubRepoName": "magicbell-java-client",
+      "ignoreFiles": [],
+      "includeKotlinSnippets": true,
+      "sdkVersion": "0.0.1",
+      "liblabVersion": "2"
+    }
+  },
+  "publishing": {
+    "githubOrg": "magicbell"
+  }
+}
