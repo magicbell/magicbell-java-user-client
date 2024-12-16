@@ -1,4 +1,4 @@
-# MagicbellJavaClient Java SDK 0.1.0
+# MagicbellJavaClient Java SDK 0.1.1
 
 Welcome to the MagicbellJavaClient SDK documentation. This guide will help you get started with integrating and using the MagicbellJavaClient SDK in your project.
 
@@ -7,7 +7,7 @@ Welcome to the MagicbellJavaClient SDK documentation. This guide will help you g
 ## Versions
 
 - API version: `2.0.0`
-- SDK version: `0.1.0`
+- SDK version: `0.1.1`
 
 ## About the API
 
@@ -40,14 +40,14 @@ If you use Maven, place the following within the _dependency_ tag in your `pom.x
 <dependency>
     <groupId>com.magicbell.client</groupId>
     <artifactId>magicbell-java-client</artifactId>
-    <version>0.1.0</version>
+    <version>0.1.1</version>
 </dependency>
 ```
 
 If you use Gradle, paste the next line inside the _dependencies_ block of your `build.gradle` file:
 
 ```Gradle
-implementation group: com.magicbell.client, name: magicbell-java-client, version: 0.1.0
+implementation group: com.magicbell.client, name: magicbell-java-client, version: 0.1.1
 ```
 
 If you use JAR files, package the SDK by running the following command:
