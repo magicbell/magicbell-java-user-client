@@ -24,15 +24,13 @@ jobs:
           server-id: central
           server-username: MAVEN_USERNAME
           server-password: MAVEN_PASSWORD
-          gpg-private-key: ${{ secrets.MAVEN_KEY }}
-          gpg-passphrase: MAVEN_GPG_PASSPHRASE
-
+          
       - name: Publish package
         run: |
           mvn \
           --no-transfer-progress \
           --batch-mode \
-          -Dgpg.passphrase=${{ secrets.MAVEN_KEY_PASSWORD }} \
+          -Dgpg.keyname=${{ secrets.MAVEN_KEY_ID }} \
           clean deploy -P release-sign-artifacts -e
         env:
           MAVEN_USERNAME: ${{ secrets.MAVEN_USERNAME }}
