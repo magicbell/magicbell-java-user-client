@@ -22,6 +22,16 @@
         <url>https://github.com/magicbell/magicbell-java-client</url>
     </scm>
 
+    <!-- See https://central.sonatype.org/publish/requirements/#developer-information -->
+    <developers>
+        <developer>
+            <name>Ullrich Schäfer</name>
+            <email>ullrich@magicbell.io</email>
+            <organization>MagicBell</organization>
+            <organizationUrl>https://www.magicbell.com</organizationUrl>
+        </developer>
+    </developers>
+
     <licenses>
         <license>
             <name>MIT</name>
