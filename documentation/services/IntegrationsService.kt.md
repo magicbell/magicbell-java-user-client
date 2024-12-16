@@ -68,7 +68,7 @@ fun main() {
 
 		Banner banner = Banner.builder()
 			.backgroundColor("backgroundColor")
-			.backgroundOpacity(0.83D)
+			.backgroundOpacity(8.96D)
 			.fontSize("fontSize")
 			.textColor("textColor")
 			.build();
@@ -248,7 +248,7 @@ fun main() {
 
     AuthedUser authedUser = AuthedUser.builder()
 			.accessToken("access_token")
-			.expiresIn(8L)
+			.expiresIn(5L)
 			.id("id")
 			.refreshToken("refresh_token")
 			.scope("scope")
@@ -277,8 +277,8 @@ fun main() {
 			.authedUser(authedUser)
 			.botUserId("bot_user_id")
 			.enterprise(enterprise)
-			.expiresIn(1L)
-			.id("FX")
+			.expiresIn(10L)
+			.id("626")
 			.incomingWebhook(incomingWebhook)
 			.isEnterpriseInstall(false)
 			.refreshToken("refresh_token")

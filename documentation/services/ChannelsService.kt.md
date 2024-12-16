@@ -62,7 +62,7 @@ fun main() {
     val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters.builder()
-			.pageSize(3L)
+			.pageSize(8L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -107,7 +107,7 @@ fun main() {
 
     ApnsToken apnsToken = ApnsToken.builder()
 			.appId("app_id")
-			.deviceToken("amet dolore ani")
+			.deviceToken("fugiat ullamco ")
 			.installationId(ApnsTokenInstallationId.DEVELOPMENT)
 			.build();
 
@@ -224,7 +224,7 @@ fun main() {
     val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
 
     GetMobilePushExpoTokensParameters requestParameters = GetMobilePushExpoTokensParameters.builder()
-			.pageSize(9L)
+			.pageSize(8L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -383,7 +383,7 @@ fun main() {
     val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
 
     GetMobilePushFcmTokensParameters requestParameters = GetMobilePushFcmTokensParameters.builder()
-			.pageSize(0L)
+			.pageSize(7L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -427,7 +427,7 @@ fun main() {
     val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
 
     FcmToken fcmToken = FcmToken.builder()
-			.deviceToken("in quiin dolore")
+			.deviceToken("velit dolor adi")
 			.installationId(FcmTokenInstallationId.DEVELOPMENT)
 			.build();
 
@@ -544,7 +544,7 @@ fun main() {
     val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
 
     GetSlackTokensParameters requestParameters = GetSlackTokensParameters.builder()
-			.pageSize(4L)
+			.pageSize(5L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -716,7 +716,7 @@ fun main() {
     val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
 
     GetTeamsTokensParameters requestParameters = GetTeamsTokensParameters.builder()
-			.pageSize(9L)
+			.pageSize(6L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -880,7 +880,7 @@ fun main() {
     val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
 
     GetWebPushTokensParameters requestParameters = GetWebPushTokensParameters.builder()
-			.pageSize(2L)
+			.pageSize(6L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();

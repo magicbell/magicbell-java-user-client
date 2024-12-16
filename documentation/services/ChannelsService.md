@@ -63,7 +63,7 @@ public class Main {
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters
       .builder()
-      .pageSize(3L)
+      .pageSize(8L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -111,7 +111,7 @@ public class Main {
     ApnsToken apnsToken = ApnsToken
       .builder()
       .appId("app_id")
-      .deviceToken("amet dolore ani")
+      .deviceToken("fugiat ullamco ")
       .installationId(ApnsTokenInstallationId.DEVELOPMENT)
       .build();
 
@@ -235,7 +235,7 @@ public class Main {
 
     GetMobilePushExpoTokensParameters requestParameters = GetMobilePushExpoTokensParameters
       .builder()
-      .pageSize(9L)
+      .pageSize(8L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -401,7 +401,7 @@ public class Main {
 
     GetMobilePushFcmTokensParameters requestParameters = GetMobilePushFcmTokensParameters
       .builder()
-      .pageSize(0L)
+      .pageSize(7L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -448,7 +448,7 @@ public class Main {
 
     FcmToken fcmToken = FcmToken
       .builder()
-      .deviceToken("in quiin dolore")
+      .deviceToken("velit dolor adi")
       .installationId(FcmTokenInstallationId.DEVELOPMENT)
       .build();
 
@@ -572,7 +572,7 @@ public class Main {
 
     GetSlackTokensParameters requestParameters = GetSlackTokensParameters
       .builder()
-      .pageSize(4L)
+      .pageSize(5L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -744,7 +744,7 @@ public class Main {
 
     GetTeamsTokensParameters requestParameters = GetTeamsTokensParameters
       .builder()
-      .pageSize(9L)
+      .pageSize(6L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -913,7 +913,7 @@ public class Main {
 
     GetWebPushTokensParameters requestParameters = GetWebPushTokensParameters
       .builder()
-      .pageSize(2L)
+      .pageSize(6L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
