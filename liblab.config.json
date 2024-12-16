@@ -30,7 +30,7 @@
       "githubRepoName": "magicbell-java-client",
       "ignoreFiles": [],
       "includeKotlinSnippets": true,
-      "sdkVersion": "0.0.1",
+      "sdkVersion": "0.1.0",
       "liblabVersion": "2"
     }
   },
