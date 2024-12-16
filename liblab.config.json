@@ -27,6 +27,12 @@
     "java": {
       "groupId": "com.magicbell.client",
       "artifactId": "magicbell-java-client",
+      "developers": [{
+        "name": "Ullrich Schäfer",
+        "email": "ullrich@magicbell.io",
+        "organization": "MagicBell",
+        "organizationUrl": "https://www.magicbell.com"
+      }],
       "githubRepoName": "magicbell-java-client",
       "ignoreFiles": [],
       "includeKotlinSnippets": true,
