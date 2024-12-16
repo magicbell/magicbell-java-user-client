@@ -1,4 +1,3 @@
-
 package com.magicbell.client.magicbelljavaclient.validation.validators.modelValidators;
 
 import com.magicbell.client.magicbelljavaclient.models.WebPushStartInstallationResponse;

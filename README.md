@@ -47,7 +47,7 @@ If you use Maven, place the following within the _dependency_ tag in your `pom.x
 If you use Gradle, paste the next line inside the _dependencies_ block of your `build.gradle` file:
 
 ```Gradle
-implementation group: com.magicbell.client, name: magicbell-java-client, version: 0.0.0
+implementation group: com.magicbell.client, name: magicbell-java-client, version: 0.0.1
 ```
 
 If you use JAR files, package the SDK by running the following command:
