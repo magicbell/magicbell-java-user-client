@@ -14,7 +14,7 @@ public class Main {
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters
       .builder()
-      .pageSize(3L)
+      .pageSize(8L)
       .pageAfter("")
       .pageBefore("")
       .build();

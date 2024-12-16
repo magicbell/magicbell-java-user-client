@@ -13,7 +13,7 @@ fun main() {
     val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters.builder()
-			.pageSize(3L)
+			.pageSize(8L)
 			.pageAfter("")
 			.pageBefore("")
 			.build();
