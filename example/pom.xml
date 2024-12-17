@@ -22,7 +22,7 @@
         <dependency>
             <groupId>com.magicbell.client</groupId>
             <artifactId>magicbell-java-client</artifactId>
-            <version>0.1.2</version>
+            <version>0.1.3</version>
         </dependency>
     </dependencies>
 

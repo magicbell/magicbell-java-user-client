@@ -1,5 +1,11 @@
 # magicbell-java-client
 
+## 0.1.3
+
+### Patch Changes
+
+- [#7](https://github.com/magicbell/magicbell-java-client/pull/7) [`cc6c777`](https://github.com/magicbell/magicbell-java-client/commit/cc6c7775bd39776f39b344eea4d1240b8c256911) Thanks [@stigi](https://github.com/stigi)! - Fixing release discussion category
+
 ## 0.1.2
 
 ### Patch Changes
