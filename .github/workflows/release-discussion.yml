@@ -16,7 +16,7 @@ jobs:
         uses: magicbell/release-discussion-action@main
         with:
           repo: magicbell/community
-          category: product-changelog
+          category: changelog
           cycle: week
           release-prefix: magicbell-java-clilent
         env:
