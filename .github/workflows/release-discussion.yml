@@ -18,6 +18,6 @@ jobs:
           repo: magicbell/community
           category: changelog
           cycle: week
-          release-prefix: magicbell-java-clilent
+          release-prefix: magicbell-java-client
         env:
           GITHUB_TOKEN: ${{ secrets.BELLA_ACTION_TOKEN }}
