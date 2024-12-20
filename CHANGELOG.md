@@ -1,5 +1,11 @@
 # magicbell-java-user-client
 
+## 0.2.0
+
+### Minor Changes
+
+- [#10](https://github.com/magicbell/magicbell-java-user-client/pull/10) [`8bbcabd`](https://github.com/magicbell/magicbell-java-user-client/commit/8bbcabdfee5eb8bfbeafc43d8a86c10994fa2062) Thanks [@stigi](https://github.com/stigi)! - Renaming library to magicbell-java-user-client
+
 ## 0.1.3
 
 ### Patch Changes
