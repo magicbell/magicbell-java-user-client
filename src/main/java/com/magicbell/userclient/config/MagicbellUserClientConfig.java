@@ -7,7 +7,7 @@ import lombok.NonNull;
 
 @Builder
 @Data
-public class MagicbellJavaUserClientConfig {
+public class MagicbellUserClientConfig {
 
   @NonNull
   @Builder.Default

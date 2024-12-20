@@ -1,6 +1,6 @@
 package com.magicbell.userclient;
 
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.http.Environment;
 import com.magicbell.userclient.http.interceptors.DefaultHeadersInterceptor;
 import com.magicbell.userclient.http.interceptors.RetryInterceptor;
@@ -11,19 +11,19 @@ import java.util.concurrent.TimeUnit;
 import okhttp3.OkHttpClient;
 
 /** OpenAPI 3.0.3 Specification for MagicBell API. */
-public class MagicbellJavaUserClient {
+public class MagicbellUserClient {
 
   public final ChannelsService channels;
   public final IntegrationsService integrations;
 
   private final TokenInterceptor accessAuthInterceptor;
 
-  public MagicbellJavaUserClient() {
+  public MagicbellUserClient() {
     // Default configs
-    this(MagicbellJavaUserClientConfig.builder().build());
+    this(MagicbellUserClientConfig.builder().build());
   }
 
-  public MagicbellJavaUserClient(MagicbellJavaUserClientConfig config) {
+  public MagicbellUserClient(MagicbellUserClientConfig config) {
     final String serverUrl = config.getEnvironment().getUrl();
 
     this.accessAuthInterceptor =

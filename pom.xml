@@ -12,7 +12,7 @@
 
     <!-- See https://central.sonatype.org/publish/requirements/#project-name-description-and-url -->
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>A Java SDK for MagicbellJavaUserClient</description>
+    <description>A Java SDK for MagicbellUserClient</description>
     <url>https://magicbell.com</url>
 
     <!-- See https://central.sonatype.org/publish/requirements/#scm-information -->

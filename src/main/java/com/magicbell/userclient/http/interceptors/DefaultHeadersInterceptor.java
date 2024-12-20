@@ -1,6 +1,6 @@
 package com.magicbell.userclient.http.interceptors;
 
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,7 +13,7 @@ public class DefaultHeadersInterceptor implements Interceptor {
 
   private final Map<String, String> defaultHeaders = new HashMap<>();
 
-  public DefaultHeadersInterceptor(MagicbellJavaUserClientConfig config) {
+  public DefaultHeadersInterceptor(MagicbellUserClientConfig config) {
     defaultHeaders.put("User-Agent", config.getUserAgent());
   }
 

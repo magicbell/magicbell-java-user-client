@@ -1,5 +1,5 @@
 {
-  "sdkName": "magicbell-java-user-client",
+  "sdkName": "magicbell-user-client",
   "specFilePath": "https://site.magicbell.cloud/docs/api/openapi.user.json",
   "apiName": "magicbell-api",
   "languages": ["java"],

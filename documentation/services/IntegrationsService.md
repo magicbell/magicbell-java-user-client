@@ -33,8 +33,8 @@ Creates a new installation of a inbox integration for a user. This endpoint is u
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellJavaUserClient;
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellUserClient;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.models.Banner;
 import com.magicbell.userclient.models.DefaultHover;
 import com.magicbell.userclient.models.DefaultState;
@@ -58,19 +58,16 @@ import com.magicbell.userclient.models.UnseenState;
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
-      .builder()
-      .accessToken("YOUR_ACCESS_TOKEN")
-      .build();
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
 
-    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
     Images images = Images.builder().emptyInboxUrl("emptyInboxUrl").build();
 
     Banner banner = Banner
       .builder()
       .backgroundColor("backgroundColor")
-      .backgroundOpacity(2.68D)
+      .backgroundOpacity(9.95D)
       .fontSize("fontSize")
       .textColor("textColor")
       .build();
@@ -158,7 +155,7 @@ public class Main {
 
     InboxConfig inboxConfig = InboxConfig.builder().images(images).locale("locale").theme(theme).build();
 
-    InboxConfig response = magicbellJavaUserClient.integrations.saveInboxInstallation(inboxConfig);
+    InboxConfig response = magicbellUserClient.integrations.saveInboxInstallation(inboxConfig);
 
     System.out.println(response);
   }
@@ -180,21 +177,18 @@ Initiates the installation flow for a inbox integration. This is the first step 
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellJavaUserClient;
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellUserClient;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.models.InboxConfig;
 
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
-      .builder()
-      .accessToken("YOUR_ACCESS_TOKEN")
-      .build();
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
 
-    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    InboxConfig response = magicbellJavaUserClient.integrations.startInboxInstallation();
+    InboxConfig response = magicbellUserClient.integrations.startInboxInstallation();
 
     System.out.println(response);
   }
@@ -222,8 +216,8 @@ Creates a new installation of a slack integration for a user. This endpoint is u
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellJavaUserClient;
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellUserClient;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.models.AuthedUser;
 import com.magicbell.userclient.models.Enterprise;
 import com.magicbell.userclient.models.IncomingWebhook;
@@ -233,17 +227,14 @@ import com.magicbell.userclient.models.Team;
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
-      .builder()
-      .accessToken("YOUR_ACCESS_TOKEN")
-      .build();
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
 
-    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
     AuthedUser authedUser = AuthedUser
       .builder()
       .accessToken("access_token")
-      .expiresIn(0L)
+      .expiresIn(2L)
       .id("id")
       .refreshToken("refresh_token")
       .scope("scope")
@@ -268,17 +259,17 @@ public class Main {
       .authedUser(authedUser)
       .botUserId("bot_user_id")
       .enterprise(enterprise)
-      .expiresIn(10L)
-      .id("0GKF")
+      .expiresIn(9L)
+      .id("HC/1O")
       .incomingWebhook(incomingWebhook)
-      .isEnterpriseInstall(false)
+      .isEnterpriseInstall(true)
       .refreshToken("refresh_token")
       .scope("scope")
       .team(team)
       .tokenType("token_type")
       .build();
 
-    SlackInstallation response = magicbellJavaUserClient.integrations.saveSlackInstallation(slackInstallation);
+    SlackInstallation response = magicbellUserClient.integrations.saveSlackInstallation(slackInstallation);
 
     System.out.println(response);
   }
@@ -306,20 +297,17 @@ Completes the installation flow for a slack integration. This endpoint is typica
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellJavaUserClient;
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellUserClient;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.models.SlackFinishInstallResponse;
 import com.magicbell.userclient.models.SlackInstallation;
 
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
-      .builder()
-      .accessToken("YOUR_ACCESS_TOKEN")
-      .build();
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
 
-    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
     SlackFinishInstallResponse slackFinishInstallResponse = SlackFinishInstallResponse
       .builder()
@@ -328,9 +316,7 @@ public class Main {
       .redirectUrl("redirect_url")
       .build();
 
-    SlackInstallation response = magicbellJavaUserClient.integrations.finishSlackInstallation(
-      slackFinishInstallResponse
-    );
+    SlackInstallation response = magicbellUserClient.integrations.finishSlackInstallation(slackFinishInstallResponse);
 
     System.out.println(response);
   }
@@ -358,8 +344,8 @@ Initiates the installation flow for a slack integration. This is the first step 
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellJavaUserClient;
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellUserClient;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.models.SlackStartInstall;
 import com.magicbell.userclient.models.SlackStartInstallResponseContent;
 import java.util.Arrays;
@@ -368,12 +354,9 @@ import java.util.List;
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
-      .builder()
-      .accessToken("YOUR_ACCESS_TOKEN")
-      .build();
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
 
-    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
     List<String> extraScopes = Arrays.asList("extra_scopes");
 
@@ -385,7 +368,7 @@ public class Main {
       .redirectUrl("redirect_url")
       .build();
 
-    SlackStartInstallResponseContent response = magicbellJavaUserClient.integrations.startSlackInstallation(
+    SlackStartInstallResponseContent response = magicbellUserClient.integrations.startSlackInstallation(
       slackStartInstall
     );
 
@@ -415,19 +398,16 @@ Creates a new installation of a templates integration for a user. This endpoint 
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellJavaUserClient;
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellUserClient;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.models.TemplatesInstallation;
 
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
-      .builder()
-      .accessToken("YOUR_ACCESS_TOKEN")
-      .build();
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
 
-    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
     TemplatesInstallation templatesInstallation = TemplatesInstallation
       .builder()
@@ -436,9 +416,7 @@ public class Main {
       .text("text")
       .build();
 
-    TemplatesInstallation response = magicbellJavaUserClient.integrations.saveTemplatesInstallation(
-      templatesInstallation
-    );
+    TemplatesInstallation response = magicbellUserClient.integrations.saveTemplatesInstallation(templatesInstallation);
 
     System.out.println(response);
   }
@@ -466,26 +444,23 @@ Creates a new installation of a web_push integration for a user. This endpoint i
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellJavaUserClient;
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellUserClient;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.models.Keys;
 import com.magicbell.userclient.models.WebPushToken;
 
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
-      .builder()
-      .accessToken("YOUR_ACCESS_TOKEN")
-      .build();
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
 
-    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
     Keys keys = Keys.builder().auth("auth").p256dh("p256dh").build();
 
     WebPushToken webPushToken = WebPushToken.builder().endpoint("endpoint").keys(keys).build();
 
-    WebPushToken response = magicbellJavaUserClient.integrations.saveWebPushInstallation(webPushToken);
+    WebPushToken response = magicbellUserClient.integrations.saveWebPushInstallation(webPushToken);
 
     System.out.println(response);
   }
@@ -507,21 +482,18 @@ Initiates the installation flow for a web_push integration. This is the first st
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellJavaUserClient;
-import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellUserClient;
+import com.magicbell.userclient.config.MagicbellUserClientConfig;
 import com.magicbell.userclient.models.WebPushStartInstallationResponse;
 
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
-      .builder()
-      .accessToken("YOUR_ACCESS_TOKEN")
-      .build();
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
 
-    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    WebPushStartInstallationResponse response = magicbellJavaUserClient.integrations.startWebPushInstallation();
+    WebPushStartInstallationResponse response = magicbellUserClient.integrations.startWebPushInstallation();
 
     System.out.println(response);
   }
