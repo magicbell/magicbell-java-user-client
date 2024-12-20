@@ -38,8 +38,8 @@ If you use Maven, place the following within the _dependency_ tag in your `pom.x
 
 ```XML
 <dependency>
-    <groupId>com.magicbell.user_client</groupId>
-    <artifactId>magicbell-java-user-client</artifactId>
+    <groupId>com.magicbell</groupId>
+    <artifactId>user-client</artifactId>
     <version>0.1.3</version>
 </dependency>
 ```
@@ -47,7 +47,7 @@ If you use Maven, place the following within the _dependency_ tag in your `pom.x
 If you use Gradle, paste the next line inside the _dependencies_ block of your `build.gradle` file:
 
 ```Gradle
-implementation group: com.magicbell.user_client, name: magicbell-java-user-client, version: 0.1.3
+implementation group: com.magicbell, name: user-client, version: 0.1.3
 ```
 
 If you use JAR files, package the SDK by running the following command:
@@ -71,8 +71,8 @@ This token must be provided to authenticate your requests to the API.
 When you initialize the SDK, you can set the access token as follows:
 
 ```java
-import com.magicbell.user_client.magicbelljavauserclient.MagicbellJavaUserClient;
-import com.magicbell.user_client.magicbelljavauserclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellJavaUserClient;
+import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
 
 public class Main {
 
@@ -99,8 +99,8 @@ magicbellJavaUserClient.setAccessToken('YOUR_ACCESS_TOKEN');
 You can set a custom timeout for the SDK's HTTP requests as follows:
 
 ```java
-import com.magicbell.user_client.magicbelljavauserclient.MagicbellJavaUserClient;
-import com.magicbell.user_client.magicbelljavauserclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.MagicbellJavaUserClient;
+import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
 
 public class Main {
 
@@ -117,10 +117,10 @@ public class Main {
 Below is a comprehensive example demonstrating how to authenticate and call a simple endpoint:
 
 ```java
-import com.magicbell.user_client.magicbelljavauserclient.MagicbellJavaUserClient;
-import com.magicbell.user_client.magicbelljavauserclient.config.MagicbellJavaUserClientConfig;
-import com.magicbell.user_client.magicbelljavauserclient.models.ArrayOfMetadataApnsTokens;
-import com.magicbell.user_client.magicbelljavauserclient.models.GetMobilePushApnsTokensParameters;
+import com.magicbell.userclient.MagicbellJavaUserClient;
+import com.magicbell.userclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.userclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.userclient.models.GetMobilePushApnsTokensParameters;
 
 public class Main {
 
@@ -134,7 +134,7 @@ public class Main {
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters
       .builder()
-      .pageSize(8L)
+      .pageSize(9L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();

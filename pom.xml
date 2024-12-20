@@ -6,8 +6,8 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.magicbell.user_client</groupId>
-    <artifactId>magicbell-java-user-client</artifactId>
+    <groupId>com.magicbell</groupId>
+    <artifactId>user-client</artifactId>
     <version>0.1.3</version>
 
     <!-- See https://central.sonatype.org/publish/requirements/#project-name-description-and-url -->
