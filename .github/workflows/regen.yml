@@ -23,7 +23,7 @@ jobs:
           node-version: 20
       - uses: bahmutov/npm-install@v1
 
-      - name: Regen `magicbell-java-client`
+      - name: Regen
         run: yarn codegen
         env:
           LIBLAB_TOKEN: ${{ secrets.LIBLAB_ACTION_TOKEN }}

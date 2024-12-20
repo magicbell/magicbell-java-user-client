@@ -33,34 +33,34 @@ Creates a new installation of a inbox integration for a user. This endpoint is u
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.Banner;
-import com.magicbell.client.magicbelljavaclient.models.DefaultHover;
-import com.magicbell.client.magicbelljavaclient.models.DefaultState;
-import com.magicbell.client.magicbelljavaclient.models.Default_;
-import com.magicbell.client.magicbelljavaclient.models.Dialog;
-import com.magicbell.client.magicbelljavaclient.models.Footer;
-import com.magicbell.client.magicbelljavaclient.models.Header;
-import com.magicbell.client.magicbelljavaclient.models.Icon;
-import com.magicbell.client.magicbelljavaclient.models.Images;
-import com.magicbell.client.magicbelljavaclient.models.InboxConfig;
-import com.magicbell.client.magicbelljavaclient.models.Notification;
-import com.magicbell.client.magicbelljavaclient.models.Theme;
-import com.magicbell.client.magicbelljavaclient.models.Unread;
-import com.magicbell.client.magicbelljavaclient.models.UnreadHover;
-import com.magicbell.client.magicbelljavaclient.models.UnreadState;
-import com.magicbell.client.magicbelljavaclient.models.Unseen;
-import com.magicbell.client.magicbelljavaclient.models.UnseenBadge;
-import com.magicbell.client.magicbelljavaclient.models.UnseenHover;
-import com.magicbell.client.magicbelljavaclient.models.UnseenState;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.Banner;
+import com.magicbell.magicbelluserclient.models.DefaultHover;
+import com.magicbell.magicbelluserclient.models.DefaultState;
+import com.magicbell.magicbelluserclient.models.Default_;
+import com.magicbell.magicbelluserclient.models.Dialog;
+import com.magicbell.magicbelluserclient.models.Footer;
+import com.magicbell.magicbelluserclient.models.Header;
+import com.magicbell.magicbelluserclient.models.Icon;
+import com.magicbell.magicbelluserclient.models.Images;
+import com.magicbell.magicbelluserclient.models.InboxConfig;
+import com.magicbell.magicbelluserclient.models.Notification;
+import com.magicbell.magicbelluserclient.models.Theme;
+import com.magicbell.magicbelluserclient.models.Unread;
+import com.magicbell.magicbelluserclient.models.UnreadHover;
+import com.magicbell.magicbelluserclient.models.UnreadState;
+import com.magicbell.magicbelluserclient.models.Unseen;
+import com.magicbell.magicbelluserclient.models.UnseenBadge;
+import com.magicbell.magicbelluserclient.models.UnseenHover;
+import com.magicbell.magicbelluserclient.models.UnseenState;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     Images images = Images.builder()
 			.emptyInboxUrl("emptyInboxUrl")
@@ -174,7 +174,7 @@ fun main() {
 			.theme(theme)
 			.build();
 
-    val response: InboxConfig = magicbellJavaClient.integrations.saveInboxInstallation(inboxConfig);
+    val response: InboxConfig = magicbellUserClient.integrations.saveInboxInstallation(inboxConfig);
 
     println(response);
 }
@@ -194,18 +194,18 @@ Initiates the installation flow for a inbox integration. This is the first step 
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.InboxConfig;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.InboxConfig;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    val response: InboxConfig = magicbellJavaClient.integrations.startInboxInstallation();
+    val response: InboxConfig = magicbellUserClient.integrations.startInboxInstallation();
 
     println(response);
 }
@@ -231,20 +231,20 @@ Creates a new installation of a slack integration for a user. This endpoint is u
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.AuthedUser;
-import com.magicbell.client.magicbelljavaclient.models.Enterprise;
-import com.magicbell.client.magicbelljavaclient.models.IncomingWebhook;
-import com.magicbell.client.magicbelljavaclient.models.SlackInstallation;
-import com.magicbell.client.magicbelljavaclient.models.Team;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.AuthedUser;
+import com.magicbell.magicbelluserclient.models.Enterprise;
+import com.magicbell.magicbelluserclient.models.IncomingWebhook;
+import com.magicbell.magicbelluserclient.models.SlackInstallation;
+import com.magicbell.magicbelluserclient.models.Team;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     AuthedUser authedUser = AuthedUser.builder()
 			.accessToken("access_token")
@@ -287,7 +287,7 @@ fun main() {
 			.tokenType("token_type")
 			.build();
 
-    val response: SlackInstallation = magicbellJavaClient.integrations.saveSlackInstallation(slackInstallation);
+    val response: SlackInstallation = magicbellUserClient.integrations.saveSlackInstallation(slackInstallation);
 
     println(response);
 }
@@ -313,17 +313,17 @@ Completes the installation flow for a slack integration. This endpoint is typica
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.SlackFinishInstallResponse;
-import com.magicbell.client.magicbelljavaclient.models.SlackInstallation;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.SlackFinishInstallResponse;
+import com.magicbell.magicbelluserclient.models.SlackInstallation;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     SlackFinishInstallResponse slackFinishInstallResponse = SlackFinishInstallResponse.builder()
 			.appId("app_id")
@@ -331,7 +331,7 @@ fun main() {
 			.redirectUrl("redirect_url")
 			.build();
 
-    val response: SlackInstallation = magicbellJavaClient.integrations.finishSlackInstallation(slackFinishInstallResponse);
+    val response: SlackInstallation = magicbellUserClient.integrations.finishSlackInstallation(slackFinishInstallResponse);
 
     println(response);
 }
@@ -357,19 +357,19 @@ Initiates the installation flow for a slack integration. This is the first step 
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.SlackStartInstall;
-import com.magicbell.client.magicbelljavaclient.models.SlackStartInstallResponseContent;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.SlackStartInstall;
+import com.magicbell.magicbelluserclient.models.SlackStartInstallResponseContent;
 import java.util.Arrays;
 import java.util.List;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     List<String> extraScopes = Arrays.asList("extra_scopes");
 
@@ -380,7 +380,7 @@ fun main() {
 			.redirectUrl("redirect_url")
 			.build();
 
-    val response: SlackStartInstallResponseContent = magicbellJavaClient.integrations.startSlackInstallation(slackStartInstall);
+    val response: SlackStartInstallResponseContent = magicbellUserClient.integrations.startSlackInstallation(slackStartInstall);
 
     println(response);
 }
@@ -406,16 +406,16 @@ Creates a new installation of a templates integration for a user. This endpoint 
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.TemplatesInstallation;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.TemplatesInstallation;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     TemplatesInstallation templatesInstallation = TemplatesInstallation.builder()
 			.category("category")
@@ -423,7 +423,7 @@ fun main() {
 			.text("text")
 			.build();
 
-    val response: TemplatesInstallation = magicbellJavaClient.integrations.saveTemplatesInstallation(templatesInstallation);
+    val response: TemplatesInstallation = magicbellUserClient.integrations.saveTemplatesInstallation(templatesInstallation);
 
     println(response);
 }
@@ -449,17 +449,17 @@ Creates a new installation of a web_push integration for a user. This endpoint i
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.Keys;
-import com.magicbell.client.magicbelljavaclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.Keys;
+import com.magicbell.magicbelluserclient.models.WebPushToken;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     Keys keys = Keys.builder()
 			.auth("auth")
@@ -471,7 +471,7 @@ fun main() {
 			.keys(keys)
 			.build();
 
-    val response: WebPushToken = magicbellJavaClient.integrations.saveWebPushInstallation(webPushToken);
+    val response: WebPushToken = magicbellUserClient.integrations.saveWebPushInstallation(webPushToken);
 
     println(response);
 }
@@ -491,18 +491,18 @@ Initiates the installation flow for a web_push integration. This is the first st
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.WebPushStartInstallationResponse;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.WebPushStartInstallationResponse;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    val response: WebPushStartInstallationResponse = magicbellJavaClient.integrations.startWebPushInstallation();
+    val response: WebPushStartInstallationResponse = magicbellUserClient.integrations.startWebPushInstallation();
 
     println(response);
 }
