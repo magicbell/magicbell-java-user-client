@@ -1,5 +1,5 @@
 {
-  "sdkName": "magicbell-java-client",
+  "sdkName": "magicbell-java-user-client",
   "specFilePath": "https://site.magicbell.cloud/docs/api/openapi.user.json",
   "apiName": "magicbell-api",
   "languages": ["java"],
@@ -25,15 +25,15 @@
   },
   "languageOptions": {
     "java": {
-      "groupId": "com.magicbell.client",
-      "artifactId": "magicbell-java-client",
+      "groupId": "com.magicbell.user-client",
+      "artifactId": "magicbell-java-user-client",
       "developers": [{
         "name": "Ullrich Schäfer",
         "email": "ullrich@magicbell.io",
         "organization": "MagicBell",
         "organizationUrl": "https://www.magicbell.com"
       }],
-      "githubRepoName": "magicbell-java-client",
+      "githubRepoName": "magicbell-java-user-client",
       "ignoreFiles": [],
       "includeKotlinSnippets": true,
       "sdkVersion": "0.1.3",

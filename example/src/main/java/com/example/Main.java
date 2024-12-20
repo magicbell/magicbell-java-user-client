@@ -1,16 +1,19 @@
 package com.example;
 
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.ArrayOfMetadataApnsTokens;
-import com.magicbell.client.magicbelljavaclient.models.GetMobilePushApnsTokensParameters;
+import com.magicbell.user_client.magicbelljavauserclient.MagicbellJavaUserClient;
+import com.magicbell.user_client.magicbelljavauserclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.user_client.magicbelljavauserclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.user_client.magicbelljavauserclient.models.GetMobilePushApnsTokensParameters;
 
 public class Main {
 
   public static void main(String[] args) {
-    MagicbellJavaClientConfig config = MagicbellJavaClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
+    MagicbellJavaUserClientConfig config = MagicbellJavaUserClientConfig
+      .builder()
+      .accessToken("YOUR_ACCESS_TOKEN")
+      .build();
 
-    MagicbellJavaClient magicbellJavaClient = new MagicbellJavaClient(config);
+    MagicbellJavaUserClient magicbellJavaUserClient = new MagicbellJavaUserClient(config);
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters
       .builder()
@@ -19,7 +22,7 @@ public class Main {
       .pageBefore("")
       .build();
 
-    ArrayOfMetadataApnsTokens response = magicbellJavaClient.channels.getMobilePushApnsTokens(requestParameters);
+    ArrayOfMetadataApnsTokens response = magicbellJavaUserClient.channels.getMobilePushApnsTokens(requestParameters);
 
     System.out.println(response);
   }

@@ -1,16 +1,16 @@
 package com.example
 
-import com.magicbell.client.magicbelljavaclient.MagicbellJavaClient;
-import com.magicbell.client.magicbelljavaclient.config.MagicbellJavaClientConfig;
-import com.magicbell.client.magicbelljavaclient.models.ArrayOfMetadataApnsTokens;
-import com.magicbell.client.magicbelljavaclient.models.GetMobilePushApnsTokensParameters;
+import com.magicbell.user_client.magicbelljavauserclient.MagicbellJavaUserClient;
+import com.magicbell.user_client.magicbelljavauserclient.config.MagicbellJavaUserClientConfig;
+import com.magicbell.user_client.magicbelljavauserclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.user_client.magicbelljavauserclient.models.GetMobilePushApnsTokensParameters;
 
 fun main() {
-	val config: MagicbellJavaClientConfig = MagicbellJavaClientConfig.builder()
+	val config: MagicbellJavaUserClientConfig = MagicbellJavaUserClientConfig.builder()
 			.accessToken("YOUR_ACCESS_TOKEN")
 			.build();
 
-    val magicbellJavaClient: MagicbellJavaClient = MagicbellJavaClient(config);
+    val magicbellJavaUserClient: MagicbellJavaUserClient = MagicbellJavaUserClient(config);
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters.builder()
 			.pageSize(8L)
@@ -18,7 +18,7 @@ fun main() {
 			.pageBefore("")
 			.build();
 
-    val response: ArrayOfMetadataApnsTokens = magicbellJavaClient.channels.getMobilePushApnsTokens(requestParameters);
+    val response: ArrayOfMetadataApnsTokens = magicbellJavaUserClient.channels.getMobilePushApnsTokens(requestParameters);
     
     println(response);
 }
