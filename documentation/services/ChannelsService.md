@@ -49,10 +49,10 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataApnsTokens;
-import com.magicbell.userclient.models.GetMobilePushApnsTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
 
 public class Main {
 
@@ -63,7 +63,7 @@ public class Main {
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters
       .builder()
-      .pageSize(5L)
+      .pageSize(8L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -96,10 +96,10 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ApnsToken;
-import com.magicbell.userclient.models.ApnsTokenInstallationId;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ApnsToken;
+import com.magicbell.magicbelluserclient.models.ApnsTokenInstallationId;
 
 public class Main {
 
@@ -111,7 +111,7 @@ public class Main {
     ApnsToken apnsToken = ApnsToken
       .builder()
       .appId("app_id")
-      .deviceToken("magna commodo s")
+      .deviceToken("fugiat ullamco ")
       .installationId(ApnsTokenInstallationId.DEVELOPMENT)
       .build();
 
@@ -143,9 +143,9 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataApnsToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataApnsToken;
 
 public class Main {
 
@@ -182,9 +182,9 @@ Revokes one of the authenticated user's mobile_push tokens. This permanently inv
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 public class Main {
 
@@ -221,10 +221,10 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataExpoTokens;
-import com.magicbell.userclient.models.GetMobilePushExpoTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataExpoTokens;
+import com.magicbell.magicbelluserclient.models.GetMobilePushExpoTokensParameters;
 
 public class Main {
 
@@ -235,7 +235,7 @@ public class Main {
 
     GetMobilePushExpoTokensParameters requestParameters = GetMobilePushExpoTokensParameters
       .builder()
-      .pageSize(7L)
+      .pageSize(8L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -268,9 +268,9 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ExpoToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ExpoToken;
 
 public class Main {
 
@@ -309,9 +309,9 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataExpoToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataExpoToken;
 
 public class Main {
 
@@ -348,9 +348,9 @@ Revokes one of the authenticated user's mobile_push tokens. This permanently inv
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 public class Main {
 
@@ -387,10 +387,10 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataFcmTokens;
-import com.magicbell.userclient.models.GetMobilePushFcmTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataFcmTokens;
+import com.magicbell.magicbelluserclient.models.GetMobilePushFcmTokensParameters;
 
 public class Main {
 
@@ -401,7 +401,7 @@ public class Main {
 
     GetMobilePushFcmTokensParameters requestParameters = GetMobilePushFcmTokensParameters
       .builder()
-      .pageSize(3L)
+      .pageSize(7L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -434,10 +434,10 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.FcmToken;
-import com.magicbell.userclient.models.FcmTokenInstallationId;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.FcmToken;
+import com.magicbell.magicbelluserclient.models.FcmTokenInstallationId;
 
 public class Main {
 
@@ -448,7 +448,7 @@ public class Main {
 
     FcmToken fcmToken = FcmToken
       .builder()
-      .deviceToken("labore dolorull")
+      .deviceToken("velit dolor adi")
       .installationId(FcmTokenInstallationId.DEVELOPMENT)
       .build();
 
@@ -480,9 +480,9 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataFcmToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataFcmToken;
 
 public class Main {
 
@@ -519,9 +519,9 @@ Revokes one of the authenticated user's mobile_push tokens. This permanently inv
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 public class Main {
 
@@ -558,10 +558,10 @@ Lists all slack tokens belonging to the authenticated user. Returns a paginated 
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataSlackTokens;
-import com.magicbell.userclient.models.GetSlackTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataSlackTokens;
+import com.magicbell.magicbelluserclient.models.GetSlackTokensParameters;
 
 public class Main {
 
@@ -572,7 +572,7 @@ public class Main {
 
     GetSlackTokensParameters requestParameters = GetSlackTokensParameters
       .builder()
-      .pageSize(1L)
+      .pageSize(5L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -605,11 +605,11 @@ Saves a slack token for the authenticated user. This token serves as a credentia
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.Oauth;
-import com.magicbell.userclient.models.SlackToken;
-import com.magicbell.userclient.models.SlackTokenWebhook;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.Oauth;
+import com.magicbell.magicbelluserclient.models.SlackToken;
+import com.magicbell.magicbelluserclient.models.SlackTokenWebhook;
 
 public class Main {
 
@@ -652,9 +652,9 @@ Retrieves details of a specific slack token belonging to the authenticated user.
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataSlackToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataSlackToken;
 
 public class Main {
 
@@ -691,9 +691,9 @@ Revokes one of the authenticated user's slack tokens. This permanently invalidat
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 public class Main {
 
@@ -730,10 +730,10 @@ Lists all teams tokens belonging to the authenticated user. Returns a paginated 
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataTeamsTokens;
-import com.magicbell.userclient.models.GetTeamsTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataTeamsTokens;
+import com.magicbell.magicbelluserclient.models.GetTeamsTokensParameters;
 
 public class Main {
 
@@ -744,7 +744,7 @@ public class Main {
 
     GetTeamsTokensParameters requestParameters = GetTeamsTokensParameters
       .builder()
-      .pageSize(4L)
+      .pageSize(6L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -777,10 +777,10 @@ Saves a teams token for the authenticated user. This token serves as a credentia
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.TeamsToken;
-import com.magicbell.userclient.models.TeamsTokenWebhook;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.TeamsToken;
+import com.magicbell.magicbelluserclient.models.TeamsTokenWebhook;
 
 public class Main {
 
@@ -821,9 +821,9 @@ Retrieves details of a specific teams token belonging to the authenticated user.
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataTeamsToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataTeamsToken;
 
 public class Main {
 
@@ -860,9 +860,9 @@ Revokes one of the authenticated user's teams tokens. This permanently invalidat
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 public class Main {
 
@@ -899,10 +899,10 @@ Lists all web_push tokens belonging to the authenticated user. Returns a paginat
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataWebPushTokens;
-import com.magicbell.userclient.models.GetWebPushTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataWebPushTokens;
+import com.magicbell.magicbelluserclient.models.GetWebPushTokensParameters;
 
 public class Main {
 
@@ -913,7 +913,7 @@ public class Main {
 
     GetWebPushTokensParameters requestParameters = GetWebPushTokensParameters
       .builder()
-      .pageSize(5L)
+      .pageSize(6L)
       .pageAfter("page[after]")
       .pageBefore("page[before]")
       .build();
@@ -946,10 +946,10 @@ Saves a web_push token for the authenticated user. This token serves as a creden
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.Keys;
-import com.magicbell.userclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.Keys;
+import com.magicbell.magicbelluserclient.models.WebPushToken;
 
 public class Main {
 
@@ -990,9 +990,9 @@ Retrieves details of a specific web_push token belonging to the authenticated us
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataWebPushToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataWebPushToken;
 
 public class Main {
 
@@ -1029,9 +1029,9 @@ Revokes one of the authenticated user's web_push tokens. This permanently invali
 **Example Usage Code Snippet**
 
 ```java
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 public class Main {
 

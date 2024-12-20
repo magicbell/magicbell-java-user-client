@@ -49,10 +49,10 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataApnsTokens;
-import com.magicbell.userclient.models.GetMobilePushApnsTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -62,7 +62,7 @@ fun main() {
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters.builder()
-			.pageSize(5L)
+			.pageSize(8L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -93,10 +93,10 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ApnsToken;
-import com.magicbell.userclient.models.ApnsTokenInstallationId;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ApnsToken;
+import com.magicbell.magicbelluserclient.models.ApnsTokenInstallationId;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -107,7 +107,7 @@ fun main() {
 
     ApnsToken apnsToken = ApnsToken.builder()
 			.appId("app_id")
-			.deviceToken("magna commodo s")
+			.deviceToken("fugiat ullamco ")
 			.installationId(ApnsTokenInstallationId.DEVELOPMENT)
 			.build();
 
@@ -137,9 +137,9 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataApnsToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataApnsToken;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -174,9 +174,9 @@ Revokes one of the authenticated user's mobile_push tokens. This permanently inv
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -211,10 +211,10 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataExpoTokens;
-import com.magicbell.userclient.models.GetMobilePushExpoTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataExpoTokens;
+import com.magicbell.magicbelluserclient.models.GetMobilePushExpoTokensParameters;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -224,7 +224,7 @@ fun main() {
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     GetMobilePushExpoTokensParameters requestParameters = GetMobilePushExpoTokensParameters.builder()
-			.pageSize(7L)
+			.pageSize(8L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -255,9 +255,9 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ExpoToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ExpoToken;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -296,9 +296,9 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataExpoToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataExpoToken;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -333,9 +333,9 @@ Revokes one of the authenticated user's mobile_push tokens. This permanently inv
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -370,10 +370,10 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataFcmTokens;
-import com.magicbell.userclient.models.GetMobilePushFcmTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataFcmTokens;
+import com.magicbell.magicbelluserclient.models.GetMobilePushFcmTokensParameters;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -383,7 +383,7 @@ fun main() {
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     GetMobilePushFcmTokensParameters requestParameters = GetMobilePushFcmTokensParameters.builder()
-			.pageSize(3L)
+			.pageSize(7L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -414,10 +414,10 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.FcmToken;
-import com.magicbell.userclient.models.FcmTokenInstallationId;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.FcmToken;
+import com.magicbell.magicbelluserclient.models.FcmTokenInstallationId;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -427,7 +427,7 @@ fun main() {
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     FcmToken fcmToken = FcmToken.builder()
-			.deviceToken("labore dolorull")
+			.deviceToken("velit dolor adi")
 			.installationId(FcmTokenInstallationId.DEVELOPMENT)
 			.build();
 
@@ -457,9 +457,9 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataFcmToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataFcmToken;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -494,9 +494,9 @@ Revokes one of the authenticated user's mobile_push tokens. This permanently inv
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -531,10 +531,10 @@ Lists all slack tokens belonging to the authenticated user. Returns a paginated 
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataSlackTokens;
-import com.magicbell.userclient.models.GetSlackTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataSlackTokens;
+import com.magicbell.magicbelluserclient.models.GetSlackTokensParameters;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -544,7 +544,7 @@ fun main() {
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     GetSlackTokensParameters requestParameters = GetSlackTokensParameters.builder()
-			.pageSize(1L)
+			.pageSize(5L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -575,11 +575,11 @@ Saves a slack token for the authenticated user. This token serves as a credentia
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.Oauth;
-import com.magicbell.userclient.models.SlackToken;
-import com.magicbell.userclient.models.SlackTokenWebhook;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.Oauth;
+import com.magicbell.magicbelluserclient.models.SlackToken;
+import com.magicbell.magicbelluserclient.models.SlackTokenWebhook;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -629,9 +629,9 @@ Retrieves details of a specific slack token belonging to the authenticated user.
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataSlackToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataSlackToken;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -666,9 +666,9 @@ Revokes one of the authenticated user's slack tokens. This permanently invalidat
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -703,10 +703,10 @@ Lists all teams tokens belonging to the authenticated user. Returns a paginated 
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataTeamsTokens;
-import com.magicbell.userclient.models.GetTeamsTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataTeamsTokens;
+import com.magicbell.magicbelluserclient.models.GetTeamsTokensParameters;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -716,7 +716,7 @@ fun main() {
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     GetTeamsTokensParameters requestParameters = GetTeamsTokensParameters.builder()
-			.pageSize(4L)
+			.pageSize(6L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -747,10 +747,10 @@ Saves a teams token for the authenticated user. This token serves as a credentia
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.TeamsToken;
-import com.magicbell.userclient.models.TeamsTokenWebhook;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.TeamsToken;
+import com.magicbell.magicbelluserclient.models.TeamsTokenWebhook;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -793,9 +793,9 @@ Retrieves details of a specific teams token belonging to the authenticated user.
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataTeamsToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataTeamsToken;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -830,9 +830,9 @@ Revokes one of the authenticated user's teams tokens. This permanently invalidat
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -867,10 +867,10 @@ Lists all web_push tokens belonging to the authenticated user. Returns a paginat
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.ArrayOfMetadataWebPushTokens;
-import com.magicbell.userclient.models.GetWebPushTokensParameters;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.ArrayOfMetadataWebPushTokens;
+import com.magicbell.magicbelluserclient.models.GetWebPushTokensParameters;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -880,7 +880,7 @@ fun main() {
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
     GetWebPushTokensParameters requestParameters = GetWebPushTokensParameters.builder()
-			.pageSize(5L)
+			.pageSize(6L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
 			.build();
@@ -911,10 +911,10 @@ Saves a web_push token for the authenticated user. This token serves as a creden
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.Keys;
-import com.magicbell.userclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.Keys;
+import com.magicbell.magicbelluserclient.models.WebPushToken;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -959,9 +959,9 @@ Retrieves details of a specific web_push token belonging to the authenticated us
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.MetadataWebPushToken;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.MetadataWebPushToken;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -996,9 +996,9 @@ Revokes one of the authenticated user's web_push tokens. This permanently invali
 **Example Usage Code Snippet**
 
 ```kotlin
-import com.magicbell.userclient.MagicbellUserClient;
-import com.magicbell.userclient.config.MagicbellUserClientConfig;
-import com.magicbell.userclient.models.DiscardResult;
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()

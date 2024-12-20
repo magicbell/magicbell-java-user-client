@@ -26,7 +26,7 @@
   "languageOptions": {
     "java": {
       "groupId": "com.magicbell",
-      "artifactId": "user-client",
+      "artifactId": "magicbell-user-client",
       "developers": [{
         "name": "Ullrich Schäfer",
         "email": "ullrich@magicbell.io",
