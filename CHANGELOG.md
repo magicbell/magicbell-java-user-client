@@ -1,4 +1,4 @@
-# magicbell-java-client
+# magicbell-java-user-client
 
 ## 0.1.3
 
