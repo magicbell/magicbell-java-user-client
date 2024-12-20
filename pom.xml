@@ -6,20 +6,20 @@
 >
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.magicbell</groupId>
-    <artifactId>magicbell-user-client</artifactId>
+    <groupId>com.magicbell.client</groupId>
+    <artifactId>magicbell-java-client</artifactId>
     <version>0.2.0</version>
 
     <!-- See https://central.sonatype.org/publish/requirements/#project-name-description-and-url -->
     <name>${project.groupId}:${project.artifactId}</name>
-    <description>A Java SDK for MagicbellUserClient</description>
+    <description>(relocated) A Java SDK for MagicbellUserClient</description>
     <url>https://magicbell.com</url>
 
     <!-- See https://central.sonatype.org/publish/requirements/#scm-information -->
     <scm>
-        <connection>scm:git:git://github.com/magicbell/magicbell-java-user-client.git</connection>
-        <developerConnection>scm:git:ssh://github.com/magicbell/magicbell-java-user-client.git</developerConnection>
-        <url>https://github.com/magicbell/magicbell-java-user-client</url>
+        <connection>scm:git:git://github.com/magicbell/magicbell-java-client.git</connection>
+        <developerConnection>scm:git:ssh://github.com/magicbell/magicbell-java-client.git</developerConnection>
+        <url>https://github.com/magicbell/magicbell-java-client</url>
     </scm>
 
     <!-- See https://central.sonatype.org/publish/requirements/#developer-information -->
