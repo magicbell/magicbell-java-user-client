@@ -61,7 +61,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters.builder()
+    val requestParameters: GetMobilePushApnsTokensParameters = GetMobilePushApnsTokensParameters.builder()
 			.pageSize(8L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
@@ -105,7 +105,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    ApnsToken apnsToken = ApnsToken.builder()
+    val apnsToken: ApnsToken = ApnsToken.builder()
 			.appId("app_id")
 			.deviceToken("fugiat ullamco ")
 			.installationId(ApnsTokenInstallationId.DEVELOPMENT)
@@ -223,7 +223,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    GetMobilePushExpoTokensParameters requestParameters = GetMobilePushExpoTokensParameters.builder()
+    val requestParameters: GetMobilePushExpoTokensParameters = GetMobilePushExpoTokensParameters.builder()
 			.pageSize(8L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
@@ -266,7 +266,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    ExpoToken expoToken = ExpoToken.builder()
+    val expoToken: ExpoToken = ExpoToken.builder()
 			.deviceToken("device_token")
 			.build();
 
@@ -382,7 +382,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    GetMobilePushFcmTokensParameters requestParameters = GetMobilePushFcmTokensParameters.builder()
+    val requestParameters: GetMobilePushFcmTokensParameters = GetMobilePushFcmTokensParameters.builder()
 			.pageSize(7L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
@@ -426,7 +426,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    FcmToken fcmToken = FcmToken.builder()
+    val fcmToken: FcmToken = FcmToken.builder()
 			.deviceToken("velit dolor adi")
 			.installationId(FcmTokenInstallationId.DEVELOPMENT)
 			.build();
@@ -543,7 +543,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    GetSlackTokensParameters requestParameters = GetSlackTokensParameters.builder()
+    val requestParameters: GetSlackTokensParameters = GetSlackTokensParameters.builder()
 			.pageSize(5L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
@@ -588,17 +588,17 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    Oauth oauth = Oauth.builder()
+    val oauth: Oauth = Oauth.builder()
 			.channelId("channel_id")
 			.installationId("installation_id")
 			.scope("scope")
 			.build();
 
-		SlackTokenWebhook slackTokenWebhook = SlackTokenWebhook.builder()
+		val slackTokenWebhook: SlackTokenWebhook = SlackTokenWebhook.builder()
 			.url("url")
 			.build();
 
-		SlackToken slackToken = SlackToken.builder()
+		val slackToken: SlackToken = SlackToken.builder()
 			.oauth(oauth)
 			.webhook(slackTokenWebhook)
 			.build();
@@ -715,7 +715,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    GetTeamsTokensParameters requestParameters = GetTeamsTokensParameters.builder()
+    val requestParameters: GetTeamsTokensParameters = GetTeamsTokensParameters.builder()
 			.pageSize(6L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
@@ -759,11 +759,11 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    TeamsTokenWebhook teamsTokenWebhook = TeamsTokenWebhook.builder()
+    val teamsTokenWebhook: TeamsTokenWebhook = TeamsTokenWebhook.builder()
 			.url("url")
 			.build();
 
-		TeamsToken teamsToken = TeamsToken.builder()
+		val teamsToken: TeamsToken = TeamsToken.builder()
 			.webhook(teamsTokenWebhook)
 			.build();
 
@@ -879,7 +879,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    GetWebPushTokensParameters requestParameters = GetWebPushTokensParameters.builder()
+    val requestParameters: GetWebPushTokensParameters = GetWebPushTokensParameters.builder()
 			.pageSize(6L)
 			.pageAfter("page[after]")
 			.pageBefore("page[before]")
@@ -923,12 +923,12 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    Keys keys = Keys.builder()
+    val keys: Keys = Keys.builder()
 			.auth("auth")
 			.p256dh("p256dh")
 			.build();
 
-		WebPushToken webPushToken = WebPushToken.builder()
+		val webPushToken: WebPushToken = WebPushToken.builder()
 			.endpoint("endpoint")
 			.keys(keys)
 			.build();
