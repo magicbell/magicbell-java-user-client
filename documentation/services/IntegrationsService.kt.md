@@ -62,31 +62,31 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    Images images = Images.builder()
+    val images: Images = Images.builder()
 			.emptyInboxUrl("emptyInboxUrl")
 			.build();
 
-		Banner banner = Banner.builder()
+		val banner: Banner = Banner.builder()
 			.backgroundColor("backgroundColor")
 			.backgroundOpacity(8.96D)
 			.fontSize("fontSize")
 			.textColor("textColor")
 			.build();
 
-		Dialog dialog = Dialog.builder()
+		val dialog: Dialog = Dialog.builder()
 			.accentColor("accentColor")
 			.backgroundColor("backgroundColor")
 			.textColor("textColor")
 			.build();
 
-		Footer footer = Footer.builder()
+		val footer: Footer = Footer.builder()
 			.backgroundColor("backgroundColor")
 			.borderRadius("borderRadius")
 			.fontSize("fontSize")
 			.textColor("textColor")
 			.build();
 
-		Header header = Header.builder()
+		val header: Header = Header.builder()
 			.backgroundColor("backgroundColor")
 			.borderRadius("borderRadius")
 			.fontFamily("fontFamily")
@@ -94,20 +94,20 @@ fun main() {
 			.textColor("textColor")
 			.build();
 
-		Icon icon = Icon.builder()
+		val icon: Icon = Icon.builder()
 			.borderColor("borderColor")
 			.width("width")
 			.build();
 
-		DefaultHover defaultHover = DefaultHover.builder()
+		val defaultHover: DefaultHover = DefaultHover.builder()
 			.backgroundColor("backgroundColor")
 			.build();
 
-		DefaultState defaultState = DefaultState.builder()
+		val defaultState: DefaultState = DefaultState.builder()
 			.color("color")
 			.build();
 
-		Default_ default_ = Default_.builder()
+		val default_: Default_ = Default_.builder()
 			.backgroundColor("backgroundColor")
 			.borderRadius("borderRadius")
 			.fontFamily("fontFamily")
@@ -118,47 +118,47 @@ fun main() {
 			.textColor("textColor")
 			.build();
 
-		UnreadHover unreadHover = UnreadHover.builder()
+		val unreadHover: UnreadHover = UnreadHover.builder()
 			.backgroundColor("backgroundColor")
 			.build();
 
-		UnreadState unreadState = UnreadState.builder()
+		val unreadState: UnreadState = UnreadState.builder()
 			.color("color")
 			.build();
 
-		Unread unread = Unread.builder()
+		val unread: Unread = Unread.builder()
 			.backgroundColor("backgroundColor")
 			.hover(unreadHover)
 			.state(unreadState)
 			.textColor("textColor")
 			.build();
 
-		UnseenHover unseenHover = UnseenHover.builder()
+		val unseenHover: UnseenHover = UnseenHover.builder()
 			.backgroundColor("backgroundColor")
 			.build();
 
-		UnseenState unseenState = UnseenState.builder()
+		val unseenState: UnseenState = UnseenState.builder()
 			.color("color")
 			.build();
 
-		Unseen unseen = Unseen.builder()
+		val unseen: Unseen = Unseen.builder()
 			.backgroundColor("backgroundColor")
 			.hover(unseenHover)
 			.state(unseenState)
 			.textColor("textColor")
 			.build();
 
-		Notification notification = Notification.builder()
+		val notification: Notification = Notification.builder()
 			.default_(default_)
 			.unread(unread)
 			.unseen(unseen)
 			.build();
 
-		UnseenBadge unseenBadge = UnseenBadge.builder()
+		val unseenBadge: UnseenBadge = UnseenBadge.builder()
 			.backgroundColor("backgroundColor")
 			.build();
 
-		Theme theme = Theme.builder()
+		val theme: Theme = Theme.builder()
 			.banner(banner)
 			.dialog(dialog)
 			.footer(footer)
@@ -168,7 +168,7 @@ fun main() {
 			.unseenBadge(unseenBadge)
 			.build();
 
-		InboxConfig inboxConfig = InboxConfig.builder()
+		val inboxConfig: InboxConfig = InboxConfig.builder()
 			.images(images)
 			.locale("locale")
 			.theme(theme)
@@ -246,7 +246,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    AuthedUser authedUser = AuthedUser.builder()
+    val authedUser: AuthedUser = AuthedUser.builder()
 			.accessToken("access_token")
 			.expiresIn(5L)
 			.id("id")
@@ -255,23 +255,23 @@ fun main() {
 			.tokenType("token_type")
 			.build();
 
-		Enterprise enterprise = Enterprise.builder()
+		val enterprise: Enterprise = Enterprise.builder()
 			.id("id")
 			.name("name")
 			.build();
 
-		IncomingWebhook incomingWebhook = IncomingWebhook.builder()
+		val incomingWebhook: IncomingWebhook = IncomingWebhook.builder()
 			.channel("channel")
 			.configurationUrl("configuration_url")
 			.url("url")
 			.build();
 
-		Team team = Team.builder()
+		val team: Team = Team.builder()
 			.id("id")
 			.name("name")
 			.build();
 
-		SlackInstallation slackInstallation = SlackInstallation.builder()
+		val slackInstallation: SlackInstallation = SlackInstallation.builder()
 			.accessToken("access_token")
 			.appId("app_id")
 			.authedUser(authedUser)
@@ -325,7 +325,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    SlackFinishInstallResponse slackFinishInstallResponse = SlackFinishInstallResponse.builder()
+    val slackFinishInstallResponse: SlackFinishInstallResponse = SlackFinishInstallResponse.builder()
 			.appId("app_id")
 			.code("code")
 			.redirectUrl("redirect_url")
@@ -371,9 +371,9 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    List<String> extraScopes = Arrays.asList("extra_scopes");
+    val extraScopes: List<String> = Arrays.asList("extra_scopes");
 
-		SlackStartInstall slackStartInstall = SlackStartInstall.builder()
+		val slackStartInstall: SlackStartInstall = SlackStartInstall.builder()
 			.appId("app_id")
 			.authUrl("auth_url")
 			.extraScopes(extraScopes)
@@ -417,7 +417,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    TemplatesInstallation templatesInstallation = TemplatesInstallation.builder()
+    val templatesInstallation: TemplatesInstallation = TemplatesInstallation.builder()
 			.category("category")
 			.channel("channel")
 			.text("text")
@@ -461,12 +461,12 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    Keys keys = Keys.builder()
+    val keys: Keys = Keys.builder()
 			.auth("auth")
 			.p256dh("p256dh")
 			.build();
 
-		WebPushToken webPushToken = WebPushToken.builder()
+		val webPushToken: WebPushToken = WebPushToken.builder()
 			.endpoint("endpoint")
 			.keys(keys)
 			.build();

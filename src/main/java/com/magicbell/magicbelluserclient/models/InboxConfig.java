@@ -31,44 +31,44 @@ public class InboxConfig {
     /**
      * Flag to track if the images property has been set.
      */
-    private boolean wasImagesSet = false;
+    private boolean images$set = false;
 
     /**
      * Flag to track if the locale property has been set.
      */
-    private boolean wasLocaleSet = false;
+    private boolean locale$set = false;
 
     /**
      * Flag to track if the theme property has been set.
      */
-    private boolean wasThemeSet = false;
+    private boolean theme$set = false;
 
     public InboxConfigBuilder images(Images images) {
-      this.wasImagesSet = true;
+      this.images$set = true;
       this.images = images;
       return this;
     }
 
     public InboxConfigBuilder locale(String locale) {
-      this.wasLocaleSet = true;
+      this.locale$set = true;
       this.locale = locale;
       return this;
     }
 
     public InboxConfigBuilder theme(Theme theme) {
-      this.wasThemeSet = true;
+      this.theme$set = true;
       this.theme = theme;
       return this;
     }
 
     public InboxConfig build() {
-      if (!wasImagesSet) {
+      if (!images$set) {
         throw new IllegalStateException("images is required");
       }
-      if (!wasLocaleSet) {
+      if (!locale$set) {
         throw new IllegalStateException("locale is required");
       }
-      if (!wasThemeSet) {
+      if (!theme$set) {
         throw new IllegalStateException("theme is required");
       }
       return new InboxConfig(images, locale, theme);
