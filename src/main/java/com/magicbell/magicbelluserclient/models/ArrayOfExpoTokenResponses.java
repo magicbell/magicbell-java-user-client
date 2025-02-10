@@ -1,9 +1,9 @@
 package com.magicbell.magicbelluserclient.models;
 
+import java.util.List;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NonNull;
 import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
@@ -14,11 +14,9 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 @EqualsAndHashCode
 @Jacksonized
-public class WebPushToken {
+public class ArrayOfExpoTokenResponses {
 
-  @NonNull
-  private String endpoint;
+  private List<ExpoTokenResponse> data;
 
-  @NonNull
-  private WebPushTokenKeys keys;
+  private Links links;
 }

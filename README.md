@@ -116,7 +116,8 @@ Below is a comprehensive example demonstrating how to authenticate and call a si
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.magicbelluserclient.exceptions.ApiException;
+import com.magicbell.magicbelluserclient.models.ArrayOfApnsTokenResponses;
 import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
 
 public class Main {
@@ -133,9 +134,15 @@ public class Main {
       .pageBefore("page[before]")
       .build();
 
-    ArrayOfMetadataApnsTokens response = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
+    try {
+      ArrayOfApnsTokenResponses response = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
 
-    System.out.println(response);
+      System.out.println(response);
+    } catch (ApiException e) {
+      e.printStackTrace();
+    }
+
+    System.exit(0);
   }
 }
 
@@ -164,25 +171,25 @@ The SDK includes several models that represent the data structures used in API r
 
 | Name                                                                                           | Description |
 | :--------------------------------------------------------------------------------------------- | :---------- |
-| [ArrayOfMetadataApnsTokens](documentation/models/ArrayOfMetadataApnsTokens.md)                 |             |
+| [ArrayOfApnsTokenResponses](documentation/models/ArrayOfApnsTokenResponses.md)                 |             |
 | [ApnsToken](documentation/models/ApnsToken.md)                                                 |             |
-| [MetadataApnsToken](documentation/models/MetadataApnsToken.md)                                 |             |
+| [ApnsTokenResponse](documentation/models/ApnsTokenResponse.md)                                 |             |
 | [DiscardResult](documentation/models/DiscardResult.md)                                         |             |
-| [ArrayOfMetadataExpoTokens](documentation/models/ArrayOfMetadataExpoTokens.md)                 |             |
+| [ArrayOfExpoTokenResponses](documentation/models/ArrayOfExpoTokenResponses.md)                 |             |
 | [ExpoToken](documentation/models/ExpoToken.md)                                                 |             |
-| [MetadataExpoToken](documentation/models/MetadataExpoToken.md)                                 |             |
-| [ArrayOfMetadataFcmTokens](documentation/models/ArrayOfMetadataFcmTokens.md)                   |             |
+| [ExpoTokenResponse](documentation/models/ExpoTokenResponse.md)                                 |             |
+| [ArrayOfFcmTokenResponses](documentation/models/ArrayOfFcmTokenResponses.md)                   |             |
 | [FcmToken](documentation/models/FcmToken.md)                                                   |             |
-| [MetadataFcmToken](documentation/models/MetadataFcmToken.md)                                   |             |
-| [ArrayOfMetadataSlackTokens](documentation/models/ArrayOfMetadataSlackTokens.md)               |             |
+| [FcmTokenResponse](documentation/models/FcmTokenResponse.md)                                   |             |
+| [ArrayOfSlackTokenResponses](documentation/models/ArrayOfSlackTokenResponses.md)               |             |
 | [SlackToken](documentation/models/SlackToken.md)                                               |             |
-| [MetadataSlackToken](documentation/models/MetadataSlackToken.md)                               |             |
-| [ArrayOfMetadataTeamsTokens](documentation/models/ArrayOfMetadataTeamsTokens.md)               |             |
+| [SlackTokenResponse](documentation/models/SlackTokenResponse.md)                               |             |
+| [ArrayOfTeamsTokenResponses](documentation/models/ArrayOfTeamsTokenResponses.md)               |             |
 | [TeamsToken](documentation/models/TeamsToken.md)                                               |             |
-| [MetadataTeamsToken](documentation/models/MetadataTeamsToken.md)                               |             |
-| [ArrayOfMetadataWebPushTokens](documentation/models/ArrayOfMetadataWebPushTokens.md)           |             |
+| [TeamsTokenResponse](documentation/models/TeamsTokenResponse.md)                               |             |
+| [ArrayOfWebPushTokenResponses](documentation/models/ArrayOfWebPushTokenResponses.md)           |             |
 | [WebPushToken](documentation/models/WebPushToken.md)                                           |             |
-| [MetadataWebPushToken](documentation/models/MetadataWebPushToken.md)                           |             |
+| [WebPushTokenResponse](documentation/models/WebPushTokenResponse.md)                           |             |
 | [InboxConfig](documentation/models/InboxConfig.md)                                             |             |
 | [SlackInstallation](documentation/models/SlackInstallation.md)                                 |             |
 | [SlackFinishInstallResponse](documentation/models/SlackFinishInstallResponse.md)               |             |
@@ -191,7 +198,6 @@ The SDK includes several models that represent the data structures used in API r
 | [TemplatesInstallation](documentation/models/TemplatesInstallation.md)                         |             |
 | [WebPushStartInstallationResponse](documentation/models/WebPushStartInstallationResponse.md)   |             |
 | [Links](documentation/models/Links.md)                                                         |             |
-| [TokenMetadata](documentation/models/TokenMetadata.md)                                         |             |
 | [GetMobilePushApnsTokensParameters](documentation/models/GetMobilePushApnsTokensParameters.md) |             |
 | [GetMobilePushExpoTokensParameters](documentation/models/GetMobilePushExpoTokensParameters.md) |             |
 | [GetMobilePushFcmTokensParameters](documentation/models/GetMobilePushFcmTokensParameters.md)   |             |

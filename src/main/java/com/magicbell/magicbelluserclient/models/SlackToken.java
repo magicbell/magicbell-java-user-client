@@ -15,7 +15,7 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class SlackToken {
 
-  private Oauth oauth;
+  private SlackTokenOauth oauth;
 
   private SlackTokenWebhook webhook;
 }

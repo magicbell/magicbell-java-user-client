@@ -14,11 +14,8 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 @EqualsAndHashCode
 @Jacksonized
-public class WebPushToken {
+public class SlackTokenResponseWebhook {
 
   @NonNull
-  private String endpoint;
-
-  @NonNull
-  private WebPushTokenKeys keys;
+  private String url;
 }
