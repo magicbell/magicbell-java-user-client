@@ -14,11 +14,11 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 @EqualsAndHashCode
 @Jacksonized
-public class WebPushToken {
+public class WebPushTokenResponseKeys {
 
   @NonNull
-  private String endpoint;
+  private String auth;
 
   @NonNull
-  private WebPushTokenKeys keys;
+  private String p256dh;
 }

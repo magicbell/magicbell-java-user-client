@@ -67,7 +67,7 @@ public class Main {
     Banner banner = Banner
       .builder()
       .backgroundColor("backgroundColor")
-      .backgroundOpacity(8.96D)
+      .backgroundOpacity(7.75D)
       .fontSize("fontSize")
       .textColor("textColor")
       .build();
@@ -234,7 +234,7 @@ public class Main {
     AuthedUser authedUser = AuthedUser
       .builder()
       .accessToken("access_token")
-      .expiresIn(5L)
+      .expiresIn(3L)
       .id("id")
       .refreshToken("refresh_token")
       .scope("scope")
@@ -259,8 +259,8 @@ public class Main {
       .authedUser(authedUser)
       .botUserId("bot_user_id")
       .enterprise(enterprise)
-      .expiresIn(10L)
-      .id("626")
+      .expiresIn(5L)
+      .id("1VJWUM")
       .incomingWebhook(incomingWebhook)
       .isEnterpriseInstall(false)
       .refreshToken("refresh_token")
@@ -446,8 +446,8 @@ Creates a new installation of a web_push integration for a user. This endpoint i
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.Keys;
 import com.magicbell.magicbelluserclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.models.WebPushTokenKeys;
 
 public class Main {
 
@@ -456,9 +456,9 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    Keys keys = Keys.builder().auth("auth").p256dh("p256dh").build();
+    WebPushTokenKeys webPushTokenKeys = WebPushTokenKeys.builder().auth("auth").p256dh("p256dh").build();
 
-    WebPushToken webPushToken = WebPushToken.builder().endpoint("endpoint").keys(keys).build();
+    WebPushToken webPushToken = WebPushToken.builder().endpoint("endpoint").keys(webPushTokenKeys).build();
 
     WebPushToken response = magicbellUserClient.integrations.saveWebPushInstallation(webPushToken);
 

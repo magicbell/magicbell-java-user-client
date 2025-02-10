@@ -2,7 +2,7 @@
 
 **Properties**
 
-| Name     | Type   | Required | Description |
-| :------- | :----- | :------- | :---------- |
-| endpoint | String | ✅       |             |
-| keys     | Keys   | ✅       |             |
+| Name     | Type             | Required | Description |
+| :------- | :--------------- | :------- | :---------- |
+| endpoint | String           | ✅       |             |
+| keys     | WebPushTokenKeys | ✅       |             |

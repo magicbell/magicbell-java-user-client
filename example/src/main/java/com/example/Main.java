@@ -2,7 +2,8 @@ package com.example;
 
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.magicbelluserclient.exceptions.ApiException;
+import com.magicbell.magicbelluserclient.models.ArrayOfApnsTokenResponses;
 import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
 
 public class Main {
@@ -19,8 +20,14 @@ public class Main {
       .pageBefore("")
       .build();
 
-    ArrayOfMetadataApnsTokens response = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
+    try {
+      ArrayOfApnsTokenResponses response = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
 
-    System.out.println(response);
+      System.out.println(response);
+    } catch (ApiException e) {
+      e.printStackTrace();
+    }
+
+    System.exit(0);
   }
 }

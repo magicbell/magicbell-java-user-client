@@ -68,7 +68,7 @@ fun main() {
 
 		val banner: Banner = Banner.builder()
 			.backgroundColor("backgroundColor")
-			.backgroundOpacity(8.96D)
+			.backgroundOpacity(7.75D)
 			.fontSize("fontSize")
 			.textColor("textColor")
 			.build();
@@ -248,7 +248,7 @@ fun main() {
 
     val authedUser: AuthedUser = AuthedUser.builder()
 			.accessToken("access_token")
-			.expiresIn(5L)
+			.expiresIn(3L)
 			.id("id")
 			.refreshToken("refresh_token")
 			.scope("scope")
@@ -277,8 +277,8 @@ fun main() {
 			.authedUser(authedUser)
 			.botUserId("bot_user_id")
 			.enterprise(enterprise)
-			.expiresIn(10L)
-			.id("626")
+			.expiresIn(5L)
+			.id("1VJWUM")
 			.incomingWebhook(incomingWebhook)
 			.isEnterpriseInstall(false)
 			.refreshToken("refresh_token")
@@ -451,8 +451,8 @@ Creates a new installation of a web_push integration for a user. This endpoint i
 ```kotlin
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.Keys;
 import com.magicbell.magicbelluserclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.models.WebPushTokenKeys;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -461,14 +461,14 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    val keys: Keys = Keys.builder()
+    val webPushTokenKeys: WebPushTokenKeys = WebPushTokenKeys.builder()
 			.auth("auth")
 			.p256dh("p256dh")
 			.build();
 
 		val webPushToken: WebPushToken = WebPushToken.builder()
 			.endpoint("endpoint")
-			.keys(keys)
+			.keys(webPushTokenKeys)
 			.build();
 
     val response: WebPushToken = magicbellUserClient.integrations.saveWebPushInstallation(webPushToken);

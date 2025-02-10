@@ -2,7 +2,7 @@ package com.example
 
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.magicbelluserclient.models.ArrayOfApnsTokenResponses;
 import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
 
 fun main() {
@@ -18,7 +18,7 @@ fun main() {
 			.pageBefore("")
 			.build();
 
-    val response: ArrayOfMetadataApnsTokens = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
+    val response: ArrayOfApnsTokenResponses = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
     
     println(response);
 }
