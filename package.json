@@ -3,6 +3,9 @@
   "version": "0.3.0",
   "private": true,
   "type": "module",
+  "docs": {
+    "name": "Java User Client"
+  },
   "scripts": {
     "changeset": "./scripts/changeset-wrapper.sh",
     "codegen": "tsx scripts/liblab-gen.ts",
