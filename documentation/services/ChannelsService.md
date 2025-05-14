@@ -4,6 +4,10 @@ A list of all methods in the `ChannelsService` service. Click on the method name
 
 | Methods                                                   | Description                                                                                                                                                                                                                                                      |
 | :-------------------------------------------------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| [getInAppInboxTokens](#getinappinboxtokens)               | Lists all in_app tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.                                                                                                |
+| [saveInAppInboxToken](#saveinappinboxtoken)               | Saves a in_app token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.      |
+| [getInAppInboxToken](#getinappinboxtoken)                 | Retrieves details of a specific in_app token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.                                              |
+| [discardInAppInboxToken](#discardinappinboxtoken)         | Revokes one of the authenticated user's in_app tokens. This permanently invalidates the specified token, preventing it from being used for future channel access. This action cannot be undone. Users can only revoke their own tokens.                          |
 | [getMobilePushApnsTokens](#getmobilepushapnstokens)       | Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.                                                                                           |
 | [saveMobilePushApnsToken](#savemobilepushapnstoken)       | Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel. |
 | [getMobilePushApnsToken](#getmobilepushapnstoken)         | Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.                                         |
@@ -29,6 +33,171 @@ A list of all methods in the `ChannelsService` service. Click on the method name
 | [getWebPushToken](#getwebpushtoken)                       | Retrieves details of a specific web_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.                                            |
 | [discardWebPushToken](#discardwebpushtoken)               | Revokes one of the authenticated user's web_push tokens. This permanently invalidates the specified token, preventing it from being used for future channel access. This action cannot be undone. Users can only revoke their own tokens.                        |
 
+## getInAppInboxTokens
+
+Lists all in_app tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
+
+- HTTP Method: `GET`
+- Endpoint: `/channels/in_app/inbox/tokens`
+
+**Parameters**
+
+| Name              | Type                                                                        | Required | Description               |
+| :---------------- | :-------------------------------------------------------------------------- | :------- | :------------------------ |
+| requestParameters | [GetInAppInboxTokensParameters](../models/GetInAppInboxTokensParameters.md) | ❌       | Request Parameters Object |
+
+**Return Type**
+
+`InboxTokenResponseCollection`
+
+**Example Usage Code Snippet**
+
+```java
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.GetInAppInboxTokensParameters;
+import com.magicbell.magicbelluserclient.models.InboxTokenResponseCollection;
+
+public class Main {
+
+  public static void main(String[] args) {
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
+
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
+
+    GetInAppInboxTokensParameters requestParameters = GetInAppInboxTokensParameters.builder()
+      .limit(10L)
+      .startingAfter("starting_after")
+      .endingBefore("ending_before")
+      .build();
+
+    InboxTokenResponseCollection response = magicbellUserClient.channels.getInAppInboxTokens(requestParameters);
+
+    System.out.println(response);
+  }
+}
+
+```
+
+## saveInAppInboxToken
+
+Saves a in_app token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+
+- HTTP Method: `POST`
+- Endpoint: `/channels/in_app/inbox/tokens`
+
+**Parameters**
+
+| Name       | Type                                  | Required | Description  |
+| :--------- | :------------------------------------ | :------- | :----------- |
+| inboxToken | [InboxToken](../models/InboxToken.md) | ❌       | Request Body |
+
+**Return Type**
+
+`InboxToken`
+
+**Example Usage Code Snippet**
+
+```java
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.InboxToken;
+
+public class Main {
+
+  public static void main(String[] args) {
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
+
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
+
+    InboxToken inboxToken = InboxToken.builder().connectionId("connection_id").token("in exeu esse co").build();
+
+    InboxToken response = magicbellUserClient.channels.saveInAppInboxToken(inboxToken);
+
+    System.out.println(response);
+  }
+}
+
+```
+
+## getInAppInboxToken
+
+Retrieves details of a specific in_app token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+
+- HTTP Method: `GET`
+- Endpoint: `/channels/in_app/inbox/tokens/{token_id}`
+
+**Parameters**
+
+| Name    | Type   | Required | Description |
+| :------ | :----- | :------- | :---------- |
+| tokenId | String | ✅       |             |
+
+**Return Type**
+
+`InboxTokenResponse`
+
+**Example Usage Code Snippet**
+
+```java
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.InboxTokenResponse;
+
+public class Main {
+
+  public static void main(String[] args) {
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
+
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
+
+    InboxTokenResponse response = magicbellUserClient.channels.getInAppInboxToken("token_id");
+
+    System.out.println(response);
+  }
+}
+
+```
+
+## discardInAppInboxToken
+
+Revokes one of the authenticated user's in_app tokens. This permanently invalidates the specified token, preventing it from being used for future channel access. This action cannot be undone. Users can only revoke their own tokens.
+
+- HTTP Method: `DELETE`
+- Endpoint: `/channels/in_app/inbox/tokens/{token_id}`
+
+**Parameters**
+
+| Name    | Type   | Required | Description |
+| :------ | :----- | :------- | :---------- |
+| tokenId | String | ✅       |             |
+
+**Return Type**
+
+`DiscardResult`
+
+**Example Usage Code Snippet**
+
+```java
+import com.magicbell.magicbelluserclient.MagicbellUserClient;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
+import com.magicbell.magicbelluserclient.models.DiscardResult;
+
+public class Main {
+
+  public static void main(String[] args) {
+    MagicbellUserClientConfig config = MagicbellUserClientConfig.builder().accessToken("YOUR_ACCESS_TOKEN").build();
+
+    MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
+
+    DiscardResult response = magicbellUserClient.channels.discardInAppInboxToken("token_id");
+
+    System.out.println(response);
+  }
+}
+
+```
+
 ## getMobilePushApnsTokens
 
 Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
@@ -44,14 +213,14 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 
 **Return Type**
 
-`ArrayOfMetadataApnsTokens`
+`ApnsTokenCollection`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
+import com.magicbell.magicbelluserclient.models.ApnsTokenCollection;
 import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
 
 public class Main {
@@ -61,14 +230,13 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters
-      .builder()
-      .pageSize(8L)
-      .pageAfter("page[after]")
-      .pageBefore("page[before]")
+    GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters.builder()
+      .limit(3L)
+      .startingAfter("starting_after")
+      .endingBefore("ending_before")
       .build();
 
-    ArrayOfMetadataApnsTokens response = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
+    ApnsTokenCollection response = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
 
     System.out.println(response);
   }
@@ -85,21 +253,21 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 
 **Parameters**
 
-| Name      | Type                                | Required | Description  |
-| :-------- | :---------------------------------- | :------- | :----------- |
-| apnsToken | [ApnsToken](../models/ApnsToken.md) | ❌       | Request Body |
+| Name             | Type                                              | Required | Description  |
+| :--------------- | :------------------------------------------------ | :------- | :----------- |
+| apnsTokenPayload | [ApnsTokenPayload](../models/ApnsTokenPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`ApnsToken`
+`ApnsTokenPayload`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ApnsToken;
-import com.magicbell.magicbelluserclient.models.ApnsTokenInstallationId;
+import com.magicbell.magicbelluserclient.models.ApnsTokenPayload;
+import com.magicbell.magicbelluserclient.models.ApnsTokenPayloadInstallationId;
 
 public class Main {
 
@@ -108,14 +276,13 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    ApnsToken apnsToken = ApnsToken
-      .builder()
+    ApnsTokenPayload apnsTokenPayload = ApnsTokenPayload.builder()
       .appId("app_id")
-      .deviceToken("fugiat ullamco ")
-      .installationId(ApnsTokenInstallationId.DEVELOPMENT)
+      .deviceToken("doloresed quis ")
+      .installationId(ApnsTokenPayloadInstallationId.DEVELOPMENT)
       .build();
 
-    ApnsToken response = magicbellUserClient.channels.saveMobilePushApnsToken(apnsToken);
+    ApnsTokenPayload response = magicbellUserClient.channels.saveMobilePushApnsToken(apnsTokenPayload);
 
     System.out.println(response);
   }
@@ -138,14 +305,14 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 
 **Return Type**
 
-`MetadataApnsToken`
+`ApnsToken`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.MetadataApnsToken;
+import com.magicbell.magicbelluserclient.models.ApnsToken;
 
 public class Main {
 
@@ -154,7 +321,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    MetadataApnsToken response = magicbellUserClient.channels.getMobilePushApnsToken("token_id");
+    ApnsToken response = magicbellUserClient.channels.getMobilePushApnsToken("token_id");
 
     System.out.println(response);
   }
@@ -216,14 +383,14 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 
 **Return Type**
 
-`ArrayOfMetadataExpoTokens`
+`ExpoTokenCollection`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataExpoTokens;
+import com.magicbell.magicbelluserclient.models.ExpoTokenCollection;
 import com.magicbell.magicbelluserclient.models.GetMobilePushExpoTokensParameters;
 
 public class Main {
@@ -233,14 +400,13 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    GetMobilePushExpoTokensParameters requestParameters = GetMobilePushExpoTokensParameters
-      .builder()
-      .pageSize(8L)
-      .pageAfter("page[after]")
-      .pageBefore("page[before]")
+    GetMobilePushExpoTokensParameters requestParameters = GetMobilePushExpoTokensParameters.builder()
+      .limit(9L)
+      .startingAfter("starting_after")
+      .endingBefore("ending_before")
       .build();
 
-    ArrayOfMetadataExpoTokens response = magicbellUserClient.channels.getMobilePushExpoTokens(requestParameters);
+    ExpoTokenCollection response = magicbellUserClient.channels.getMobilePushExpoTokens(requestParameters);
 
     System.out.println(response);
   }
@@ -257,20 +423,20 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 
 **Parameters**
 
-| Name      | Type                                | Required | Description  |
-| :-------- | :---------------------------------- | :------- | :----------- |
-| expoToken | [ExpoToken](../models/ExpoToken.md) | ❌       | Request Body |
+| Name             | Type                                              | Required | Description  |
+| :--------------- | :------------------------------------------------ | :------- | :----------- |
+| expoTokenPayload | [ExpoTokenPayload](../models/ExpoTokenPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`ExpoToken`
+`ExpoTokenPayload`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ExpoToken;
+import com.magicbell.magicbelluserclient.models.ExpoTokenPayload;
 
 public class Main {
 
@@ -279,9 +445,9 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    ExpoToken expoToken = ExpoToken.builder().deviceToken("device_token").build();
+    ExpoTokenPayload expoTokenPayload = ExpoTokenPayload.builder().deviceToken("device_token").build();
 
-    ExpoToken response = magicbellUserClient.channels.saveMobilePushExpoToken(expoToken);
+    ExpoTokenPayload response = magicbellUserClient.channels.saveMobilePushExpoToken(expoTokenPayload);
 
     System.out.println(response);
   }
@@ -304,14 +470,14 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 
 **Return Type**
 
-`MetadataExpoToken`
+`ExpoToken`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.MetadataExpoToken;
+import com.magicbell.magicbelluserclient.models.ExpoToken;
 
 public class Main {
 
@@ -320,7 +486,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    MetadataExpoToken response = magicbellUserClient.channels.getMobilePushExpoToken("token_id");
+    ExpoToken response = magicbellUserClient.channels.getMobilePushExpoToken("token_id");
 
     System.out.println(response);
   }
@@ -382,14 +548,14 @@ Lists all mobile_push tokens belonging to the authenticated user. Returns a pagi
 
 **Return Type**
 
-`ArrayOfMetadataFcmTokens`
+`FcmTokenCollection`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataFcmTokens;
+import com.magicbell.magicbelluserclient.models.FcmTokenCollection;
 import com.magicbell.magicbelluserclient.models.GetMobilePushFcmTokensParameters;
 
 public class Main {
@@ -399,14 +565,13 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    GetMobilePushFcmTokensParameters requestParameters = GetMobilePushFcmTokensParameters
-      .builder()
-      .pageSize(7L)
-      .pageAfter("page[after]")
-      .pageBefore("page[before]")
+    GetMobilePushFcmTokensParameters requestParameters = GetMobilePushFcmTokensParameters.builder()
+      .limit(6L)
+      .startingAfter("starting_after")
+      .endingBefore("ending_before")
       .build();
 
-    ArrayOfMetadataFcmTokens response = magicbellUserClient.channels.getMobilePushFcmTokens(requestParameters);
+    FcmTokenCollection response = magicbellUserClient.channels.getMobilePushFcmTokens(requestParameters);
 
     System.out.println(response);
   }
@@ -423,21 +588,21 @@ Saves a mobile_push token for the authenticated user. This token serves as a cre
 
 **Parameters**
 
-| Name     | Type                              | Required | Description  |
-| :------- | :-------------------------------- | :------- | :----------- |
-| fcmToken | [FcmToken](../models/FcmToken.md) | ❌       | Request Body |
+| Name            | Type                                            | Required | Description  |
+| :-------------- | :---------------------------------------------- | :------- | :----------- |
+| fcmTokenPayload | [FcmTokenPayload](../models/FcmTokenPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`FcmToken`
+`FcmTokenPayload`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.FcmToken;
-import com.magicbell.magicbelluserclient.models.FcmTokenInstallationId;
+import com.magicbell.magicbelluserclient.models.FcmTokenPayload;
+import com.magicbell.magicbelluserclient.models.FcmTokenPayloadInstallationId;
 
 public class Main {
 
@@ -446,13 +611,12 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    FcmToken fcmToken = FcmToken
-      .builder()
-      .deviceToken("velit dolor adi")
-      .installationId(FcmTokenInstallationId.DEVELOPMENT)
+    FcmTokenPayload fcmTokenPayload = FcmTokenPayload.builder()
+      .deviceToken("in commodo quis")
+      .installationId(FcmTokenPayloadInstallationId.DEVELOPMENT)
       .build();
 
-    FcmToken response = magicbellUserClient.channels.saveMobilePushFcmToken(fcmToken);
+    FcmTokenPayload response = magicbellUserClient.channels.saveMobilePushFcmToken(fcmTokenPayload);
 
     System.out.println(response);
   }
@@ -475,14 +639,14 @@ Retrieves details of a specific mobile_push token belonging to the authenticated
 
 **Return Type**
 
-`MetadataFcmToken`
+`FcmToken`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.MetadataFcmToken;
+import com.magicbell.magicbelluserclient.models.FcmToken;
 
 public class Main {
 
@@ -491,7 +655,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    MetadataFcmToken response = magicbellUserClient.channels.getMobilePushFcmToken("token_id");
+    FcmToken response = magicbellUserClient.channels.getMobilePushFcmToken("token_id");
 
     System.out.println(response);
   }
@@ -553,15 +717,15 @@ Lists all slack tokens belonging to the authenticated user. Returns a paginated 
 
 **Return Type**
 
-`ArrayOfMetadataSlackTokens`
+`SlackTokenCollection`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataSlackTokens;
 import com.magicbell.magicbelluserclient.models.GetSlackTokensParameters;
+import com.magicbell.magicbelluserclient.models.SlackTokenCollection;
 
 public class Main {
 
@@ -570,14 +734,13 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    GetSlackTokensParameters requestParameters = GetSlackTokensParameters
-      .builder()
-      .pageSize(5L)
-      .pageAfter("page[after]")
-      .pageBefore("page[before]")
+    GetSlackTokensParameters requestParameters = GetSlackTokensParameters.builder()
+      .limit(2L)
+      .startingAfter("starting_after")
+      .endingBefore("ending_before")
       .build();
 
-    ArrayOfMetadataSlackTokens response = magicbellUserClient.channels.getSlackTokens(requestParameters);
+    SlackTokenCollection response = magicbellUserClient.channels.getSlackTokens(requestParameters);
 
     System.out.println(response);
   }
@@ -594,22 +757,22 @@ Saves a slack token for the authenticated user. This token serves as a credentia
 
 **Parameters**
 
-| Name       | Type                                  | Required | Description  |
-| :--------- | :------------------------------------ | :------- | :----------- |
-| slackToken | [SlackToken](../models/SlackToken.md) | ❌       | Request Body |
+| Name              | Type                                                | Required | Description  |
+| :---------------- | :-------------------------------------------------- | :------- | :----------- |
+| slackTokenPayload | [SlackTokenPayload](../models/SlackTokenPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`SlackToken`
+`SlackTokenPayload`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.Oauth;
-import com.magicbell.magicbelluserclient.models.SlackToken;
-import com.magicbell.magicbelluserclient.models.SlackTokenWebhook;
+import com.magicbell.magicbelluserclient.models.SlackTokenPayload;
+import com.magicbell.magicbelluserclient.models.SlackTokenPayloadOauth;
+import com.magicbell.magicbelluserclient.models.SlackTokenPayloadWebhook;
 
 public class Main {
 
@@ -618,13 +781,20 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    Oauth oauth = Oauth.builder().channelId("channel_id").installationId("installation_id").scope("scope").build();
+    SlackTokenPayloadOauth slackTokenPayloadOauth = SlackTokenPayloadOauth.builder()
+      .channelId("channel_id")
+      .installationId("installation_id")
+      .scope("scope")
+      .build();
 
-    SlackTokenWebhook slackTokenWebhook = SlackTokenWebhook.builder().url("url").build();
+    SlackTokenPayloadWebhook slackTokenPayloadWebhook = SlackTokenPayloadWebhook.builder().url("url").build();
 
-    SlackToken slackToken = SlackToken.builder().oauth(oauth).webhook(slackTokenWebhook).build();
+    SlackTokenPayload slackTokenPayload = SlackTokenPayload.builder()
+      .oauth(slackTokenPayloadOauth)
+      .webhook(slackTokenPayloadWebhook)
+      .build();
 
-    SlackToken response = magicbellUserClient.channels.saveSlackToken(slackToken);
+    SlackTokenPayload response = magicbellUserClient.channels.saveSlackToken(slackTokenPayload);
 
     System.out.println(response);
   }
@@ -647,14 +817,14 @@ Retrieves details of a specific slack token belonging to the authenticated user.
 
 **Return Type**
 
-`MetadataSlackToken`
+`SlackToken`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.MetadataSlackToken;
+import com.magicbell.magicbelluserclient.models.SlackToken;
 
 public class Main {
 
@@ -663,7 +833,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    MetadataSlackToken response = magicbellUserClient.channels.getSlackToken("token_id");
+    SlackToken response = magicbellUserClient.channels.getSlackToken("token_id");
 
     System.out.println(response);
   }
@@ -725,15 +895,15 @@ Lists all teams tokens belonging to the authenticated user. Returns a paginated 
 
 **Return Type**
 
-`ArrayOfMetadataTeamsTokens`
+`TeamsTokenCollection`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataTeamsTokens;
 import com.magicbell.magicbelluserclient.models.GetTeamsTokensParameters;
+import com.magicbell.magicbelluserclient.models.TeamsTokenCollection;
 
 public class Main {
 
@@ -742,14 +912,13 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    GetTeamsTokensParameters requestParameters = GetTeamsTokensParameters
-      .builder()
-      .pageSize(6L)
-      .pageAfter("page[after]")
-      .pageBefore("page[before]")
+    GetTeamsTokensParameters requestParameters = GetTeamsTokensParameters.builder()
+      .limit(5L)
+      .startingAfter("starting_after")
+      .endingBefore("ending_before")
       .build();
 
-    ArrayOfMetadataTeamsTokens response = magicbellUserClient.channels.getTeamsTokens(requestParameters);
+    TeamsTokenCollection response = magicbellUserClient.channels.getTeamsTokens(requestParameters);
 
     System.out.println(response);
   }
@@ -766,21 +935,21 @@ Saves a teams token for the authenticated user. This token serves as a credentia
 
 **Parameters**
 
-| Name       | Type                                  | Required | Description  |
-| :--------- | :------------------------------------ | :------- | :----------- |
-| teamsToken | [TeamsToken](../models/TeamsToken.md) | ❌       | Request Body |
+| Name              | Type                                                | Required | Description  |
+| :---------------- | :-------------------------------------------------- | :------- | :----------- |
+| teamsTokenPayload | [TeamsTokenPayload](../models/TeamsTokenPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`TeamsToken`
+`TeamsTokenPayload`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.TeamsToken;
-import com.magicbell.magicbelluserclient.models.TeamsTokenWebhook;
+import com.magicbell.magicbelluserclient.models.TeamsTokenPayload;
+import com.magicbell.magicbelluserclient.models.TeamsTokenPayloadWebhook;
 
 public class Main {
 
@@ -789,11 +958,11 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    TeamsTokenWebhook teamsTokenWebhook = TeamsTokenWebhook.builder().url("url").build();
+    TeamsTokenPayloadWebhook teamsTokenPayloadWebhook = TeamsTokenPayloadWebhook.builder().url("url").build();
 
-    TeamsToken teamsToken = TeamsToken.builder().webhook(teamsTokenWebhook).build();
+    TeamsTokenPayload teamsTokenPayload = TeamsTokenPayload.builder().webhook(teamsTokenPayloadWebhook).build();
 
-    TeamsToken response = magicbellUserClient.channels.saveTeamsToken(teamsToken);
+    TeamsTokenPayload response = magicbellUserClient.channels.saveTeamsToken(teamsTokenPayload);
 
     System.out.println(response);
   }
@@ -816,14 +985,14 @@ Retrieves details of a specific teams token belonging to the authenticated user.
 
 **Return Type**
 
-`MetadataTeamsToken`
+`TeamsToken`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.MetadataTeamsToken;
+import com.magicbell.magicbelluserclient.models.TeamsToken;
 
 public class Main {
 
@@ -832,7 +1001,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    MetadataTeamsToken response = magicbellUserClient.channels.getTeamsToken("token_id");
+    TeamsToken response = magicbellUserClient.channels.getTeamsToken("token_id");
 
     System.out.println(response);
   }
@@ -894,15 +1063,15 @@ Lists all web_push tokens belonging to the authenticated user. Returns a paginat
 
 **Return Type**
 
-`ArrayOfMetadataWebPushTokens`
+`WebPushTokenCollection`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataWebPushTokens;
 import com.magicbell.magicbelluserclient.models.GetWebPushTokensParameters;
+import com.magicbell.magicbelluserclient.models.WebPushTokenCollection;
 
 public class Main {
 
@@ -911,14 +1080,13 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    GetWebPushTokensParameters requestParameters = GetWebPushTokensParameters
-      .builder()
-      .pageSize(6L)
-      .pageAfter("page[after]")
-      .pageBefore("page[before]")
+    GetWebPushTokensParameters requestParameters = GetWebPushTokensParameters.builder()
+      .limit(3L)
+      .startingAfter("starting_after")
+      .endingBefore("ending_before")
       .build();
 
-    ArrayOfMetadataWebPushTokens response = magicbellUserClient.channels.getWebPushTokens(requestParameters);
+    WebPushTokenCollection response = magicbellUserClient.channels.getWebPushTokens(requestParameters);
 
     System.out.println(response);
   }
@@ -935,21 +1103,21 @@ Saves a web_push token for the authenticated user. This token serves as a creden
 
 **Parameters**
 
-| Name         | Type                                      | Required | Description  |
-| :----------- | :---------------------------------------- | :------- | :----------- |
-| webPushToken | [WebPushToken](../models/WebPushToken.md) | ❌       | Request Body |
+| Name                | Type                                                    | Required | Description  |
+| :------------------ | :------------------------------------------------------ | :------- | :----------- |
+| webPushTokenPayload | [WebPushTokenPayload](../models/WebPushTokenPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`WebPushToken`
+`WebPushTokenPayload`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.Keys;
-import com.magicbell.magicbelluserclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.models.WebPushTokenPayload;
+import com.magicbell.magicbelluserclient.models.WebPushTokenPayloadKeys;
 
 public class Main {
 
@@ -958,11 +1126,17 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    Keys keys = Keys.builder().auth("auth").p256dh("p256dh").build();
+    WebPushTokenPayloadKeys webPushTokenPayloadKeys = WebPushTokenPayloadKeys.builder()
+      .auth("auth")
+      .p256dh("p256dh")
+      .build();
 
-    WebPushToken webPushToken = WebPushToken.builder().endpoint("endpoint").keys(keys).build();
+    WebPushTokenPayload webPushTokenPayload = WebPushTokenPayload.builder()
+      .endpoint("endpoint")
+      .keys(webPushTokenPayloadKeys)
+      .build();
 
-    WebPushToken response = magicbellUserClient.channels.saveWebPushToken(webPushToken);
+    WebPushTokenPayload response = magicbellUserClient.channels.saveWebPushToken(webPushTokenPayload);
 
     System.out.println(response);
   }
@@ -985,14 +1159,14 @@ Retrieves details of a specific web_push token belonging to the authenticated us
 
 **Return Type**
 
-`MetadataWebPushToken`
+`WebPushToken`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.MetadataWebPushToken;
+import com.magicbell.magicbelluserclient.models.WebPushToken;
 
 public class Main {
 
@@ -1001,7 +1175,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    MetadataWebPushToken response = magicbellUserClient.channels.getWebPushToken("token_id");
+    WebPushToken response = magicbellUserClient.channels.getWebPushToken("token_id");
 
     System.out.println(response);
   }

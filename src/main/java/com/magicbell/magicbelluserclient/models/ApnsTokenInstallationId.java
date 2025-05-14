@@ -20,8 +20,7 @@ public enum ApnsTokenInstallationId {
 
   @JsonCreator
   public static ApnsTokenInstallationId fromValue(String value) {
-    return Arrays
-      .stream(ApnsTokenInstallationId.values())
+    return Arrays.stream(ApnsTokenInstallationId.values())
       .filter(item -> item.value.equals(value))
       .findFirst()
       .orElse(null);

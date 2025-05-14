@@ -25,7 +25,7 @@ public class Theme {
 
   private Icon icon;
 
-  private Notification notification;
+  private ThemeNotification notification;
 
   private UnseenBadge unseenBadge;
 }

@@ -16,7 +16,7 @@ public class SlackInstallationValidator extends AbstractModelValidator<SlackInst
   @Override
   protected Violation[] validateModel(SlackInstallation slackInstallation) {
     return new ViolationAggregator()
-      .add(new StringValidator("id").pattern("^[A-Z0-9/]*$").optional().validate(slackInstallation.getId()))
+      .add(new StringValidator("id").pattern("^[A-Z0-9]+-.*$").optional().validate(slackInstallation.getId()))
       .aggregate();
   }
 }

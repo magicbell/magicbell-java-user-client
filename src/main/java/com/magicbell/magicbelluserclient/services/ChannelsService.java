@@ -1,41 +1,49 @@
 package com.magicbell.magicbelluserclient.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
 import com.magicbell.magicbelluserclient.exceptions.ApiException;
+import com.magicbell.magicbelluserclient.http.Environment;
 import com.magicbell.magicbelluserclient.http.HttpMethod;
 import com.magicbell.magicbelluserclient.http.ModelConverter;
 import com.magicbell.magicbelluserclient.http.util.RequestBuilder;
 import com.magicbell.magicbelluserclient.models.ApnsToken;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataExpoTokens;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataFcmTokens;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataSlackTokens;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataTeamsTokens;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataWebPushTokens;
+import com.magicbell.magicbelluserclient.models.ApnsTokenCollection;
+import com.magicbell.magicbelluserclient.models.ApnsTokenPayload;
 import com.magicbell.magicbelluserclient.models.DiscardResult;
 import com.magicbell.magicbelluserclient.models.ExpoToken;
+import com.magicbell.magicbelluserclient.models.ExpoTokenCollection;
+import com.magicbell.magicbelluserclient.models.ExpoTokenPayload;
 import com.magicbell.magicbelluserclient.models.FcmToken;
+import com.magicbell.magicbelluserclient.models.FcmTokenCollection;
+import com.magicbell.magicbelluserclient.models.FcmTokenPayload;
+import com.magicbell.magicbelluserclient.models.GetInAppInboxTokensParameters;
 import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
 import com.magicbell.magicbelluserclient.models.GetMobilePushExpoTokensParameters;
 import com.magicbell.magicbelluserclient.models.GetMobilePushFcmTokensParameters;
 import com.magicbell.magicbelluserclient.models.GetSlackTokensParameters;
 import com.magicbell.magicbelluserclient.models.GetTeamsTokensParameters;
 import com.magicbell.magicbelluserclient.models.GetWebPushTokensParameters;
-import com.magicbell.magicbelluserclient.models.MetadataApnsToken;
-import com.magicbell.magicbelluserclient.models.MetadataExpoToken;
-import com.magicbell.magicbelluserclient.models.MetadataFcmToken;
-import com.magicbell.magicbelluserclient.models.MetadataSlackToken;
-import com.magicbell.magicbelluserclient.models.MetadataTeamsToken;
-import com.magicbell.magicbelluserclient.models.MetadataWebPushToken;
+import com.magicbell.magicbelluserclient.models.InboxToken;
+import com.magicbell.magicbelluserclient.models.InboxTokenResponse;
+import com.magicbell.magicbelluserclient.models.InboxTokenResponseCollection;
 import com.magicbell.magicbelluserclient.models.SlackToken;
+import com.magicbell.magicbelluserclient.models.SlackTokenCollection;
+import com.magicbell.magicbelluserclient.models.SlackTokenPayload;
 import com.magicbell.magicbelluserclient.models.TeamsToken;
+import com.magicbell.magicbelluserclient.models.TeamsTokenCollection;
+import com.magicbell.magicbelluserclient.models.TeamsTokenPayload;
 import com.magicbell.magicbelluserclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.models.WebPushTokenCollection;
+import com.magicbell.magicbelluserclient.models.WebPushTokenPayload;
 import com.magicbell.magicbelluserclient.validation.ViolationAggregator;
 import com.magicbell.magicbelluserclient.validation.exceptions.ValidationException;
-import com.magicbell.magicbelluserclient.validation.validators.modelValidators.ApnsTokenValidator;
-import com.magicbell.magicbelluserclient.validation.validators.modelValidators.ExpoTokenValidator;
-import com.magicbell.magicbelluserclient.validation.validators.modelValidators.FcmTokenValidator;
-import com.magicbell.magicbelluserclient.validation.validators.modelValidators.SlackTokenValidator;
+import com.magicbell.magicbelluserclient.validation.validators.modelValidators.ApnsTokenPayloadValidator;
+import com.magicbell.magicbelluserclient.validation.validators.modelValidators.ExpoTokenPayloadValidator;
+import com.magicbell.magicbelluserclient.validation.validators.modelValidators.FcmTokenPayloadValidator;
+import com.magicbell.magicbelluserclient.validation.validators.modelValidators.InboxTokenValidator;
+import com.magicbell.magicbelluserclient.validation.validators.modelValidators.SlackTokenPayloadValidator;
+import java.util.Optional;
 import java.util.concurrent.CompletableFuture;
 import lombok.NonNull;
 import okhttp3.OkHttpClient;
@@ -47,16 +55,207 @@ import okhttp3.Response;
  */
 public class ChannelsService extends BaseService {
 
-  public ChannelsService(@NonNull OkHttpClient httpClient, String serverUrl) {
-    super(httpClient, serverUrl);
+  public ChannelsService(@NonNull OkHttpClient httpClient, MagicbellUserClientConfig config) {
+    super(httpClient, config);
+  }
+
+  /**
+   * Lists all in_app tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
+   *
+   * @return response of {@code InboxTokenResponseCollection}
+   */
+  public InboxTokenResponseCollection getInAppInboxTokens() throws ApiException {
+    return this.getInAppInboxTokens(GetInAppInboxTokensParameters.builder().build());
+  }
+
+  /**
+   * Lists all in_app tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
+   *
+   * @param requestParameters {@link GetInAppInboxTokensParameters} Request Parameters Object
+   * @return response of {@code InboxTokenResponseCollection}
+   */
+  public InboxTokenResponseCollection getInAppInboxTokens(@NonNull GetInAppInboxTokensParameters requestParameters)
+    throws ApiException {
+    Request request = this.buildGetInAppInboxTokensRequest(requestParameters);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<InboxTokenResponseCollection>() {});
+  }
+
+  /**
+   * Lists all in_app tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
+   *
+   * @return response of {@code CompletableFuture<InboxTokenResponseCollection>}
+   */
+  public CompletableFuture<InboxTokenResponseCollection> getInAppInboxTokensAsync() throws ApiException {
+    return this.getInAppInboxTokensAsync(GetInAppInboxTokensParameters.builder().build());
+  }
+
+  /**
+   * Lists all in_app tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
+   *
+   * @param requestParameters {@link GetInAppInboxTokensParameters} Request Parameters Object
+   * @return response of {@code CompletableFuture<InboxTokenResponseCollection>}
+   */
+  public CompletableFuture<InboxTokenResponseCollection> getInAppInboxTokensAsync(
+    @NonNull GetInAppInboxTokensParameters requestParameters
+  ) throws ApiException {
+    Request request = this.buildGetInAppInboxTokensRequest(requestParameters);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<InboxTokenResponseCollection>() {})
+    );
+  }
+
+  private Request buildGetInAppInboxTokensRequest(@NonNull GetInAppInboxTokensParameters requestParameters) {
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/in_app/inbox/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setOptionalQueryParameter("limit", requestParameters.getLimit())
+      .setOptionalQueryParameter("starting_after", requestParameters.getStartingAfter())
+      .setOptionalQueryParameter("ending_before", requestParameters.getEndingBefore())
+      .build();
+  }
+
+  /**
+   * Saves a in_app token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @return response of {@code InboxToken}
+   */
+  public InboxToken saveInAppInboxToken() throws ApiException, ValidationException {
+    return this.saveInAppInboxToken(InboxToken.builder().build());
+  }
+
+  /**
+   * Saves a in_app token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @param inboxToken {@link InboxToken} Request Body
+   * @return response of {@code InboxToken}
+   */
+  public InboxToken saveInAppInboxToken(@NonNull InboxToken inboxToken) throws ApiException, ValidationException {
+    Request request = this.buildSaveInAppInboxTokenRequest(inboxToken);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<InboxToken>() {});
+  }
+
+  /**
+   * Saves a in_app token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @return response of {@code CompletableFuture<InboxToken>}
+   */
+  public CompletableFuture<InboxToken> saveInAppInboxTokenAsync() throws ApiException, ValidationException {
+    return this.saveInAppInboxTokenAsync(InboxToken.builder().build());
+  }
+
+  /**
+   * Saves a in_app token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @param inboxToken {@link InboxToken} Request Body
+   * @return response of {@code CompletableFuture<InboxToken>}
+   */
+  public CompletableFuture<InboxToken> saveInAppInboxTokenAsync(@NonNull InboxToken inboxToken)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveInAppInboxTokenRequest(inboxToken);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<InboxToken>() {})
+    );
+  }
+
+  private Request buildSaveInAppInboxTokenRequest(@NonNull InboxToken inboxToken) throws ValidationException {
+    new ViolationAggregator().add(new InboxTokenValidator("inboxToken").optional().validate(inboxToken)).validateAll();
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/in_app/inbox/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(inboxToken)
+      .build();
+  }
+
+  /**
+   * Retrieves details of a specific in_app token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+   *
+   * @param tokenId String
+   * @return response of {@code InboxTokenResponse}
+   */
+  public InboxTokenResponse getInAppInboxToken(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetInAppInboxTokenRequest(tokenId);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<InboxTokenResponse>() {});
+  }
+
+  /**
+   * Retrieves details of a specific in_app token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+   *
+   * @param tokenId String
+   * @return response of {@code CompletableFuture<InboxTokenResponse>}
+   */
+  public CompletableFuture<InboxTokenResponse> getInAppInboxTokenAsync(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetInAppInboxTokenRequest(tokenId);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<InboxTokenResponse>() {})
+    );
+  }
+
+  private Request buildGetInAppInboxTokenRequest(@NonNull String tokenId) {
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/in_app/inbox/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setPathParameter("token_id", tokenId)
+      .build();
+  }
+
+  /**
+   * Revokes one of the authenticated user's in_app tokens. This permanently invalidates the specified token, preventing it from being used for future channel access. This action cannot be undone. Users can only revoke their own tokens.
+   *
+   * @param tokenId String
+   * @return response of {@code DiscardResult}
+   */
+  public DiscardResult discardInAppInboxToken(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildDiscardInAppInboxTokenRequest(tokenId);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<DiscardResult>() {});
+  }
+
+  /**
+   * Revokes one of the authenticated user's in_app tokens. This permanently invalidates the specified token, preventing it from being used for future channel access. This action cannot be undone. Users can only revoke their own tokens.
+   *
+   * @param tokenId String
+   * @return response of {@code CompletableFuture<DiscardResult>}
+   */
+  public CompletableFuture<DiscardResult> discardInAppInboxTokenAsync(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildDiscardInAppInboxTokenRequest(tokenId);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<DiscardResult>() {})
+    );
+  }
+
+  private Request buildDiscardInAppInboxTokenRequest(@NonNull String tokenId) {
+    return new RequestBuilder(
+      HttpMethod.DELETE,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/in_app/inbox/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setPathParameter("token_id", tokenId)
+      .build();
   }
 
   /**
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code ArrayOfMetadataApnsTokens}
+   * @return response of {@code ApnsTokenCollection}
    */
-  public ArrayOfMetadataApnsTokens getMobilePushApnsTokens() throws ApiException {
+  public ApnsTokenCollection getMobilePushApnsTokens() throws ApiException {
     return this.getMobilePushApnsTokens(GetMobilePushApnsTokensParameters.builder().build());
   }
 
@@ -64,22 +263,21 @@ public class ChannelsService extends BaseService {
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetMobilePushApnsTokensParameters} Request Parameters Object
-   * @return response of {@code ArrayOfMetadataApnsTokens}
+   * @return response of {@code ApnsTokenCollection}
    */
-  public ArrayOfMetadataApnsTokens getMobilePushApnsTokens(
-    @NonNull GetMobilePushApnsTokensParameters requestParameters
-  ) throws ApiException {
+  public ApnsTokenCollection getMobilePushApnsTokens(@NonNull GetMobilePushApnsTokensParameters requestParameters)
+    throws ApiException {
     Request request = this.buildGetMobilePushApnsTokensRequest(requestParameters);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<ArrayOfMetadataApnsTokens>() {});
+    return ModelConverter.convert(response, new TypeReference<ApnsTokenCollection>() {});
   }
 
   /**
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code CompletableFuture<ArrayOfMetadataApnsTokens>}
+   * @return response of {@code CompletableFuture<ApnsTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataApnsTokens> getMobilePushApnsTokensAsync() throws ApiException {
+  public CompletableFuture<ApnsTokenCollection> getMobilePushApnsTokensAsync() throws ApiException {
     return this.getMobilePushApnsTokensAsync(GetMobilePushApnsTokensParameters.builder().build());
   }
 
@@ -87,105 +285,124 @@ public class ChannelsService extends BaseService {
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetMobilePushApnsTokensParameters} Request Parameters Object
-   * @return response of {@code CompletableFuture<ArrayOfMetadataApnsTokens>}
+   * @return response of {@code CompletableFuture<ApnsTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataApnsTokens> getMobilePushApnsTokensAsync(
+  public CompletableFuture<ApnsTokenCollection> getMobilePushApnsTokensAsync(
     @NonNull GetMobilePushApnsTokensParameters requestParameters
   ) throws ApiException {
     Request request = this.buildGetMobilePushApnsTokensRequest(requestParameters);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<ArrayOfMetadataApnsTokens>() {})
+      ModelConverter.convert(response, new TypeReference<ApnsTokenCollection>() {})
     );
   }
 
   private Request buildGetMobilePushApnsTokensRequest(@NonNull GetMobilePushApnsTokensParameters requestParameters) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/mobile_push/apns/tokens")
-      .setOptionalQueryParameter("page[size]", requestParameters.getPageSize())
-      .setOptionalQueryParameter("page[after]", requestParameters.getPageAfter())
-      .setOptionalQueryParameter("page[before]", requestParameters.getPageBefore())
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/apns/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setOptionalQueryParameter("limit", requestParameters.getLimit())
+      .setOptionalQueryParameter("starting_after", requestParameters.getStartingAfter())
+      .setOptionalQueryParameter("ending_before", requestParameters.getEndingBefore())
       .build();
   }
 
   /**
    * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @return response of {@code ApnsToken}
+   * @return response of {@code ApnsTokenPayload}
    */
-  public ApnsToken saveMobilePushApnsToken() throws ApiException, ValidationException {
-    return this.saveMobilePushApnsToken(ApnsToken.builder().build());
+  public ApnsTokenPayload saveMobilePushApnsToken() throws ApiException, ValidationException {
+    return this.saveMobilePushApnsToken(ApnsTokenPayload.builder().build());
   }
 
   /**
    * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @param apnsToken {@link ApnsToken} Request Body
+   * @param apnsTokenPayload {@link ApnsTokenPayload} Request Body
+   * @return response of {@code ApnsTokenPayload}
+   */
+  public ApnsTokenPayload saveMobilePushApnsToken(@NonNull ApnsTokenPayload apnsTokenPayload)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveMobilePushApnsTokenRequest(apnsTokenPayload);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<ApnsTokenPayload>() {});
+  }
+
+  /**
+   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @return response of {@code CompletableFuture<ApnsTokenPayload>}
+   */
+  public CompletableFuture<ApnsTokenPayload> saveMobilePushApnsTokenAsync() throws ApiException, ValidationException {
+    return this.saveMobilePushApnsTokenAsync(ApnsTokenPayload.builder().build());
+  }
+
+  /**
+   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @param apnsTokenPayload {@link ApnsTokenPayload} Request Body
+   * @return response of {@code CompletableFuture<ApnsTokenPayload>}
+   */
+  public CompletableFuture<ApnsTokenPayload> saveMobilePushApnsTokenAsync(@NonNull ApnsTokenPayload apnsTokenPayload)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveMobilePushApnsTokenRequest(apnsTokenPayload);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<ApnsTokenPayload>() {})
+    );
+  }
+
+  private Request buildSaveMobilePushApnsTokenRequest(@NonNull ApnsTokenPayload apnsTokenPayload)
+    throws ValidationException {
+    new ViolationAggregator()
+      .add(new ApnsTokenPayloadValidator("apnsTokenPayload").optional().validate(apnsTokenPayload))
+      .validateAll();
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/apns/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(apnsTokenPayload)
+      .build();
+  }
+
+  /**
+   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+   *
+   * @param tokenId String
    * @return response of {@code ApnsToken}
    */
-  public ApnsToken saveMobilePushApnsToken(@NonNull ApnsToken apnsToken) throws ApiException, ValidationException {
-    Request request = this.buildSaveMobilePushApnsTokenRequest(apnsToken);
+  public ApnsToken getMobilePushApnsToken(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetMobilePushApnsTokenRequest(tokenId);
     Response response = this.execute(request);
     return ModelConverter.convert(response, new TypeReference<ApnsToken>() {});
   }
 
   /**
-   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
    *
+   * @param tokenId String
    * @return response of {@code CompletableFuture<ApnsToken>}
    */
-  public CompletableFuture<ApnsToken> saveMobilePushApnsTokenAsync() throws ApiException, ValidationException {
-    return this.saveMobilePushApnsTokenAsync(ApnsToken.builder().build());
-  }
-
-  /**
-   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
-   *
-   * @param apnsToken {@link ApnsToken} Request Body
-   * @return response of {@code CompletableFuture<ApnsToken>}
-   */
-  public CompletableFuture<ApnsToken> saveMobilePushApnsTokenAsync(@NonNull ApnsToken apnsToken)
-    throws ApiException, ValidationException {
-    Request request = this.buildSaveMobilePushApnsTokenRequest(apnsToken);
+  public CompletableFuture<ApnsToken> getMobilePushApnsTokenAsync(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetMobilePushApnsTokenRequest(tokenId);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response -> ModelConverter.convert(response, new TypeReference<ApnsToken>() {})
     );
   }
 
-  private Request buildSaveMobilePushApnsTokenRequest(@NonNull ApnsToken apnsToken) throws ValidationException {
-    new ViolationAggregator().add(new ApnsTokenValidator("apnsToken").optional().validate(apnsToken)).validateAll();
-    return new RequestBuilder(HttpMethod.POST, this.serverUrl, "channels/mobile_push/apns/tokens")
-      .setJsonContent(apnsToken)
-      .build();
-  }
-
-  /**
-   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code MetadataApnsToken}
-   */
-  public MetadataApnsToken getMobilePushApnsToken(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetMobilePushApnsTokenRequest(tokenId);
-    Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<MetadataApnsToken>() {});
-  }
-
-  /**
-   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code CompletableFuture<MetadataApnsToken>}
-   */
-  public CompletableFuture<MetadataApnsToken> getMobilePushApnsTokenAsync(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetMobilePushApnsTokenRequest(tokenId);
-    CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<MetadataApnsToken>() {})
-    );
-  }
-
   private Request buildGetMobilePushApnsTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/mobile_push/apns/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/apns/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -217,7 +434,12 @@ public class ChannelsService extends BaseService {
   }
 
   private Request buildDiscardMobilePushApnsTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.DELETE, this.serverUrl, "channels/mobile_push/apns/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.DELETE,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/apns/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -225,9 +447,9 @@ public class ChannelsService extends BaseService {
   /**
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code ArrayOfMetadataExpoTokens}
+   * @return response of {@code ExpoTokenCollection}
    */
-  public ArrayOfMetadataExpoTokens getMobilePushExpoTokens() throws ApiException {
+  public ExpoTokenCollection getMobilePushExpoTokens() throws ApiException {
     return this.getMobilePushExpoTokens(GetMobilePushExpoTokensParameters.builder().build());
   }
 
@@ -235,22 +457,21 @@ public class ChannelsService extends BaseService {
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetMobilePushExpoTokensParameters} Request Parameters Object
-   * @return response of {@code ArrayOfMetadataExpoTokens}
+   * @return response of {@code ExpoTokenCollection}
    */
-  public ArrayOfMetadataExpoTokens getMobilePushExpoTokens(
-    @NonNull GetMobilePushExpoTokensParameters requestParameters
-  ) throws ApiException {
+  public ExpoTokenCollection getMobilePushExpoTokens(@NonNull GetMobilePushExpoTokensParameters requestParameters)
+    throws ApiException {
     Request request = this.buildGetMobilePushExpoTokensRequest(requestParameters);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<ArrayOfMetadataExpoTokens>() {});
+    return ModelConverter.convert(response, new TypeReference<ExpoTokenCollection>() {});
   }
 
   /**
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code CompletableFuture<ArrayOfMetadataExpoTokens>}
+   * @return response of {@code CompletableFuture<ExpoTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataExpoTokens> getMobilePushExpoTokensAsync() throws ApiException {
+  public CompletableFuture<ExpoTokenCollection> getMobilePushExpoTokensAsync() throws ApiException {
     return this.getMobilePushExpoTokensAsync(GetMobilePushExpoTokensParameters.builder().build());
   }
 
@@ -258,105 +479,124 @@ public class ChannelsService extends BaseService {
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetMobilePushExpoTokensParameters} Request Parameters Object
-   * @return response of {@code CompletableFuture<ArrayOfMetadataExpoTokens>}
+   * @return response of {@code CompletableFuture<ExpoTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataExpoTokens> getMobilePushExpoTokensAsync(
+  public CompletableFuture<ExpoTokenCollection> getMobilePushExpoTokensAsync(
     @NonNull GetMobilePushExpoTokensParameters requestParameters
   ) throws ApiException {
     Request request = this.buildGetMobilePushExpoTokensRequest(requestParameters);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<ArrayOfMetadataExpoTokens>() {})
+      ModelConverter.convert(response, new TypeReference<ExpoTokenCollection>() {})
     );
   }
 
   private Request buildGetMobilePushExpoTokensRequest(@NonNull GetMobilePushExpoTokensParameters requestParameters) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/mobile_push/expo/tokens")
-      .setOptionalQueryParameter("page[size]", requestParameters.getPageSize())
-      .setOptionalQueryParameter("page[after]", requestParameters.getPageAfter())
-      .setOptionalQueryParameter("page[before]", requestParameters.getPageBefore())
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/expo/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setOptionalQueryParameter("limit", requestParameters.getLimit())
+      .setOptionalQueryParameter("starting_after", requestParameters.getStartingAfter())
+      .setOptionalQueryParameter("ending_before", requestParameters.getEndingBefore())
       .build();
   }
 
   /**
    * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @return response of {@code ExpoToken}
+   * @return response of {@code ExpoTokenPayload}
    */
-  public ExpoToken saveMobilePushExpoToken() throws ApiException, ValidationException {
-    return this.saveMobilePushExpoToken(ExpoToken.builder().build());
+  public ExpoTokenPayload saveMobilePushExpoToken() throws ApiException, ValidationException {
+    return this.saveMobilePushExpoToken(ExpoTokenPayload.builder().build());
   }
 
   /**
    * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @param expoToken {@link ExpoToken} Request Body
+   * @param expoTokenPayload {@link ExpoTokenPayload} Request Body
+   * @return response of {@code ExpoTokenPayload}
+   */
+  public ExpoTokenPayload saveMobilePushExpoToken(@NonNull ExpoTokenPayload expoTokenPayload)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveMobilePushExpoTokenRequest(expoTokenPayload);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<ExpoTokenPayload>() {});
+  }
+
+  /**
+   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @return response of {@code CompletableFuture<ExpoTokenPayload>}
+   */
+  public CompletableFuture<ExpoTokenPayload> saveMobilePushExpoTokenAsync() throws ApiException, ValidationException {
+    return this.saveMobilePushExpoTokenAsync(ExpoTokenPayload.builder().build());
+  }
+
+  /**
+   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @param expoTokenPayload {@link ExpoTokenPayload} Request Body
+   * @return response of {@code CompletableFuture<ExpoTokenPayload>}
+   */
+  public CompletableFuture<ExpoTokenPayload> saveMobilePushExpoTokenAsync(@NonNull ExpoTokenPayload expoTokenPayload)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveMobilePushExpoTokenRequest(expoTokenPayload);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<ExpoTokenPayload>() {})
+    );
+  }
+
+  private Request buildSaveMobilePushExpoTokenRequest(@NonNull ExpoTokenPayload expoTokenPayload)
+    throws ValidationException {
+    new ViolationAggregator()
+      .add(new ExpoTokenPayloadValidator("expoTokenPayload").optional().validate(expoTokenPayload))
+      .validateAll();
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/expo/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(expoTokenPayload)
+      .build();
+  }
+
+  /**
+   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+   *
+   * @param tokenId String
    * @return response of {@code ExpoToken}
    */
-  public ExpoToken saveMobilePushExpoToken(@NonNull ExpoToken expoToken) throws ApiException, ValidationException {
-    Request request = this.buildSaveMobilePushExpoTokenRequest(expoToken);
+  public ExpoToken getMobilePushExpoToken(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetMobilePushExpoTokenRequest(tokenId);
     Response response = this.execute(request);
     return ModelConverter.convert(response, new TypeReference<ExpoToken>() {});
   }
 
   /**
-   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
    *
+   * @param tokenId String
    * @return response of {@code CompletableFuture<ExpoToken>}
    */
-  public CompletableFuture<ExpoToken> saveMobilePushExpoTokenAsync() throws ApiException, ValidationException {
-    return this.saveMobilePushExpoTokenAsync(ExpoToken.builder().build());
-  }
-
-  /**
-   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
-   *
-   * @param expoToken {@link ExpoToken} Request Body
-   * @return response of {@code CompletableFuture<ExpoToken>}
-   */
-  public CompletableFuture<ExpoToken> saveMobilePushExpoTokenAsync(@NonNull ExpoToken expoToken)
-    throws ApiException, ValidationException {
-    Request request = this.buildSaveMobilePushExpoTokenRequest(expoToken);
+  public CompletableFuture<ExpoToken> getMobilePushExpoTokenAsync(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetMobilePushExpoTokenRequest(tokenId);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response -> ModelConverter.convert(response, new TypeReference<ExpoToken>() {})
     );
   }
 
-  private Request buildSaveMobilePushExpoTokenRequest(@NonNull ExpoToken expoToken) throws ValidationException {
-    new ViolationAggregator().add(new ExpoTokenValidator("expoToken").optional().validate(expoToken)).validateAll();
-    return new RequestBuilder(HttpMethod.POST, this.serverUrl, "channels/mobile_push/expo/tokens")
-      .setJsonContent(expoToken)
-      .build();
-  }
-
-  /**
-   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code MetadataExpoToken}
-   */
-  public MetadataExpoToken getMobilePushExpoToken(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetMobilePushExpoTokenRequest(tokenId);
-    Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<MetadataExpoToken>() {});
-  }
-
-  /**
-   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code CompletableFuture<MetadataExpoToken>}
-   */
-  public CompletableFuture<MetadataExpoToken> getMobilePushExpoTokenAsync(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetMobilePushExpoTokenRequest(tokenId);
-    CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<MetadataExpoToken>() {})
-    );
-  }
-
   private Request buildGetMobilePushExpoTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/mobile_push/expo/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/expo/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -388,7 +628,12 @@ public class ChannelsService extends BaseService {
   }
 
   private Request buildDiscardMobilePushExpoTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.DELETE, this.serverUrl, "channels/mobile_push/expo/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.DELETE,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/expo/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -396,9 +641,9 @@ public class ChannelsService extends BaseService {
   /**
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code ArrayOfMetadataFcmTokens}
+   * @return response of {@code FcmTokenCollection}
    */
-  public ArrayOfMetadataFcmTokens getMobilePushFcmTokens() throws ApiException {
+  public FcmTokenCollection getMobilePushFcmTokens() throws ApiException {
     return this.getMobilePushFcmTokens(GetMobilePushFcmTokensParameters.builder().build());
   }
 
@@ -406,21 +651,21 @@ public class ChannelsService extends BaseService {
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetMobilePushFcmTokensParameters} Request Parameters Object
-   * @return response of {@code ArrayOfMetadataFcmTokens}
+   * @return response of {@code FcmTokenCollection}
    */
-  public ArrayOfMetadataFcmTokens getMobilePushFcmTokens(@NonNull GetMobilePushFcmTokensParameters requestParameters)
+  public FcmTokenCollection getMobilePushFcmTokens(@NonNull GetMobilePushFcmTokensParameters requestParameters)
     throws ApiException {
     Request request = this.buildGetMobilePushFcmTokensRequest(requestParameters);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<ArrayOfMetadataFcmTokens>() {});
+    return ModelConverter.convert(response, new TypeReference<FcmTokenCollection>() {});
   }
 
   /**
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code CompletableFuture<ArrayOfMetadataFcmTokens>}
+   * @return response of {@code CompletableFuture<FcmTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataFcmTokens> getMobilePushFcmTokensAsync() throws ApiException {
+  public CompletableFuture<FcmTokenCollection> getMobilePushFcmTokensAsync() throws ApiException {
     return this.getMobilePushFcmTokensAsync(GetMobilePushFcmTokensParameters.builder().build());
   }
 
@@ -428,105 +673,124 @@ public class ChannelsService extends BaseService {
    * Lists all mobile_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetMobilePushFcmTokensParameters} Request Parameters Object
-   * @return response of {@code CompletableFuture<ArrayOfMetadataFcmTokens>}
+   * @return response of {@code CompletableFuture<FcmTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataFcmTokens> getMobilePushFcmTokensAsync(
+  public CompletableFuture<FcmTokenCollection> getMobilePushFcmTokensAsync(
     @NonNull GetMobilePushFcmTokensParameters requestParameters
   ) throws ApiException {
     Request request = this.buildGetMobilePushFcmTokensRequest(requestParameters);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<ArrayOfMetadataFcmTokens>() {})
+      ModelConverter.convert(response, new TypeReference<FcmTokenCollection>() {})
     );
   }
 
   private Request buildGetMobilePushFcmTokensRequest(@NonNull GetMobilePushFcmTokensParameters requestParameters) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/mobile_push/fcm/tokens")
-      .setOptionalQueryParameter("page[size]", requestParameters.getPageSize())
-      .setOptionalQueryParameter("page[after]", requestParameters.getPageAfter())
-      .setOptionalQueryParameter("page[before]", requestParameters.getPageBefore())
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/fcm/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setOptionalQueryParameter("limit", requestParameters.getLimit())
+      .setOptionalQueryParameter("starting_after", requestParameters.getStartingAfter())
+      .setOptionalQueryParameter("ending_before", requestParameters.getEndingBefore())
       .build();
   }
 
   /**
    * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @return response of {@code FcmToken}
+   * @return response of {@code FcmTokenPayload}
    */
-  public FcmToken saveMobilePushFcmToken() throws ApiException, ValidationException {
-    return this.saveMobilePushFcmToken(FcmToken.builder().build());
+  public FcmTokenPayload saveMobilePushFcmToken() throws ApiException, ValidationException {
+    return this.saveMobilePushFcmToken(FcmTokenPayload.builder().build());
   }
 
   /**
    * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @param fcmToken {@link FcmToken} Request Body
+   * @param fcmTokenPayload {@link FcmTokenPayload} Request Body
+   * @return response of {@code FcmTokenPayload}
+   */
+  public FcmTokenPayload saveMobilePushFcmToken(@NonNull FcmTokenPayload fcmTokenPayload)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveMobilePushFcmTokenRequest(fcmTokenPayload);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<FcmTokenPayload>() {});
+  }
+
+  /**
+   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @return response of {@code CompletableFuture<FcmTokenPayload>}
+   */
+  public CompletableFuture<FcmTokenPayload> saveMobilePushFcmTokenAsync() throws ApiException, ValidationException {
+    return this.saveMobilePushFcmTokenAsync(FcmTokenPayload.builder().build());
+  }
+
+  /**
+   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @param fcmTokenPayload {@link FcmTokenPayload} Request Body
+   * @return response of {@code CompletableFuture<FcmTokenPayload>}
+   */
+  public CompletableFuture<FcmTokenPayload> saveMobilePushFcmTokenAsync(@NonNull FcmTokenPayload fcmTokenPayload)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveMobilePushFcmTokenRequest(fcmTokenPayload);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<FcmTokenPayload>() {})
+    );
+  }
+
+  private Request buildSaveMobilePushFcmTokenRequest(@NonNull FcmTokenPayload fcmTokenPayload)
+    throws ValidationException {
+    new ViolationAggregator()
+      .add(new FcmTokenPayloadValidator("fcmTokenPayload").optional().validate(fcmTokenPayload))
+      .validateAll();
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/fcm/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(fcmTokenPayload)
+      .build();
+  }
+
+  /**
+   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+   *
+   * @param tokenId String
    * @return response of {@code FcmToken}
    */
-  public FcmToken saveMobilePushFcmToken(@NonNull FcmToken fcmToken) throws ApiException, ValidationException {
-    Request request = this.buildSaveMobilePushFcmTokenRequest(fcmToken);
+  public FcmToken getMobilePushFcmToken(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetMobilePushFcmTokenRequest(tokenId);
     Response response = this.execute(request);
     return ModelConverter.convert(response, new TypeReference<FcmToken>() {});
   }
 
   /**
-   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
    *
+   * @param tokenId String
    * @return response of {@code CompletableFuture<FcmToken>}
    */
-  public CompletableFuture<FcmToken> saveMobilePushFcmTokenAsync() throws ApiException, ValidationException {
-    return this.saveMobilePushFcmTokenAsync(FcmToken.builder().build());
-  }
-
-  /**
-   * Saves a mobile_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
-   *
-   * @param fcmToken {@link FcmToken} Request Body
-   * @return response of {@code CompletableFuture<FcmToken>}
-   */
-  public CompletableFuture<FcmToken> saveMobilePushFcmTokenAsync(@NonNull FcmToken fcmToken)
-    throws ApiException, ValidationException {
-    Request request = this.buildSaveMobilePushFcmTokenRequest(fcmToken);
+  public CompletableFuture<FcmToken> getMobilePushFcmTokenAsync(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetMobilePushFcmTokenRequest(tokenId);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response -> ModelConverter.convert(response, new TypeReference<FcmToken>() {})
     );
   }
 
-  private Request buildSaveMobilePushFcmTokenRequest(@NonNull FcmToken fcmToken) throws ValidationException {
-    new ViolationAggregator().add(new FcmTokenValidator("fcmToken").optional().validate(fcmToken)).validateAll();
-    return new RequestBuilder(HttpMethod.POST, this.serverUrl, "channels/mobile_push/fcm/tokens")
-      .setJsonContent(fcmToken)
-      .build();
-  }
-
-  /**
-   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code MetadataFcmToken}
-   */
-  public MetadataFcmToken getMobilePushFcmToken(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetMobilePushFcmTokenRequest(tokenId);
-    Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<MetadataFcmToken>() {});
-  }
-
-  /**
-   * Retrieves details of a specific mobile_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code CompletableFuture<MetadataFcmToken>}
-   */
-  public CompletableFuture<MetadataFcmToken> getMobilePushFcmTokenAsync(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetMobilePushFcmTokenRequest(tokenId);
-    CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<MetadataFcmToken>() {})
-    );
-  }
-
   private Request buildGetMobilePushFcmTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/mobile_push/fcm/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/fcm/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -558,7 +822,12 @@ public class ChannelsService extends BaseService {
   }
 
   private Request buildDiscardMobilePushFcmTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.DELETE, this.serverUrl, "channels/mobile_push/fcm/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.DELETE,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/mobile_push/fcm/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -566,9 +835,9 @@ public class ChannelsService extends BaseService {
   /**
    * Lists all slack tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code ArrayOfMetadataSlackTokens}
+   * @return response of {@code SlackTokenCollection}
    */
-  public ArrayOfMetadataSlackTokens getSlackTokens() throws ApiException {
+  public SlackTokenCollection getSlackTokens() throws ApiException {
     return this.getSlackTokens(GetSlackTokensParameters.builder().build());
   }
 
@@ -576,21 +845,20 @@ public class ChannelsService extends BaseService {
    * Lists all slack tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetSlackTokensParameters} Request Parameters Object
-   * @return response of {@code ArrayOfMetadataSlackTokens}
+   * @return response of {@code SlackTokenCollection}
    */
-  public ArrayOfMetadataSlackTokens getSlackTokens(@NonNull GetSlackTokensParameters requestParameters)
-    throws ApiException {
+  public SlackTokenCollection getSlackTokens(@NonNull GetSlackTokensParameters requestParameters) throws ApiException {
     Request request = this.buildGetSlackTokensRequest(requestParameters);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<ArrayOfMetadataSlackTokens>() {});
+    return ModelConverter.convert(response, new TypeReference<SlackTokenCollection>() {});
   }
 
   /**
    * Lists all slack tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code CompletableFuture<ArrayOfMetadataSlackTokens>}
+   * @return response of {@code CompletableFuture<SlackTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataSlackTokens> getSlackTokensAsync() throws ApiException {
+  public CompletableFuture<SlackTokenCollection> getSlackTokensAsync() throws ApiException {
     return this.getSlackTokensAsync(GetSlackTokensParameters.builder().build());
   }
 
@@ -598,106 +866,124 @@ public class ChannelsService extends BaseService {
    * Lists all slack tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetSlackTokensParameters} Request Parameters Object
-   * @return response of {@code CompletableFuture<ArrayOfMetadataSlackTokens>}
+   * @return response of {@code CompletableFuture<SlackTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataSlackTokens> getSlackTokensAsync(
+  public CompletableFuture<SlackTokenCollection> getSlackTokensAsync(
     @NonNull GetSlackTokensParameters requestParameters
   ) throws ApiException {
     Request request = this.buildGetSlackTokensRequest(requestParameters);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<ArrayOfMetadataSlackTokens>() {})
+      ModelConverter.convert(response, new TypeReference<SlackTokenCollection>() {})
     );
   }
 
   private Request buildGetSlackTokensRequest(@NonNull GetSlackTokensParameters requestParameters) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/slack/tokens")
-      .setOptionalQueryParameter("page[size]", requestParameters.getPageSize())
-      .setOptionalQueryParameter("page[after]", requestParameters.getPageAfter())
-      .setOptionalQueryParameter("page[before]", requestParameters.getPageBefore())
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/slack/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setOptionalQueryParameter("limit", requestParameters.getLimit())
+      .setOptionalQueryParameter("starting_after", requestParameters.getStartingAfter())
+      .setOptionalQueryParameter("ending_before", requestParameters.getEndingBefore())
       .build();
   }
 
   /**
    * Saves a slack token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @return response of {@code SlackToken}
+   * @return response of {@code SlackTokenPayload}
    */
-  public SlackToken saveSlackToken() throws ApiException, ValidationException {
-    return this.saveSlackToken(SlackToken.builder().build());
+  public SlackTokenPayload saveSlackToken() throws ApiException, ValidationException {
+    return this.saveSlackToken(SlackTokenPayload.builder().build());
   }
 
   /**
    * Saves a slack token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @param slackToken {@link SlackToken} Request Body
+   * @param slackTokenPayload {@link SlackTokenPayload} Request Body
+   * @return response of {@code SlackTokenPayload}
+   */
+  public SlackTokenPayload saveSlackToken(@NonNull SlackTokenPayload slackTokenPayload)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveSlackTokenRequest(slackTokenPayload);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<SlackTokenPayload>() {});
+  }
+
+  /**
+   * Saves a slack token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @return response of {@code CompletableFuture<SlackTokenPayload>}
+   */
+  public CompletableFuture<SlackTokenPayload> saveSlackTokenAsync() throws ApiException, ValidationException {
+    return this.saveSlackTokenAsync(SlackTokenPayload.builder().build());
+  }
+
+  /**
+   * Saves a slack token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @param slackTokenPayload {@link SlackTokenPayload} Request Body
+   * @return response of {@code CompletableFuture<SlackTokenPayload>}
+   */
+  public CompletableFuture<SlackTokenPayload> saveSlackTokenAsync(@NonNull SlackTokenPayload slackTokenPayload)
+    throws ApiException, ValidationException {
+    Request request = this.buildSaveSlackTokenRequest(slackTokenPayload);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<SlackTokenPayload>() {})
+    );
+  }
+
+  private Request buildSaveSlackTokenRequest(@NonNull SlackTokenPayload slackTokenPayload) throws ValidationException {
+    new ViolationAggregator()
+      .add(new SlackTokenPayloadValidator("slackTokenPayload").optional().validate(slackTokenPayload))
+      .validateAll();
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/slack/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(slackTokenPayload)
+      .build();
+  }
+
+  /**
+   * Retrieves details of a specific slack token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+   *
+   * @param tokenId String
    * @return response of {@code SlackToken}
    */
-  public SlackToken saveSlackToken(@NonNull SlackToken slackToken) throws ApiException, ValidationException {
-    Request request = this.buildSaveSlackTokenRequest(slackToken);
+  public SlackToken getSlackToken(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetSlackTokenRequest(tokenId);
     Response response = this.execute(request);
     return ModelConverter.convert(response, new TypeReference<SlackToken>() {});
   }
 
   /**
-   * Saves a slack token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   * Retrieves details of a specific slack token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
    *
+   * @param tokenId String
    * @return response of {@code CompletableFuture<SlackToken>}
    */
-  public CompletableFuture<SlackToken> saveSlackTokenAsync() throws ApiException, ValidationException {
-    return this.saveSlackTokenAsync(SlackToken.builder().build());
-  }
-
-  /**
-   * Saves a slack token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
-   *
-   * @param slackToken {@link SlackToken} Request Body
-   * @return response of {@code CompletableFuture<SlackToken>}
-   */
-  public CompletableFuture<SlackToken> saveSlackTokenAsync(@NonNull SlackToken slackToken)
-    throws ApiException, ValidationException {
-    Request request = this.buildSaveSlackTokenRequest(slackToken);
+  public CompletableFuture<SlackToken> getSlackTokenAsync(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetSlackTokenRequest(tokenId);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
       ModelConverter.convert(response, new TypeReference<SlackToken>() {})
     );
   }
 
-  private Request buildSaveSlackTokenRequest(@NonNull SlackToken slackToken) throws ValidationException {
-    new ViolationAggregator().add(new SlackTokenValidator("slackToken").optional().validate(slackToken)).validateAll();
-    return new RequestBuilder(HttpMethod.POST, this.serverUrl, "channels/slack/tokens")
-      .setJsonContent(slackToken)
-      .build();
-  }
-
-  /**
-   * Retrieves details of a specific slack token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code MetadataSlackToken}
-   */
-  public MetadataSlackToken getSlackToken(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetSlackTokenRequest(tokenId);
-    Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<MetadataSlackToken>() {});
-  }
-
-  /**
-   * Retrieves details of a specific slack token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code CompletableFuture<MetadataSlackToken>}
-   */
-  public CompletableFuture<MetadataSlackToken> getSlackTokenAsync(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetSlackTokenRequest(tokenId);
-    CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<MetadataSlackToken>() {})
-    );
-  }
-
   private Request buildGetSlackTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/slack/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/slack/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -729,7 +1015,12 @@ public class ChannelsService extends BaseService {
   }
 
   private Request buildDiscardSlackTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.DELETE, this.serverUrl, "channels/slack/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.DELETE,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/slack/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -737,9 +1028,9 @@ public class ChannelsService extends BaseService {
   /**
    * Lists all teams tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code ArrayOfMetadataTeamsTokens}
+   * @return response of {@code TeamsTokenCollection}
    */
-  public ArrayOfMetadataTeamsTokens getTeamsTokens() throws ApiException {
+  public TeamsTokenCollection getTeamsTokens() throws ApiException {
     return this.getTeamsTokens(GetTeamsTokensParameters.builder().build());
   }
 
@@ -747,21 +1038,20 @@ public class ChannelsService extends BaseService {
    * Lists all teams tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetTeamsTokensParameters} Request Parameters Object
-   * @return response of {@code ArrayOfMetadataTeamsTokens}
+   * @return response of {@code TeamsTokenCollection}
    */
-  public ArrayOfMetadataTeamsTokens getTeamsTokens(@NonNull GetTeamsTokensParameters requestParameters)
-    throws ApiException {
+  public TeamsTokenCollection getTeamsTokens(@NonNull GetTeamsTokensParameters requestParameters) throws ApiException {
     Request request = this.buildGetTeamsTokensRequest(requestParameters);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<ArrayOfMetadataTeamsTokens>() {});
+    return ModelConverter.convert(response, new TypeReference<TeamsTokenCollection>() {});
   }
 
   /**
    * Lists all teams tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code CompletableFuture<ArrayOfMetadataTeamsTokens>}
+   * @return response of {@code CompletableFuture<TeamsTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataTeamsTokens> getTeamsTokensAsync() throws ApiException {
+  public CompletableFuture<TeamsTokenCollection> getTeamsTokensAsync() throws ApiException {
     return this.getTeamsTokensAsync(GetTeamsTokensParameters.builder().build());
   }
 
@@ -769,104 +1059,120 @@ public class ChannelsService extends BaseService {
    * Lists all teams tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetTeamsTokensParameters} Request Parameters Object
-   * @return response of {@code CompletableFuture<ArrayOfMetadataTeamsTokens>}
+   * @return response of {@code CompletableFuture<TeamsTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataTeamsTokens> getTeamsTokensAsync(
+  public CompletableFuture<TeamsTokenCollection> getTeamsTokensAsync(
     @NonNull GetTeamsTokensParameters requestParameters
   ) throws ApiException {
     Request request = this.buildGetTeamsTokensRequest(requestParameters);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<ArrayOfMetadataTeamsTokens>() {})
+      ModelConverter.convert(response, new TypeReference<TeamsTokenCollection>() {})
     );
   }
 
   private Request buildGetTeamsTokensRequest(@NonNull GetTeamsTokensParameters requestParameters) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/teams/tokens")
-      .setOptionalQueryParameter("page[size]", requestParameters.getPageSize())
-      .setOptionalQueryParameter("page[after]", requestParameters.getPageAfter())
-      .setOptionalQueryParameter("page[before]", requestParameters.getPageBefore())
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/teams/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setOptionalQueryParameter("limit", requestParameters.getLimit())
+      .setOptionalQueryParameter("starting_after", requestParameters.getStartingAfter())
+      .setOptionalQueryParameter("ending_before", requestParameters.getEndingBefore())
       .build();
   }
 
   /**
    * Saves a teams token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @return response of {@code TeamsToken}
+   * @return response of {@code TeamsTokenPayload}
    */
-  public TeamsToken saveTeamsToken() throws ApiException {
-    return this.saveTeamsToken(TeamsToken.builder().build());
+  public TeamsTokenPayload saveTeamsToken() throws ApiException {
+    return this.saveTeamsToken(TeamsTokenPayload.builder().build());
   }
 
   /**
    * Saves a teams token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @param teamsToken {@link TeamsToken} Request Body
+   * @param teamsTokenPayload {@link TeamsTokenPayload} Request Body
+   * @return response of {@code TeamsTokenPayload}
+   */
+  public TeamsTokenPayload saveTeamsToken(@NonNull TeamsTokenPayload teamsTokenPayload) throws ApiException {
+    Request request = this.buildSaveTeamsTokenRequest(teamsTokenPayload);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<TeamsTokenPayload>() {});
+  }
+
+  /**
+   * Saves a teams token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @return response of {@code CompletableFuture<TeamsTokenPayload>}
+   */
+  public CompletableFuture<TeamsTokenPayload> saveTeamsTokenAsync() throws ApiException {
+    return this.saveTeamsTokenAsync(TeamsTokenPayload.builder().build());
+  }
+
+  /**
+   * Saves a teams token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @param teamsTokenPayload {@link TeamsTokenPayload} Request Body
+   * @return response of {@code CompletableFuture<TeamsTokenPayload>}
+   */
+  public CompletableFuture<TeamsTokenPayload> saveTeamsTokenAsync(@NonNull TeamsTokenPayload teamsTokenPayload)
+    throws ApiException {
+    Request request = this.buildSaveTeamsTokenRequest(teamsTokenPayload);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<TeamsTokenPayload>() {})
+    );
+  }
+
+  private Request buildSaveTeamsTokenRequest(@NonNull TeamsTokenPayload teamsTokenPayload) {
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/teams/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(teamsTokenPayload)
+      .build();
+  }
+
+  /**
+   * Retrieves details of a specific teams token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+   *
+   * @param tokenId String
    * @return response of {@code TeamsToken}
    */
-  public TeamsToken saveTeamsToken(@NonNull TeamsToken teamsToken) throws ApiException {
-    Request request = this.buildSaveTeamsTokenRequest(teamsToken);
+  public TeamsToken getTeamsToken(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetTeamsTokenRequest(tokenId);
     Response response = this.execute(request);
     return ModelConverter.convert(response, new TypeReference<TeamsToken>() {});
   }
 
   /**
-   * Saves a teams token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   * Retrieves details of a specific teams token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
    *
+   * @param tokenId String
    * @return response of {@code CompletableFuture<TeamsToken>}
    */
-  public CompletableFuture<TeamsToken> saveTeamsTokenAsync() throws ApiException {
-    return this.saveTeamsTokenAsync(TeamsToken.builder().build());
-  }
-
-  /**
-   * Saves a teams token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
-   *
-   * @param teamsToken {@link TeamsToken} Request Body
-   * @return response of {@code CompletableFuture<TeamsToken>}
-   */
-  public CompletableFuture<TeamsToken> saveTeamsTokenAsync(@NonNull TeamsToken teamsToken) throws ApiException {
-    Request request = this.buildSaveTeamsTokenRequest(teamsToken);
+  public CompletableFuture<TeamsToken> getTeamsTokenAsync(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetTeamsTokenRequest(tokenId);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
       ModelConverter.convert(response, new TypeReference<TeamsToken>() {})
     );
   }
 
-  private Request buildSaveTeamsTokenRequest(@NonNull TeamsToken teamsToken) {
-    return new RequestBuilder(HttpMethod.POST, this.serverUrl, "channels/teams/tokens")
-      .setJsonContent(teamsToken)
-      .build();
-  }
-
-  /**
-   * Retrieves details of a specific teams token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code MetadataTeamsToken}
-   */
-  public MetadataTeamsToken getTeamsToken(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetTeamsTokenRequest(tokenId);
-    Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<MetadataTeamsToken>() {});
-  }
-
-  /**
-   * Retrieves details of a specific teams token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code CompletableFuture<MetadataTeamsToken>}
-   */
-  public CompletableFuture<MetadataTeamsToken> getTeamsTokenAsync(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetTeamsTokenRequest(tokenId);
-    CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<MetadataTeamsToken>() {})
-    );
-  }
-
   private Request buildGetTeamsTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/teams/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/teams/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -898,7 +1204,12 @@ public class ChannelsService extends BaseService {
   }
 
   private Request buildDiscardTeamsTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.DELETE, this.serverUrl, "channels/teams/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.DELETE,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/teams/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -906,9 +1217,9 @@ public class ChannelsService extends BaseService {
   /**
    * Lists all web_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code ArrayOfMetadataWebPushTokens}
+   * @return response of {@code WebPushTokenCollection}
    */
-  public ArrayOfMetadataWebPushTokens getWebPushTokens() throws ApiException {
+  public WebPushTokenCollection getWebPushTokens() throws ApiException {
     return this.getWebPushTokens(GetWebPushTokensParameters.builder().build());
   }
 
@@ -916,21 +1227,21 @@ public class ChannelsService extends BaseService {
    * Lists all web_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetWebPushTokensParameters} Request Parameters Object
-   * @return response of {@code ArrayOfMetadataWebPushTokens}
+   * @return response of {@code WebPushTokenCollection}
    */
-  public ArrayOfMetadataWebPushTokens getWebPushTokens(@NonNull GetWebPushTokensParameters requestParameters)
+  public WebPushTokenCollection getWebPushTokens(@NonNull GetWebPushTokensParameters requestParameters)
     throws ApiException {
     Request request = this.buildGetWebPushTokensRequest(requestParameters);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<ArrayOfMetadataWebPushTokens>() {});
+    return ModelConverter.convert(response, new TypeReference<WebPushTokenCollection>() {});
   }
 
   /**
    * Lists all web_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
-   * @return response of {@code CompletableFuture<ArrayOfMetadataWebPushTokens>}
+   * @return response of {@code CompletableFuture<WebPushTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataWebPushTokens> getWebPushTokensAsync() throws ApiException {
+  public CompletableFuture<WebPushTokenCollection> getWebPushTokensAsync() throws ApiException {
     return this.getWebPushTokensAsync(GetWebPushTokensParameters.builder().build());
   }
 
@@ -938,104 +1249,120 @@ public class ChannelsService extends BaseService {
    * Lists all web_push tokens belonging to the authenticated user. Returns a paginated list of tokens, including their status, creation dates, and associated metadata.
    *
    * @param requestParameters {@link GetWebPushTokensParameters} Request Parameters Object
-   * @return response of {@code CompletableFuture<ArrayOfMetadataWebPushTokens>}
+   * @return response of {@code CompletableFuture<WebPushTokenCollection>}
    */
-  public CompletableFuture<ArrayOfMetadataWebPushTokens> getWebPushTokensAsync(
+  public CompletableFuture<WebPushTokenCollection> getWebPushTokensAsync(
     @NonNull GetWebPushTokensParameters requestParameters
   ) throws ApiException {
     Request request = this.buildGetWebPushTokensRequest(requestParameters);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<ArrayOfMetadataWebPushTokens>() {})
+      ModelConverter.convert(response, new TypeReference<WebPushTokenCollection>() {})
     );
   }
 
   private Request buildGetWebPushTokensRequest(@NonNull GetWebPushTokensParameters requestParameters) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/web_push/tokens")
-      .setOptionalQueryParameter("page[size]", requestParameters.getPageSize())
-      .setOptionalQueryParameter("page[after]", requestParameters.getPageAfter())
-      .setOptionalQueryParameter("page[before]", requestParameters.getPageBefore())
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/web_push/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setOptionalQueryParameter("limit", requestParameters.getLimit())
+      .setOptionalQueryParameter("starting_after", requestParameters.getStartingAfter())
+      .setOptionalQueryParameter("ending_before", requestParameters.getEndingBefore())
       .build();
   }
 
   /**
    * Saves a web_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @return response of {@code WebPushToken}
+   * @return response of {@code WebPushTokenPayload}
    */
-  public WebPushToken saveWebPushToken() throws ApiException {
-    return this.saveWebPushToken(WebPushToken.builder().build());
+  public WebPushTokenPayload saveWebPushToken() throws ApiException {
+    return this.saveWebPushToken(WebPushTokenPayload.builder().build());
   }
 
   /**
    * Saves a web_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
    *
-   * @param webPushToken {@link WebPushToken} Request Body
+   * @param webPushTokenPayload {@link WebPushTokenPayload} Request Body
+   * @return response of {@code WebPushTokenPayload}
+   */
+  public WebPushTokenPayload saveWebPushToken(@NonNull WebPushTokenPayload webPushTokenPayload) throws ApiException {
+    Request request = this.buildSaveWebPushTokenRequest(webPushTokenPayload);
+    Response response = this.execute(request);
+    return ModelConverter.convert(response, new TypeReference<WebPushTokenPayload>() {});
+  }
+
+  /**
+   * Saves a web_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @return response of {@code CompletableFuture<WebPushTokenPayload>}
+   */
+  public CompletableFuture<WebPushTokenPayload> saveWebPushTokenAsync() throws ApiException {
+    return this.saveWebPushTokenAsync(WebPushTokenPayload.builder().build());
+  }
+
+  /**
+   * Saves a web_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   *
+   * @param webPushTokenPayload {@link WebPushTokenPayload} Request Body
+   * @return response of {@code CompletableFuture<WebPushTokenPayload>}
+   */
+  public CompletableFuture<WebPushTokenPayload> saveWebPushTokenAsync(@NonNull WebPushTokenPayload webPushTokenPayload)
+    throws ApiException {
+    Request request = this.buildSaveWebPushTokenRequest(webPushTokenPayload);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response ->
+      ModelConverter.convert(response, new TypeReference<WebPushTokenPayload>() {})
+    );
+  }
+
+  private Request buildSaveWebPushTokenRequest(@NonNull WebPushTokenPayload webPushTokenPayload) {
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/web_push/tokens"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(webPushTokenPayload)
+      .build();
+  }
+
+  /**
+   * Retrieves details of a specific web_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
+   *
+   * @param tokenId String
    * @return response of {@code WebPushToken}
    */
-  public WebPushToken saveWebPushToken(@NonNull WebPushToken webPushToken) throws ApiException {
-    Request request = this.buildSaveWebPushTokenRequest(webPushToken);
+  public WebPushToken getWebPushToken(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetWebPushTokenRequest(tokenId);
     Response response = this.execute(request);
     return ModelConverter.convert(response, new TypeReference<WebPushToken>() {});
   }
 
   /**
-   * Saves a web_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
+   * Retrieves details of a specific web_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
    *
+   * @param tokenId String
    * @return response of {@code CompletableFuture<WebPushToken>}
    */
-  public CompletableFuture<WebPushToken> saveWebPushTokenAsync() throws ApiException {
-    return this.saveWebPushTokenAsync(WebPushToken.builder().build());
-  }
-
-  /**
-   * Saves a web_push token for the authenticated user. This token serves as a credential for accessing channel-specific functionality. Each token is unique to the user and channel combination, allowing for direct communication with the user via the channel.
-   *
-   * @param webPushToken {@link WebPushToken} Request Body
-   * @return response of {@code CompletableFuture<WebPushToken>}
-   */
-  public CompletableFuture<WebPushToken> saveWebPushTokenAsync(@NonNull WebPushToken webPushToken) throws ApiException {
-    Request request = this.buildSaveWebPushTokenRequest(webPushToken);
+  public CompletableFuture<WebPushToken> getWebPushTokenAsync(@NonNull String tokenId) throws ApiException {
+    Request request = this.buildGetWebPushTokenRequest(tokenId);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
     return futureResponse.thenApplyAsync(response ->
       ModelConverter.convert(response, new TypeReference<WebPushToken>() {})
     );
   }
 
-  private Request buildSaveWebPushTokenRequest(@NonNull WebPushToken webPushToken) {
-    return new RequestBuilder(HttpMethod.POST, this.serverUrl, "channels/web_push/tokens")
-      .setJsonContent(webPushToken)
-      .build();
-  }
-
-  /**
-   * Retrieves details of a specific web_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code MetadataWebPushToken}
-   */
-  public MetadataWebPushToken getWebPushToken(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetWebPushTokenRequest(tokenId);
-    Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<MetadataWebPushToken>() {});
-  }
-
-  /**
-   * Retrieves details of a specific web_push token belonging to the authenticated user. Returns information about the token's status, creation date, and any associated metadata. Users can only access their own tokens.
-   *
-   * @param tokenId String
-   * @return response of {@code CompletableFuture<MetadataWebPushToken>}
-   */
-  public CompletableFuture<MetadataWebPushToken> getWebPushTokenAsync(@NonNull String tokenId) throws ApiException {
-    Request request = this.buildGetWebPushTokenRequest(tokenId);
-    CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<MetadataWebPushToken>() {})
-    );
-  }
-
   private Request buildGetWebPushTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.GET, this.serverUrl, "channels/web_push/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.GET,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/web_push/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }
@@ -1067,7 +1394,12 @@ public class ChannelsService extends BaseService {
   }
 
   private Request buildDiscardWebPushTokenRequest(@NonNull String tokenId) {
-    return new RequestBuilder(HttpMethod.DELETE, this.serverUrl, "channels/web_push/tokens/{token_id}")
+    return new RequestBuilder(
+      HttpMethod.DELETE,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "channels/web_push/tokens/{token_id}"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
       .setPathParameter("token_id", tokenId)
       .build();
   }

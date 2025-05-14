@@ -16,12 +16,11 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class GetSlackTokensParameters {
 
-  @JsonProperty("page[size]")
-  private Long pageSize;
+  private Long limit;
 
-  @JsonProperty("page[after]")
-  private String pageAfter;
+  @JsonProperty("starting_after")
+  private String startingAfter;
 
-  @JsonProperty("page[before]")
-  private String pageBefore;
+  @JsonProperty("ending_before")
+  private String endingBefore;
 }

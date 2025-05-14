@@ -8,6 +8,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Obtained directly from the incoming_webhook object in the installation response from the Slack API.
+ */
 @Data
 @Builder
 @With
