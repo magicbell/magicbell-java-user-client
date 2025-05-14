@@ -4,6 +4,7 @@
   "apiName": "magicbell-api",
   "languages": ["java"],
   "auth": ["bearer"],
+  "docs": ["snippets"],
   "customizations": {
     "includeOptionalSnippetParameters": true,
     "authentication": {
@@ -21,6 +22,11 @@
       "enabled": true,
       "maxAttempts": 3,
       "retryDelay": 150
+    },
+    "documentation": {
+      "snippets": {
+        "format": "json"
+      }
     }
   },
   "languageOptions": {
