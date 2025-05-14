@@ -1,4 +1,4 @@
-# MagicbellUserClient Java SDK 0.3.0
+# MagicbellUserClient Java SDK 0.4.0
 
 Welcome to the MagicbellUserClient SDK documentation. This guide will help you get started with integrating and using the MagicbellUserClient SDK in your project.
 
@@ -7,7 +7,7 @@ Welcome to the MagicbellUserClient SDK documentation. This guide will help you g
 ## Versions
 
 - API version: `2.0.0`
-- SDK version: `0.3.0`
+- SDK version: `0.4.0`
 
 ## About the API
 
@@ -40,14 +40,14 @@ If you use Maven, place the following within the _dependency_ tag in your `pom.x
 <dependency>
     <groupId>com.magicbell</groupId>
     <artifactId>magicbell-user-client</artifactId>
-    <version>0.3.0</version>
+    <version>0.4.0</version>
 </dependency>
 ```
 
 If you use Gradle, paste the next line inside the _dependencies_ block of your `build.gradle` file:
 
 ```Gradle
-implementation group: com.magicbell, name: magicbell-user-client, version: 0.3.0
+implementation group: com.magicbell, name: magicbell-user-client, version: 0.4.0
 ```
 
 If you use JAR files, package the SDK by running the following command:
