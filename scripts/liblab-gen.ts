@@ -28,7 +28,7 @@ function hasChangesInPath(path: string) {
 async function fixExamples() {
   await replaceInFile({
     files: [
-      "example/src/main/java/com/example/Main.java",
+      "examples/src/main/java/com/example/Main.java",
       "kotlin-example/src/main/kotlin/Main.kt",
     ],
     from: ["page[before]", "page[after]"],
@@ -61,7 +61,7 @@ async function build() {
     "pom.xml",
     "README.md",
     "documentation",
-    "example",
+    "examples",
     "kotlin-example",
   ];
   for (const artifact of artifacts) {
@@ -71,6 +71,4 @@ async function build() {
   await fixExamples();
 }
 
-void build().finally(() => {
-  fs.rm("output", { recursive: true, force: true });
-});
+void build().finally(() => fs.rm("output", { recursive: true, force: true }));
