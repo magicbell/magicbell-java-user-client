@@ -10,7 +10,7 @@ const replacements = [
       "liblab.config.json",
       "README.md",
       "pom.xml",
-      "example/pom.xml",
+      "examples/pom.xml",
       "kotlin-example/pom.xml",
     ],
 
