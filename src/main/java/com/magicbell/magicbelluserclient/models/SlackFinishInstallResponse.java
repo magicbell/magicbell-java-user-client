@@ -17,10 +17,16 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class SlackFinishInstallResponse {
 
+  /**
+   * The app ID of the Slack app that was originally configured at the project-level.
+   */
   @NonNull
   @JsonProperty("app_id")
   private String appId;
 
+  /**
+   * The code that was returned from the OAuth flow, and found in the query string of the redirect URL.
+   */
   @NonNull
   private String code;
 

@@ -11,7 +11,7 @@ Welcome to the MagicbellUserClient SDK documentation. This guide will help you g
 
 ## About the API
 
-OpenAPI 3.0.3 Specification for MagicBell API.
+OpenAPI 3.1.0 Specification for MagicBell API.
 
 ## Table of Contents
 
@@ -116,8 +116,9 @@ Below is a comprehensive example demonstrating how to authenticate and call a si
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
-import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
+import com.magicbell.magicbelluserclient.exceptions.ApiException;
+import com.magicbell.magicbelluserclient.models.GetInAppInboxTokensParameters;
+import com.magicbell.magicbelluserclient.models.InboxTokenResponseCollection;
 
 public class Main {
 
@@ -126,16 +127,21 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    GetMobilePushApnsTokensParameters requestParameters = GetMobilePushApnsTokensParameters
-      .builder()
-      .pageSize(8L)
-      .pageAfter("page[after]")
-      .pageBefore("page[before]")
+    GetInAppInboxTokensParameters requestParameters = GetInAppInboxTokensParameters.builder()
+      .limit(10L)
+      .startingAfter("starting_after")
+      .endingBefore("ending_before")
       .build();
 
-    ArrayOfMetadataApnsTokens response = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
+    try {
+      InboxTokenResponseCollection response = magicbellUserClient.channels.getInAppInboxTokens(requestParameters);
 
-    System.out.println(response);
+      System.out.println(response);
+    } catch (ApiException e) {
+      e.printStackTrace();
+    }
+
+    System.exit(0);
   }
 }
 
@@ -148,10 +154,11 @@ The SDK provides various services to interact with the API.
 <details> 
 <summary>Below is a list of all available services with links to their detailed documentation:</summary>
 
-| Name                                                                                                                                      |
-| :---------------------------------------------------------------------------------------------------------------------------------------- |
-| ChannelsService: [[Java](documentation/services/ChannelsService.md)] [[Kotlin](documentation/services/ChannelsService.kt.md)]             |
-| IntegrationsService: [[Java](documentation/services/IntegrationsService.md)] [[Kotlin](documentation/services/IntegrationsService.kt.md)] |
+| Name                                                                                                                                         |
+| :------------------------------------------------------------------------------------------------------------------------------------------- |
+| ChannelsService: [[Java](documentation/services/ChannelsService.md)] [[Kotlin](documentation/services/ChannelsService.kt.md)]                |
+| IntegrationsService: [[Java](documentation/services/IntegrationsService.md)] [[Kotlin](documentation/services/IntegrationsService.kt.md)]    |
+| NotificationsService: [[Java](documentation/services/NotificationsService.md)] [[Kotlin](documentation/services/NotificationsService.kt.md)] |
 
 </details>
 
@@ -164,40 +171,46 @@ The SDK includes several models that represent the data structures used in API r
 
 | Name                                                                                           | Description |
 | :--------------------------------------------------------------------------------------------- | :---------- |
-| [ArrayOfMetadataApnsTokens](documentation/models/ArrayOfMetadataApnsTokens.md)                 |             |
-| [ApnsToken](documentation/models/ApnsToken.md)                                                 |             |
-| [MetadataApnsToken](documentation/models/MetadataApnsToken.md)                                 |             |
+| [InboxTokenResponseCollection](documentation/models/InboxTokenResponseCollection.md)           |             |
+| [InboxToken](documentation/models/InboxToken.md)                                               |             |
+| [InboxTokenResponse](documentation/models/InboxTokenResponse.md)                               |             |
 | [DiscardResult](documentation/models/DiscardResult.md)                                         |             |
-| [ArrayOfMetadataExpoTokens](documentation/models/ArrayOfMetadataExpoTokens.md)                 |             |
+| [ApnsTokenCollection](documentation/models/ApnsTokenCollection.md)                             |             |
+| [ApnsTokenPayload](documentation/models/ApnsTokenPayload.md)                                   |             |
+| [ApnsToken](documentation/models/ApnsToken.md)                                                 |             |
+| [ExpoTokenCollection](documentation/models/ExpoTokenCollection.md)                             |             |
+| [ExpoTokenPayload](documentation/models/ExpoTokenPayload.md)                                   |             |
 | [ExpoToken](documentation/models/ExpoToken.md)                                                 |             |
-| [MetadataExpoToken](documentation/models/MetadataExpoToken.md)                                 |             |
-| [ArrayOfMetadataFcmTokens](documentation/models/ArrayOfMetadataFcmTokens.md)                   |             |
+| [FcmTokenCollection](documentation/models/FcmTokenCollection.md)                               |             |
+| [FcmTokenPayload](documentation/models/FcmTokenPayload.md)                                     |             |
 | [FcmToken](documentation/models/FcmToken.md)                                                   |             |
-| [MetadataFcmToken](documentation/models/MetadataFcmToken.md)                                   |             |
-| [ArrayOfMetadataSlackTokens](documentation/models/ArrayOfMetadataSlackTokens.md)               |             |
+| [SlackTokenCollection](documentation/models/SlackTokenCollection.md)                           |             |
+| [SlackTokenPayload](documentation/models/SlackTokenPayload.md)                                 |             |
 | [SlackToken](documentation/models/SlackToken.md)                                               |             |
-| [MetadataSlackToken](documentation/models/MetadataSlackToken.md)                               |             |
-| [ArrayOfMetadataTeamsTokens](documentation/models/ArrayOfMetadataTeamsTokens.md)               |             |
+| [TeamsTokenCollection](documentation/models/TeamsTokenCollection.md)                           |             |
+| [TeamsTokenPayload](documentation/models/TeamsTokenPayload.md)                                 |             |
 | [TeamsToken](documentation/models/TeamsToken.md)                                               |             |
-| [MetadataTeamsToken](documentation/models/MetadataTeamsToken.md)                               |             |
-| [ArrayOfMetadataWebPushTokens](documentation/models/ArrayOfMetadataWebPushTokens.md)           |             |
+| [WebPushTokenCollection](documentation/models/WebPushTokenCollection.md)                       |             |
+| [WebPushTokenPayload](documentation/models/WebPushTokenPayload.md)                             |             |
 | [WebPushToken](documentation/models/WebPushToken.md)                                           |             |
-| [MetadataWebPushToken](documentation/models/MetadataWebPushToken.md)                           |             |
-| [InboxConfig](documentation/models/InboxConfig.md)                                             |             |
+| [InboxConfigPayload](documentation/models/InboxConfigPayload.md)                               |             |
 | [SlackInstallation](documentation/models/SlackInstallation.md)                                 |             |
 | [SlackFinishInstallResponse](documentation/models/SlackFinishInstallResponse.md)               |             |
 | [SlackStartInstall](documentation/models/SlackStartInstall.md)                                 |             |
 | [SlackStartInstallResponseContent](documentation/models/SlackStartInstallResponseContent.md)   |             |
 | [TemplatesInstallation](documentation/models/TemplatesInstallation.md)                         |             |
 | [WebPushStartInstallationResponse](documentation/models/WebPushStartInstallationResponse.md)   |             |
+| [NotificationCollection](documentation/models/NotificationCollection.md)                       |             |
 | [Links](documentation/models/Links.md)                                                         |             |
-| [TokenMetadata](documentation/models/TokenMetadata.md)                                         |             |
+| [Notification](documentation/models/Notification.md)                                           |             |
+| [GetInAppInboxTokensParameters](documentation/models/GetInAppInboxTokensParameters.md)         |             |
 | [GetMobilePushApnsTokensParameters](documentation/models/GetMobilePushApnsTokensParameters.md) |             |
 | [GetMobilePushExpoTokensParameters](documentation/models/GetMobilePushExpoTokensParameters.md) |             |
 | [GetMobilePushFcmTokensParameters](documentation/models/GetMobilePushFcmTokensParameters.md)   |             |
 | [GetSlackTokensParameters](documentation/models/GetSlackTokensParameters.md)                   |             |
 | [GetTeamsTokensParameters](documentation/models/GetTeamsTokensParameters.md)                   |             |
 | [GetWebPushTokensParameters](documentation/models/GetWebPushTokensParameters.md)               |             |
+| [ListNotificationsParameters](documentation/models/ListNotificationsParameters.md)             |             |
 
 </details>
 

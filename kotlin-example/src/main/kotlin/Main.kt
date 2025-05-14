@@ -2,8 +2,8 @@ package com.example
 
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.ArrayOfMetadataApnsTokens;
-import com.magicbell.magicbelluserclient.models.GetMobilePushApnsTokensParameters;
+import com.magicbell.magicbelluserclient.models.GetInAppInboxTokensParameters;
+import com.magicbell.magicbelluserclient.models.InboxTokenResponseCollection;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -12,13 +12,13 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    val requestParameters: GetMobilePushApnsTokensParameters = GetMobilePushApnsTokensParameters.builder()
-			.pageSize(8L)
-			.pageAfter("")
-			.pageBefore("")
+    val requestParameters: GetInAppInboxTokensParameters = GetInAppInboxTokensParameters.builder()
+			.limit(10L)
+			.startingAfter("starting_after")
+			.endingBefore("ending_before")
 			.build();
 
-    val response: ArrayOfMetadataApnsTokens = magicbellUserClient.channels.getMobilePushApnsTokens(requestParameters);
+    val response: InboxTokenResponseCollection = magicbellUserClient.channels.getInAppInboxTokens(requestParameters);
     
     println(response);
 }

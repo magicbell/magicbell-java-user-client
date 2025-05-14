@@ -22,13 +22,13 @@ Creates a new installation of a inbox integration for a user. This endpoint is u
 
 **Parameters**
 
-| Name        | Type                                    | Required | Description  |
-| :---------- | :-------------------------------------- | :------- | :----------- |
-| inboxConfig | [InboxConfig](../models/InboxConfig.md) | ❌       | Request Body |
+| Name               | Type                                                  | Required | Description  |
+| :----------------- | :---------------------------------------------------- | :------- | :----------- |
+| inboxConfigPayload | [InboxConfigPayload](../models/InboxConfigPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`InboxConfig`
+`InboxConfigPayload`
 
 **Example Usage Code Snippet**
 
@@ -44,9 +44,9 @@ import com.magicbell.magicbelluserclient.models.Footer;
 import com.magicbell.magicbelluserclient.models.Header;
 import com.magicbell.magicbelluserclient.models.Icon;
 import com.magicbell.magicbelluserclient.models.Images;
-import com.magicbell.magicbelluserclient.models.InboxConfig;
-import com.magicbell.magicbelluserclient.models.Notification;
+import com.magicbell.magicbelluserclient.models.InboxConfigPayload;
 import com.magicbell.magicbelluserclient.models.Theme;
+import com.magicbell.magicbelluserclient.models.ThemeNotification;
 import com.magicbell.magicbelluserclient.models.Unread;
 import com.magicbell.magicbelluserclient.models.UnreadHover;
 import com.magicbell.magicbelluserclient.models.UnreadState;
@@ -64,31 +64,27 @@ public class Main {
 
     Images images = Images.builder().emptyInboxUrl("emptyInboxUrl").build();
 
-    Banner banner = Banner
-      .builder()
+    Banner banner = Banner.builder()
       .backgroundColor("backgroundColor")
-      .backgroundOpacity(8.96D)
+      .backgroundOpacity(0.97D)
       .fontSize("fontSize")
       .textColor("textColor")
       .build();
 
-    Dialog dialog = Dialog
-      .builder()
+    Dialog dialog = Dialog.builder()
       .accentColor("accentColor")
       .backgroundColor("backgroundColor")
       .textColor("textColor")
       .build();
 
-    Footer footer = Footer
-      .builder()
+    Footer footer = Footer.builder()
       .backgroundColor("backgroundColor")
       .borderRadius("borderRadius")
       .fontSize("fontSize")
       .textColor("textColor")
       .build();
 
-    Header header = Header
-      .builder()
+    Header header = Header.builder()
       .backgroundColor("backgroundColor")
       .borderRadius("borderRadius")
       .fontFamily("fontFamily")
@@ -102,8 +98,7 @@ public class Main {
 
     DefaultState defaultState = DefaultState.builder().color("color").build();
 
-    Default_ default_ = Default_
-      .builder()
+    Default_ default_ = Default_.builder()
       .backgroundColor("backgroundColor")
       .borderRadius("borderRadius")
       .fontFamily("fontFamily")
@@ -118,8 +113,7 @@ public class Main {
 
     UnreadState unreadState = UnreadState.builder().color("color").build();
 
-    Unread unread = Unread
-      .builder()
+    Unread unread = Unread.builder()
       .backgroundColor("backgroundColor")
       .hover(unreadHover)
       .state(unreadState)
@@ -130,32 +124,38 @@ public class Main {
 
     UnseenState unseenState = UnseenState.builder().color("color").build();
 
-    Unseen unseen = Unseen
-      .builder()
+    Unseen unseen = Unseen.builder()
       .backgroundColor("backgroundColor")
       .hover(unseenHover)
       .state(unseenState)
       .textColor("textColor")
       .build();
 
-    Notification notification = Notification.builder().default_(default_).unread(unread).unseen(unseen).build();
+    ThemeNotification themeNotification = ThemeNotification.builder()
+      .default_(default_)
+      .unread(unread)
+      .unseen(unseen)
+      .build();
 
     UnseenBadge unseenBadge = UnseenBadge.builder().backgroundColor("backgroundColor").build();
 
-    Theme theme = Theme
-      .builder()
+    Theme theme = Theme.builder()
       .banner(banner)
       .dialog(dialog)
       .footer(footer)
       .header(header)
       .icon(icon)
-      .notification(notification)
+      .notification(themeNotification)
       .unseenBadge(unseenBadge)
       .build();
 
-    InboxConfig inboxConfig = InboxConfig.builder().images(images).locale("locale").theme(theme).build();
+    InboxConfigPayload inboxConfigPayload = InboxConfigPayload.builder()
+      .images(images)
+      .locale("locale")
+      .theme(theme)
+      .build();
 
-    InboxConfig response = magicbellUserClient.integrations.saveInboxInstallation(inboxConfig);
+    InboxConfigPayload response = magicbellUserClient.integrations.saveInboxInstallation(inboxConfigPayload);
 
     System.out.println(response);
   }
@@ -172,14 +172,14 @@ Initiates the installation flow for a inbox integration. This is the first step 
 
 **Return Type**
 
-`InboxConfig`
+`InboxConfigPayload`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.InboxConfig;
+import com.magicbell.magicbelluserclient.models.InboxConfigPayload;
 
 public class Main {
 
@@ -188,7 +188,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    InboxConfig response = magicbellUserClient.integrations.startInboxInstallation();
+    InboxConfigPayload response = magicbellUserClient.integrations.startInboxInstallation();
 
     System.out.println(response);
   }
@@ -231,10 +231,9 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    AuthedUser authedUser = AuthedUser
-      .builder()
+    AuthedUser authedUser = AuthedUser.builder()
       .accessToken("access_token")
-      .expiresIn(5L)
+      .expiresIn(0L)
       .id("id")
       .refreshToken("refresh_token")
       .scope("scope")
@@ -243,8 +242,7 @@ public class Main {
 
     Enterprise enterprise = Enterprise.builder().id("id").name("name").build();
 
-    IncomingWebhook incomingWebhook = IncomingWebhook
-      .builder()
+    IncomingWebhook incomingWebhook = IncomingWebhook.builder()
       .channel("channel")
       .configurationUrl("configuration_url")
       .url("url")
@@ -252,17 +250,16 @@ public class Main {
 
     Team team = Team.builder().id("id").name("name").build();
 
-    SlackInstallation slackInstallation = SlackInstallation
-      .builder()
+    SlackInstallation slackInstallation = SlackInstallation.builder()
       .accessToken("access_token")
       .appId("app_id")
       .authedUser(authedUser)
       .botUserId("bot_user_id")
       .enterprise(enterprise)
-      .expiresIn(10L)
-      .id("626")
+      .expiresIn(6L)
+      .id("FFPMPE-+")
       .incomingWebhook(incomingWebhook)
-      .isEnterpriseInstall(false)
+      .isEnterpriseInstall(true)
       .refreshToken("refresh_token")
       .scope("scope")
       .team(team)
@@ -309,8 +306,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    SlackFinishInstallResponse slackFinishInstallResponse = SlackFinishInstallResponse
-      .builder()
+    SlackFinishInstallResponse slackFinishInstallResponse = SlackFinishInstallResponse.builder()
       .appId("app_id")
       .code("code")
       .redirectUrl("redirect_url")
@@ -358,13 +354,12 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    List<String> extraScopes = Arrays.asList("extra_scopes");
+    List<String> extraScopesList = Arrays.asList("extra_scopes");
 
-    SlackStartInstall slackStartInstall = SlackStartInstall
-      .builder()
+    SlackStartInstall slackStartInstall = SlackStartInstall.builder()
       .appId("app_id")
       .authUrl("auth_url")
-      .extraScopes(extraScopes)
+      .extraScopes(extraScopesList)
       .redirectUrl("redirect_url")
       .build();
 
@@ -409,8 +404,7 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    TemplatesInstallation templatesInstallation = TemplatesInstallation
-      .builder()
+    TemplatesInstallation templatesInstallation = TemplatesInstallation.builder()
       .category("category")
       .channel("channel")
       .text("text")
@@ -433,21 +427,21 @@ Creates a new installation of a web_push integration for a user. This endpoint i
 
 **Parameters**
 
-| Name         | Type                                      | Required | Description  |
-| :----------- | :---------------------------------------- | :------- | :----------- |
-| webPushToken | [WebPushToken](../models/WebPushToken.md) | ❌       | Request Body |
+| Name                | Type                                                    | Required | Description  |
+| :------------------ | :------------------------------------------------------ | :------- | :----------- |
+| webPushTokenPayload | [WebPushTokenPayload](../models/WebPushTokenPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`WebPushToken`
+`WebPushTokenPayload`
 
 **Example Usage Code Snippet**
 
 ```java
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.Keys;
-import com.magicbell.magicbelluserclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.models.WebPushTokenPayload;
+import com.magicbell.magicbelluserclient.models.WebPushTokenPayloadKeys;
 
 public class Main {
 
@@ -456,11 +450,17 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    Keys keys = Keys.builder().auth("auth").p256dh("p256dh").build();
+    WebPushTokenPayloadKeys webPushTokenPayloadKeys = WebPushTokenPayloadKeys.builder()
+      .auth("auth")
+      .p256dh("p256dh")
+      .build();
 
-    WebPushToken webPushToken = WebPushToken.builder().endpoint("endpoint").keys(keys).build();
+    WebPushTokenPayload webPushTokenPayload = WebPushTokenPayload.builder()
+      .endpoint("endpoint")
+      .keys(webPushTokenPayloadKeys)
+      .build();
 
-    WebPushToken response = magicbellUserClient.integrations.saveWebPushInstallation(webPushToken);
+    WebPushTokenPayload response = magicbellUserClient.integrations.saveWebPushInstallation(webPushTokenPayload);
 
     System.out.println(response);
   }

@@ -22,13 +22,13 @@ Creates a new installation of a inbox integration for a user. This endpoint is u
 
 **Parameters**
 
-| Name        | Type                                    | Required | Description  |
-| :---------- | :-------------------------------------- | :------- | :----------- |
-| inboxConfig | [InboxConfig](../models/InboxConfig.md) | ❌       | Request Body |
+| Name               | Type                                                  | Required | Description  |
+| :----------------- | :---------------------------------------------------- | :------- | :----------- |
+| inboxConfigPayload | [InboxConfigPayload](../models/InboxConfigPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`InboxConfig`
+`InboxConfigPayload`
 
 **Example Usage Code Snippet**
 
@@ -44,9 +44,9 @@ import com.magicbell.magicbelluserclient.models.Footer;
 import com.magicbell.magicbelluserclient.models.Header;
 import com.magicbell.magicbelluserclient.models.Icon;
 import com.magicbell.magicbelluserclient.models.Images;
-import com.magicbell.magicbelluserclient.models.InboxConfig;
-import com.magicbell.magicbelluserclient.models.Notification;
+import com.magicbell.magicbelluserclient.models.InboxConfigPayload;
 import com.magicbell.magicbelluserclient.models.Theme;
+import com.magicbell.magicbelluserclient.models.ThemeNotification;
 import com.magicbell.magicbelluserclient.models.Unread;
 import com.magicbell.magicbelluserclient.models.UnreadHover;
 import com.magicbell.magicbelluserclient.models.UnreadState;
@@ -68,7 +68,7 @@ fun main() {
 
 		val banner: Banner = Banner.builder()
 			.backgroundColor("backgroundColor")
-			.backgroundOpacity(8.96D)
+			.backgroundOpacity(0.97D)
 			.fontSize("fontSize")
 			.textColor("textColor")
 			.build();
@@ -148,7 +148,7 @@ fun main() {
 			.textColor("textColor")
 			.build();
 
-		val notification: Notification = Notification.builder()
+		val themeNotification: ThemeNotification = ThemeNotification.builder()
 			.default_(default_)
 			.unread(unread)
 			.unseen(unseen)
@@ -164,17 +164,17 @@ fun main() {
 			.footer(footer)
 			.header(header)
 			.icon(icon)
-			.notification(notification)
+			.notification(themeNotification)
 			.unseenBadge(unseenBadge)
 			.build();
 
-		val inboxConfig: InboxConfig = InboxConfig.builder()
+		val inboxConfigPayload: InboxConfigPayload = InboxConfigPayload.builder()
 			.images(images)
 			.locale("locale")
 			.theme(theme)
 			.build();
 
-    val response: InboxConfig = magicbellUserClient.integrations.saveInboxInstallation(inboxConfig);
+    val response: InboxConfigPayload = magicbellUserClient.integrations.saveInboxInstallation(inboxConfigPayload);
 
     println(response);
 }
@@ -189,14 +189,14 @@ Initiates the installation flow for a inbox integration. This is the first step 
 
 **Return Type**
 
-`InboxConfig`
+`InboxConfigPayload`
 
 **Example Usage Code Snippet**
 
 ```kotlin
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.InboxConfig;
+import com.magicbell.magicbelluserclient.models.InboxConfigPayload;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -205,7 +205,7 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    val response: InboxConfig = magicbellUserClient.integrations.startInboxInstallation();
+    val response: InboxConfigPayload = magicbellUserClient.integrations.startInboxInstallation();
 
     println(response);
 }
@@ -248,7 +248,7 @@ fun main() {
 
     val authedUser: AuthedUser = AuthedUser.builder()
 			.accessToken("access_token")
-			.expiresIn(5L)
+			.expiresIn(0L)
 			.id("id")
 			.refreshToken("refresh_token")
 			.scope("scope")
@@ -277,10 +277,10 @@ fun main() {
 			.authedUser(authedUser)
 			.botUserId("bot_user_id")
 			.enterprise(enterprise)
-			.expiresIn(10L)
-			.id("626")
+			.expiresIn(6L)
+			.id("FFPMPE-+")
 			.incomingWebhook(incomingWebhook)
-			.isEnterpriseInstall(false)
+			.isEnterpriseInstall(true)
 			.refreshToken("refresh_token")
 			.scope("scope")
 			.team(team)
@@ -438,21 +438,21 @@ Creates a new installation of a web_push integration for a user. This endpoint i
 
 **Parameters**
 
-| Name         | Type                                      | Required | Description  |
-| :----------- | :---------------------------------------- | :------- | :----------- |
-| webPushToken | [WebPushToken](../models/WebPushToken.md) | ❌       | Request Body |
+| Name                | Type                                                    | Required | Description  |
+| :------------------ | :------------------------------------------------------ | :------- | :----------- |
+| webPushTokenPayload | [WebPushTokenPayload](../models/WebPushTokenPayload.md) | ❌       | Request Body |
 
 **Return Type**
 
-`WebPushToken`
+`WebPushTokenPayload`
 
 **Example Usage Code Snippet**
 
 ```kotlin
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.models.Keys;
-import com.magicbell.magicbelluserclient.models.WebPushToken;
+import com.magicbell.magicbelluserclient.models.WebPushTokenPayload;
+import com.magicbell.magicbelluserclient.models.WebPushTokenPayloadKeys;
 
 fun main() {
 	val config: MagicbellUserClientConfig = MagicbellUserClientConfig.builder()
@@ -461,17 +461,17 @@ fun main() {
 
     val magicbellUserClient: MagicbellUserClient = MagicbellUserClient(config);
 
-    val keys: Keys = Keys.builder()
+    val webPushTokenPayloadKeys: WebPushTokenPayloadKeys = WebPushTokenPayloadKeys.builder()
 			.auth("auth")
 			.p256dh("p256dh")
 			.build();
 
-		val webPushToken: WebPushToken = WebPushToken.builder()
+		val webPushTokenPayload: WebPushTokenPayload = WebPushTokenPayload.builder()
 			.endpoint("endpoint")
-			.keys(keys)
+			.keys(webPushTokenPayloadKeys)
 			.build();
 
-    val response: WebPushToken = magicbellUserClient.integrations.saveWebPushInstallation(webPushToken);
+    val response: WebPushTokenPayload = magicbellUserClient.integrations.saveWebPushInstallation(webPushTokenPayload);
 
     println(response);
 }

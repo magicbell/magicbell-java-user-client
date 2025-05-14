@@ -17,8 +17,7 @@ public enum FcmTokenInstallationId {
 
   @JsonCreator
   public static FcmTokenInstallationId fromValue(String value) {
-    return Arrays
-      .stream(FcmTokenInstallationId.values())
+    return Arrays.stream(FcmTokenInstallationId.values())
       .filter(item -> item.value.equals(value))
       .findFirst()
       .orElse(null);
