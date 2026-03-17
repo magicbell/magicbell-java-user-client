@@ -2,6 +2,7 @@
   "sdkName": "magicbell-user-client",
   "specFilePath": "https://www.magicbell.com/docs/api/openapi.user.json",
   "apiName": "magicbell-api",
+  "apiVersion": "2.0.0",
   "languages": ["java"],
   "auth": ["bearer"],
   "docs": ["snippets"],
