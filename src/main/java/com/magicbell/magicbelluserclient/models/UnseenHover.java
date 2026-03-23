@@ -8,6 +8,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Hover styles for unseen notifications.
+ */
 @Data
 @Builder
 @With
@@ -16,6 +19,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class UnseenHover {
 
+  /**
+   * Background color on hover for unseen notifications.
+   */
   @NonNull
   private String backgroundColor;
 }

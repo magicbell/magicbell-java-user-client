@@ -17,10 +17,10 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class FcmTokenPayload {
 
+  /**
+   * The Firebase Cloud Messaging device registration token to associate with the user.
+   */
   @NonNull
   @JsonProperty("device_token")
   private String deviceToken;
-
-  @JsonProperty("installation_id")
-  private FcmTokenPayloadInstallationId installationId;
 }

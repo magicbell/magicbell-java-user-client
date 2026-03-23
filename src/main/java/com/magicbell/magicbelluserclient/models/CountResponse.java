@@ -1,9 +1,9 @@
 package com.magicbell.magicbelluserclient.models;
 
-import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.NonNull;
 import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
@@ -14,13 +14,11 @@ import lombok.extern.jackson.Jacksonized;
 @ToString
 @EqualsAndHashCode
 @Jacksonized
-public class GetMobilePushApnsTokensParameters {
+public class CountResponse {
 
-  private Long limit;
-
-  @JsonProperty("starting_after")
-  private String startingAfter;
-
-  @JsonProperty("ending_before")
-  private String endingBefore;
+  /**
+   * The count of notifications matching the query.
+   */
+  @NonNull
+  private Long count;
 }

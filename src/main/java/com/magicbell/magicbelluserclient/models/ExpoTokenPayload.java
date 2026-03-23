@@ -17,6 +17,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class ExpoTokenPayload {
 
+  /**
+   * The Expo push token returned by the Expo client.
+   */
   @NonNull
   @JsonProperty("device_token")
   private String deviceToken;

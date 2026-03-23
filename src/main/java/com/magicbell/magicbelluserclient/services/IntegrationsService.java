@@ -2,7 +2,7 @@ package com.magicbell.magicbelluserclient.services;
 
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.exceptions.ApiException;
+import com.magicbell.magicbelluserclient.exceptions.ApiError;
 import com.magicbell.magicbelluserclient.http.Environment;
 import com.magicbell.magicbelluserclient.http.HttpMethod;
 import com.magicbell.magicbelluserclient.http.ModelConverter;
@@ -12,7 +12,6 @@ import com.magicbell.magicbelluserclient.models.SlackFinishInstallResponse;
 import com.magicbell.magicbelluserclient.models.SlackInstallation;
 import com.magicbell.magicbelluserclient.models.SlackStartInstall;
 import com.magicbell.magicbelluserclient.models.SlackStartInstallResponseContent;
-import com.magicbell.magicbelluserclient.models.TemplatesInstallation;
 import com.magicbell.magicbelluserclient.models.WebPushStartInstallationResponse;
 import com.magicbell.magicbelluserclient.models.WebPushTokenPayload;
 import com.magicbell.magicbelluserclient.validation.ViolationAggregator;
@@ -31,55 +30,63 @@ import okhttp3.Response;
  */
 public class IntegrationsService extends BaseService {
 
+  /**
+   * Constructs a new instance of IntegrationsService.
+   *
+   * @param httpClient The HTTP client to use for requests
+   * @param config The SDK configuration
+   */
   public IntegrationsService(@NonNull OkHttpClient httpClient, MagicbellUserClientConfig config) {
     super(httpClient, config);
   }
 
   /**
-   * Creates a new installation of a inbox integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save an Inbox installation
    *
    * @return response of {@code InboxConfigPayload}
    */
-  public InboxConfigPayload saveInboxInstallation() throws ApiException, ValidationException {
+  public InboxConfigPayload saveInboxInstallation() throws ApiError, ValidationException {
     return this.saveInboxInstallation(InboxConfigPayload.builder().build());
   }
 
   /**
-   * Creates a new installation of a inbox integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save an Inbox installation
    *
    * @param inboxConfigPayload {@link InboxConfigPayload} Request Body
    * @return response of {@code InboxConfigPayload}
    */
   public InboxConfigPayload saveInboxInstallation(@NonNull InboxConfigPayload inboxConfigPayload)
-    throws ApiException, ValidationException {
+    throws ApiError, ValidationException {
     Request request = this.buildSaveInboxInstallationRequest(inboxConfigPayload);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<InboxConfigPayload>() {});
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<InboxConfigPayload>() {});
   }
 
   /**
-   * Creates a new installation of a inbox integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save an Inbox installation
    *
    * @return response of {@code CompletableFuture<InboxConfigPayload>}
    */
-  public CompletableFuture<InboxConfigPayload> saveInboxInstallationAsync() throws ApiException, ValidationException {
+  public CompletableFuture<InboxConfigPayload> saveInboxInstallationAsync() throws ApiError, ValidationException {
     return this.saveInboxInstallationAsync(InboxConfigPayload.builder().build());
   }
 
   /**
-   * Creates a new installation of a inbox integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save an Inbox installation
    *
    * @param inboxConfigPayload {@link InboxConfigPayload} Request Body
    * @return response of {@code CompletableFuture<InboxConfigPayload>}
    */
   public CompletableFuture<InboxConfigPayload> saveInboxInstallationAsync(
     @NonNull InboxConfigPayload inboxConfigPayload
-  ) throws ApiException, ValidationException {
+  ) throws ApiError, ValidationException {
     Request request = this.buildSaveInboxInstallationRequest(inboxConfigPayload);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<InboxConfigPayload>() {})
-    );
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<InboxConfigPayload>() {});
+    });
   }
 
   private Request buildSaveInboxInstallationRequest(@NonNull InboxConfigPayload inboxConfigPayload)
@@ -88,7 +95,7 @@ public class IntegrationsService extends BaseService {
       .add(new InboxConfigPayloadValidator("inboxConfigPayload").optional().validate(inboxConfigPayload))
       .validateAll();
     return new RequestBuilder(
-      HttpMethod.POST,
+      HttpMethod.PUT,
       Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
       "integrations/inbox/installations"
     )
@@ -98,27 +105,29 @@ public class IntegrationsService extends BaseService {
   }
 
   /**
-   * Initiates the installation flow for a inbox integration. This is the first step in a multi-step installation process where user authorization or external service configuration may be required.
+   * Start an Inbox installation
    *
    * @return response of {@code InboxConfigPayload}
    */
-  public InboxConfigPayload startInboxInstallation() throws ApiException {
+  public InboxConfigPayload startInboxInstallation() throws ApiError {
     Request request = this.buildStartInboxInstallationRequest();
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<InboxConfigPayload>() {});
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<InboxConfigPayload>() {});
   }
 
   /**
-   * Initiates the installation flow for a inbox integration. This is the first step in a multi-step installation process where user authorization or external service configuration may be required.
+   * Start an Inbox installation
    *
    * @return response of {@code CompletableFuture<InboxConfigPayload>}
    */
-  public CompletableFuture<InboxConfigPayload> startInboxInstallationAsync() throws ApiException {
+  public CompletableFuture<InboxConfigPayload> startInboxInstallationAsync() throws ApiError {
     Request request = this.buildStartInboxInstallationRequest();
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<InboxConfigPayload>() {})
-    );
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<InboxConfigPayload>() {});
+    });
   }
 
   private Request buildStartInboxInstallationRequest() {
@@ -132,49 +141,240 @@ public class IntegrationsService extends BaseService {
   }
 
   /**
-   * Creates a new installation of a slack integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save a MagicBell SlackBot installation
    *
    * @return response of {@code SlackInstallation}
    */
-  public SlackInstallation saveSlackInstallation() throws ApiException, ValidationException {
+  public SlackInstallation saveMagicbellSlackbotInstallation() throws ApiError, ValidationException {
+    return this.saveMagicbellSlackbotInstallation(SlackInstallation.builder().build());
+  }
+
+  /**
+   * Save a MagicBell SlackBot installation
+   *
+   * @param slackInstallation {@link SlackInstallation} Request Body
+   * @return response of {@code SlackInstallation}
+   */
+  public SlackInstallation saveMagicbellSlackbotInstallation(@NonNull SlackInstallation slackInstallation)
+    throws ApiError, ValidationException {
+    Request request = this.buildSaveMagicbellSlackbotInstallationRequest(slackInstallation);
+    Response response = this.execute(request);
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<SlackInstallation>() {});
+  }
+
+  /**
+   * Save a MagicBell SlackBot installation
+   *
+   * @return response of {@code CompletableFuture<SlackInstallation>}
+   */
+  public CompletableFuture<SlackInstallation> saveMagicbellSlackbotInstallationAsync()
+    throws ApiError, ValidationException {
+    return this.saveMagicbellSlackbotInstallationAsync(SlackInstallation.builder().build());
+  }
+
+  /**
+   * Save a MagicBell SlackBot installation
+   *
+   * @param slackInstallation {@link SlackInstallation} Request Body
+   * @return response of {@code CompletableFuture<SlackInstallation>}
+   */
+  public CompletableFuture<SlackInstallation> saveMagicbellSlackbotInstallationAsync(
+    @NonNull SlackInstallation slackInstallation
+  ) throws ApiError, ValidationException {
+    Request request = this.buildSaveMagicbellSlackbotInstallationRequest(slackInstallation);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<SlackInstallation>() {});
+    });
+  }
+
+  private Request buildSaveMagicbellSlackbotInstallationRequest(@NonNull SlackInstallation slackInstallation)
+    throws ValidationException {
+    new ViolationAggregator()
+      .add(new SlackInstallationValidator("slackInstallation").optional().validate(slackInstallation))
+      .validateAll();
+    return new RequestBuilder(
+      HttpMethod.PUT,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "integrations/magicbell_slackbot/installations"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(slackInstallation)
+      .build();
+  }
+
+  /**
+   * Finish a MagicBell SlackBot installation
+   *
+   * @return response of {@code SlackInstallation}
+   */
+  public SlackInstallation finishMagicbellSlackbotInstallation() throws ApiError {
+    return this.finishMagicbellSlackbotInstallation(SlackFinishInstallResponse.builder().build());
+  }
+
+  /**
+   * Finish a MagicBell SlackBot installation
+   *
+   * @param slackFinishInstallResponse {@link SlackFinishInstallResponse} Request Body
+   * @return response of {@code SlackInstallation}
+   */
+  public SlackInstallation finishMagicbellSlackbotInstallation(
+    @NonNull SlackFinishInstallResponse slackFinishInstallResponse
+  ) throws ApiError {
+    Request request = this.buildFinishMagicbellSlackbotInstallationRequest(slackFinishInstallResponse);
+    Response response = this.execute(request);
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<SlackInstallation>() {});
+  }
+
+  /**
+   * Finish a MagicBell SlackBot installation
+   *
+   * @return response of {@code CompletableFuture<SlackInstallation>}
+   */
+  public CompletableFuture<SlackInstallation> finishMagicbellSlackbotInstallationAsync() throws ApiError {
+    return this.finishMagicbellSlackbotInstallationAsync(SlackFinishInstallResponse.builder().build());
+  }
+
+  /**
+   * Finish a MagicBell SlackBot installation
+   *
+   * @param slackFinishInstallResponse {@link SlackFinishInstallResponse} Request Body
+   * @return response of {@code CompletableFuture<SlackInstallation>}
+   */
+  public CompletableFuture<SlackInstallation> finishMagicbellSlackbotInstallationAsync(
+    @NonNull SlackFinishInstallResponse slackFinishInstallResponse
+  ) throws ApiError {
+    Request request = this.buildFinishMagicbellSlackbotInstallationRequest(slackFinishInstallResponse);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<SlackInstallation>() {});
+    });
+  }
+
+  private Request buildFinishMagicbellSlackbotInstallationRequest(
+    @NonNull SlackFinishInstallResponse slackFinishInstallResponse
+  ) {
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "integrations/magicbell_slackbot/installations/finish"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(slackFinishInstallResponse)
+      .build();
+  }
+
+  /**
+   * Start a MagicBell SlackBot installation
+   *
+   * @return response of {@code SlackStartInstallResponseContent}
+   */
+  public SlackStartInstallResponseContent startMagicbellSlackbotInstallation() throws ApiError {
+    return this.startMagicbellSlackbotInstallation(SlackStartInstall.builder().build());
+  }
+
+  /**
+   * Start a MagicBell SlackBot installation
+   *
+   * @param slackStartInstall {@link SlackStartInstall} Request Body
+   * @return response of {@code SlackStartInstallResponseContent}
+   */
+  public SlackStartInstallResponseContent startMagicbellSlackbotInstallation(
+    @NonNull SlackStartInstall slackStartInstall
+  ) throws ApiError {
+    Request request = this.buildStartMagicbellSlackbotInstallationRequest(slackStartInstall);
+    Response response = this.execute(request);
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<SlackStartInstallResponseContent>() {});
+  }
+
+  /**
+   * Start a MagicBell SlackBot installation
+   *
+   * @return response of {@code CompletableFuture<SlackStartInstallResponseContent>}
+   */
+  public CompletableFuture<SlackStartInstallResponseContent> startMagicbellSlackbotInstallationAsync() throws ApiError {
+    return this.startMagicbellSlackbotInstallationAsync(SlackStartInstall.builder().build());
+  }
+
+  /**
+   * Start a MagicBell SlackBot installation
+   *
+   * @param slackStartInstall {@link SlackStartInstall} Request Body
+   * @return response of {@code CompletableFuture<SlackStartInstallResponseContent>}
+   */
+  public CompletableFuture<SlackStartInstallResponseContent> startMagicbellSlackbotInstallationAsync(
+    @NonNull SlackStartInstall slackStartInstall
+  ) throws ApiError {
+    Request request = this.buildStartMagicbellSlackbotInstallationRequest(slackStartInstall);
+    CompletableFuture<Response> futureResponse = this.executeAsync(request);
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<SlackStartInstallResponseContent>() {});
+    });
+  }
+
+  private Request buildStartMagicbellSlackbotInstallationRequest(@NonNull SlackStartInstall slackStartInstall) {
+    return new RequestBuilder(
+      HttpMethod.POST,
+      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
+      "integrations/magicbell_slackbot/installations/start"
+    )
+      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
+      .setJsonContent(slackStartInstall)
+      .build();
+  }
+
+  /**
+   * Save a Slack installation
+   *
+   * @return response of {@code SlackInstallation}
+   */
+  public SlackInstallation saveSlackInstallation() throws ApiError, ValidationException {
     return this.saveSlackInstallation(SlackInstallation.builder().build());
   }
 
   /**
-   * Creates a new installation of a slack integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save a Slack installation
    *
    * @param slackInstallation {@link SlackInstallation} Request Body
    * @return response of {@code SlackInstallation}
    */
   public SlackInstallation saveSlackInstallation(@NonNull SlackInstallation slackInstallation)
-    throws ApiException, ValidationException {
+    throws ApiError, ValidationException {
     Request request = this.buildSaveSlackInstallationRequest(slackInstallation);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<SlackInstallation>() {});
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<SlackInstallation>() {});
   }
 
   /**
-   * Creates a new installation of a slack integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save a Slack installation
    *
    * @return response of {@code CompletableFuture<SlackInstallation>}
    */
-  public CompletableFuture<SlackInstallation> saveSlackInstallationAsync() throws ApiException, ValidationException {
+  public CompletableFuture<SlackInstallation> saveSlackInstallationAsync() throws ApiError, ValidationException {
     return this.saveSlackInstallationAsync(SlackInstallation.builder().build());
   }
 
   /**
-   * Creates a new installation of a slack integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save a Slack installation
    *
    * @param slackInstallation {@link SlackInstallation} Request Body
    * @return response of {@code CompletableFuture<SlackInstallation>}
    */
   public CompletableFuture<SlackInstallation> saveSlackInstallationAsync(@NonNull SlackInstallation slackInstallation)
-    throws ApiException, ValidationException {
+    throws ApiError, ValidationException {
     Request request = this.buildSaveSlackInstallationRequest(slackInstallation);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<SlackInstallation>() {})
-    );
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<SlackInstallation>() {});
+    });
   }
 
   private Request buildSaveSlackInstallationRequest(@NonNull SlackInstallation slackInstallation)
@@ -183,7 +383,7 @@ public class IntegrationsService extends BaseService {
       .add(new SlackInstallationValidator("slackInstallation").optional().validate(slackInstallation))
       .validateAll();
     return new RequestBuilder(
-      HttpMethod.POST,
+      HttpMethod.PUT,
       Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
       "integrations/slack/installations"
     )
@@ -193,50 +393,52 @@ public class IntegrationsService extends BaseService {
   }
 
   /**
-   * Completes the installation flow for a slack integration. This endpoint is typically called after the user has completed any required authorization steps with slack.
+   * Finish a Slack installation
    *
    * @return response of {@code SlackInstallation}
    */
-  public SlackInstallation finishSlackInstallation() throws ApiException {
+  public SlackInstallation finishSlackInstallation() throws ApiError {
     return this.finishSlackInstallation(SlackFinishInstallResponse.builder().build());
   }
 
   /**
-   * Completes the installation flow for a slack integration. This endpoint is typically called after the user has completed any required authorization steps with slack.
+   * Finish a Slack installation
    *
    * @param slackFinishInstallResponse {@link SlackFinishInstallResponse} Request Body
    * @return response of {@code SlackInstallation}
    */
   public SlackInstallation finishSlackInstallation(@NonNull SlackFinishInstallResponse slackFinishInstallResponse)
-    throws ApiException {
+    throws ApiError {
     Request request = this.buildFinishSlackInstallationRequest(slackFinishInstallResponse);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<SlackInstallation>() {});
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<SlackInstallation>() {});
   }
 
   /**
-   * Completes the installation flow for a slack integration. This endpoint is typically called after the user has completed any required authorization steps with slack.
+   * Finish a Slack installation
    *
    * @return response of {@code CompletableFuture<SlackInstallation>}
    */
-  public CompletableFuture<SlackInstallation> finishSlackInstallationAsync() throws ApiException {
+  public CompletableFuture<SlackInstallation> finishSlackInstallationAsync() throws ApiError {
     return this.finishSlackInstallationAsync(SlackFinishInstallResponse.builder().build());
   }
 
   /**
-   * Completes the installation flow for a slack integration. This endpoint is typically called after the user has completed any required authorization steps with slack.
+   * Finish a Slack installation
    *
    * @param slackFinishInstallResponse {@link SlackFinishInstallResponse} Request Body
    * @return response of {@code CompletableFuture<SlackInstallation>}
    */
   public CompletableFuture<SlackInstallation> finishSlackInstallationAsync(
     @NonNull SlackFinishInstallResponse slackFinishInstallResponse
-  ) throws ApiException {
+  ) throws ApiError {
     Request request = this.buildFinishSlackInstallationRequest(slackFinishInstallResponse);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<SlackInstallation>() {})
-    );
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<SlackInstallation>() {});
+    });
   }
 
   private Request buildFinishSlackInstallationRequest(@NonNull SlackFinishInstallResponse slackFinishInstallResponse) {
@@ -251,50 +453,52 @@ public class IntegrationsService extends BaseService {
   }
 
   /**
-   * Initiates the installation flow for a slack integration. This is the first step in a multi-step installation process where user authorization or external service configuration may be required.
+   * Start a Slack installation
    *
    * @return response of {@code SlackStartInstallResponseContent}
    */
-  public SlackStartInstallResponseContent startSlackInstallation() throws ApiException {
+  public SlackStartInstallResponseContent startSlackInstallation() throws ApiError {
     return this.startSlackInstallation(SlackStartInstall.builder().build());
   }
 
   /**
-   * Initiates the installation flow for a slack integration. This is the first step in a multi-step installation process where user authorization or external service configuration may be required.
+   * Start a Slack installation
    *
    * @param slackStartInstall {@link SlackStartInstall} Request Body
    * @return response of {@code SlackStartInstallResponseContent}
    */
   public SlackStartInstallResponseContent startSlackInstallation(@NonNull SlackStartInstall slackStartInstall)
-    throws ApiException {
+    throws ApiError {
     Request request = this.buildStartSlackInstallationRequest(slackStartInstall);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<SlackStartInstallResponseContent>() {});
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<SlackStartInstallResponseContent>() {});
   }
 
   /**
-   * Initiates the installation flow for a slack integration. This is the first step in a multi-step installation process where user authorization or external service configuration may be required.
+   * Start a Slack installation
    *
    * @return response of {@code CompletableFuture<SlackStartInstallResponseContent>}
    */
-  public CompletableFuture<SlackStartInstallResponseContent> startSlackInstallationAsync() throws ApiException {
+  public CompletableFuture<SlackStartInstallResponseContent> startSlackInstallationAsync() throws ApiError {
     return this.startSlackInstallationAsync(SlackStartInstall.builder().build());
   }
 
   /**
-   * Initiates the installation flow for a slack integration. This is the first step in a multi-step installation process where user authorization or external service configuration may be required.
+   * Start a Slack installation
    *
    * @param slackStartInstall {@link SlackStartInstall} Request Body
    * @return response of {@code CompletableFuture<SlackStartInstallResponseContent>}
    */
   public CompletableFuture<SlackStartInstallResponseContent> startSlackInstallationAsync(
     @NonNull SlackStartInstall slackStartInstall
-  ) throws ApiException {
+  ) throws ApiError {
     Request request = this.buildStartSlackInstallationRequest(slackStartInstall);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<SlackStartInstallResponseContent>() {})
-    );
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<SlackStartInstallResponseContent>() {});
+    });
   }
 
   private Request buildStartSlackInstallationRequest(@NonNull SlackStartInstall slackStartInstall) {
@@ -309,113 +513,56 @@ public class IntegrationsService extends BaseService {
   }
 
   /**
-   * Creates a new installation of a templates integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
-   *
-   * @return response of {@code TemplatesInstallation}
-   */
-  public TemplatesInstallation saveTemplatesInstallation() throws ApiException {
-    return this.saveTemplatesInstallation(TemplatesInstallation.builder().build());
-  }
-
-  /**
-   * Creates a new installation of a templates integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
-   *
-   * @param templatesInstallation {@link TemplatesInstallation} Request Body
-   * @return response of {@code TemplatesInstallation}
-   */
-  public TemplatesInstallation saveTemplatesInstallation(@NonNull TemplatesInstallation templatesInstallation)
-    throws ApiException {
-    Request request = this.buildSaveTemplatesInstallationRequest(templatesInstallation);
-    Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<TemplatesInstallation>() {});
-  }
-
-  /**
-   * Creates a new installation of a templates integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
-   *
-   * @return response of {@code CompletableFuture<TemplatesInstallation>}
-   */
-  public CompletableFuture<TemplatesInstallation> saveTemplatesInstallationAsync() throws ApiException {
-    return this.saveTemplatesInstallationAsync(TemplatesInstallation.builder().build());
-  }
-
-  /**
-   * Creates a new installation of a templates integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
-   *
-   * @param templatesInstallation {@link TemplatesInstallation} Request Body
-   * @return response of {@code CompletableFuture<TemplatesInstallation>}
-   */
-  public CompletableFuture<TemplatesInstallation> saveTemplatesInstallationAsync(
-    @NonNull TemplatesInstallation templatesInstallation
-  ) throws ApiException {
-    Request request = this.buildSaveTemplatesInstallationRequest(templatesInstallation);
-    CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<TemplatesInstallation>() {})
-    );
-  }
-
-  private Request buildSaveTemplatesInstallationRequest(@NonNull TemplatesInstallation templatesInstallation) {
-    return new RequestBuilder(
-      HttpMethod.POST,
-      Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
-      "integrations/templates/installations"
-    )
-      .setAccessTokenAuth(this.config.getAccessToken(), "Bearer")
-      .setJsonContent(templatesInstallation)
-      .build();
-  }
-
-  /**
-   * Creates a new installation of a web_push integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save a Web Push installation
    *
    * @return response of {@code WebPushTokenPayload}
    */
-  public WebPushTokenPayload saveWebPushInstallation() throws ApiException {
+  public WebPushTokenPayload saveWebPushInstallation() throws ApiError {
     return this.saveWebPushInstallation(WebPushTokenPayload.builder().build());
   }
 
   /**
-   * Creates a new installation of a web_push integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save a Web Push installation
    *
    * @param webPushTokenPayload {@link WebPushTokenPayload} Request Body
    * @return response of {@code WebPushTokenPayload}
    */
-  public WebPushTokenPayload saveWebPushInstallation(@NonNull WebPushTokenPayload webPushTokenPayload)
-    throws ApiException {
+  public WebPushTokenPayload saveWebPushInstallation(@NonNull WebPushTokenPayload webPushTokenPayload) throws ApiError {
     Request request = this.buildSaveWebPushInstallationRequest(webPushTokenPayload);
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<WebPushTokenPayload>() {});
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<WebPushTokenPayload>() {});
   }
 
   /**
-   * Creates a new installation of a web_push integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save a Web Push installation
    *
    * @return response of {@code CompletableFuture<WebPushTokenPayload>}
    */
-  public CompletableFuture<WebPushTokenPayload> saveWebPushInstallationAsync() throws ApiException {
+  public CompletableFuture<WebPushTokenPayload> saveWebPushInstallationAsync() throws ApiError {
     return this.saveWebPushInstallationAsync(WebPushTokenPayload.builder().build());
   }
 
   /**
-   * Creates a new installation of a web_push integration for a user. This endpoint is used when an integration needs to be set up with user-specific credentials or configuration.
+   * Save a Web Push installation
    *
    * @param webPushTokenPayload {@link WebPushTokenPayload} Request Body
    * @return response of {@code CompletableFuture<WebPushTokenPayload>}
    */
   public CompletableFuture<WebPushTokenPayload> saveWebPushInstallationAsync(
     @NonNull WebPushTokenPayload webPushTokenPayload
-  ) throws ApiException {
+  ) throws ApiError {
     Request request = this.buildSaveWebPushInstallationRequest(webPushTokenPayload);
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<WebPushTokenPayload>() {})
-    );
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<WebPushTokenPayload>() {});
+    });
   }
 
   private Request buildSaveWebPushInstallationRequest(@NonNull WebPushTokenPayload webPushTokenPayload) {
     return new RequestBuilder(
-      HttpMethod.POST,
+      HttpMethod.PUT,
       Optional.ofNullable(this.config.getBaseUrl()).orElse(Environment.DEFAULT.getUrl()),
       "integrations/web_push/installations"
     )
@@ -425,27 +572,29 @@ public class IntegrationsService extends BaseService {
   }
 
   /**
-   * Initiates the installation flow for a web_push integration. This is the first step in a multi-step installation process where user authorization or external service configuration may be required.
+   * Start a Web Push installation
    *
    * @return response of {@code WebPushStartInstallationResponse}
    */
-  public WebPushStartInstallationResponse startWebPushInstallation() throws ApiException {
+  public WebPushStartInstallationResponse startWebPushInstallation() throws ApiError {
     Request request = this.buildStartWebPushInstallationRequest();
     Response response = this.execute(request);
-    return ModelConverter.convert(response, new TypeReference<WebPushStartInstallationResponse>() {});
+    byte[] bodyBytes = ModelConverter.readBytes(response);
+    return ModelConverter.convert(bodyBytes, new TypeReference<WebPushStartInstallationResponse>() {});
   }
 
   /**
-   * Initiates the installation flow for a web_push integration. This is the first step in a multi-step installation process where user authorization or external service configuration may be required.
+   * Start a Web Push installation
    *
    * @return response of {@code CompletableFuture<WebPushStartInstallationResponse>}
    */
-  public CompletableFuture<WebPushStartInstallationResponse> startWebPushInstallationAsync() throws ApiException {
+  public CompletableFuture<WebPushStartInstallationResponse> startWebPushInstallationAsync() throws ApiError {
     Request request = this.buildStartWebPushInstallationRequest();
     CompletableFuture<Response> futureResponse = this.executeAsync(request);
-    return futureResponse.thenApplyAsync(response ->
-      ModelConverter.convert(response, new TypeReference<WebPushStartInstallationResponse>() {})
-    );
+    return futureResponse.thenApplyAsync(response -> {
+      byte[] bodyBytes = ModelConverter.readBytes(response);
+      return ModelConverter.convert(bodyBytes, new TypeReference<WebPushStartInstallationResponse>() {});
+    });
   }
 
   private Request buildStartWebPushInstallationRequest() {

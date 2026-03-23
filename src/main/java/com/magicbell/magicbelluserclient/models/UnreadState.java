@@ -8,6 +8,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * State indicator styling for unread notifications.
+ */
 @Data
 @Builder
 @With
@@ -16,6 +19,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class UnreadState {
 
+  /**
+   * Color for the unread state indicator.
+   */
   @NonNull
   private String color;
 }

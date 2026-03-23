@@ -8,6 +8,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Accent colors for notification state indicators.
+ */
 @Data
 @Builder
 @With
@@ -16,6 +19,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class DefaultState {
 
+  /**
+   * Color used for the state indicator.
+   */
   @NonNull
   private String color;
 }

@@ -9,6 +9,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Styling overrides for notification list items.
+ */
 @Data
 @Builder
 @With
@@ -17,13 +20,22 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class ThemeNotification {
 
+  /**
+   * Base styles applied to every notification item.
+   */
   @NonNull
   @JsonProperty("default")
   private Default_ default_;
 
+  /**
+   * Overrides for unread notifications.
+   */
   @NonNull
   private Unread unread;
 
+  /**
+   * Overrides for unseen notifications.
+   */
   @NonNull
   private Unseen unseen;
 }

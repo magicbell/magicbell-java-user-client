@@ -2,7 +2,7 @@
 
 **Properties**
 
-| Name  | Type             | Required | Description |
-| :---- | :--------------- | :------- | :---------- |
-| data  | List\<FcmToken\> | ❌       |             |
-| links | Links            | ❌       |             |
+| Name  | Type                          | Required | Description |
+| :---- | :---------------------------- | :------- | :---------- |
+| data  | List<[FcmToken](FcmToken.md)> | ❌       |             |
+| links | [Links](Links.md)             | ❌       |             |

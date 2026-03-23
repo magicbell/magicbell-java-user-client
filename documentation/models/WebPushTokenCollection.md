@@ -2,7 +2,7 @@
 
 **Properties**
 
-| Name  | Type                 | Required | Description |
-| :---- | :------------------- | :------- | :---------- |
-| data  | List\<WebPushToken\> | ❌       |             |
-| links | Links                | ❌       |             |
+| Name  | Type                                  | Required | Description |
+| :---- | :------------------------------------ | :------- | :---------- |
+| data  | List<[WebPushToken](WebPushToken.md)> | ❌       |             |
+| links | [Links](Links.md)                     | ❌       |             |

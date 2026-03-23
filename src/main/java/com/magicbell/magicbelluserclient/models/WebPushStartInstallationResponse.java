@@ -17,10 +17,16 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class WebPushStartInstallationResponse {
 
+  /**
+   * Auth secret returned from PushSubscription.getKey('auth').
+   */
   @NonNull
   @JsonProperty("auth_token")
   private String authToken;
 
+  /**
+   * VAPID public key generated for this web push installation.
+   */
   @NonNull
   @JsonProperty("public_key")
   private String publicKey;

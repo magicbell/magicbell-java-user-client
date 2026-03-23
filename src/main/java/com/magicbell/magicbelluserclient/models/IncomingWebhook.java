@@ -17,13 +17,22 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class IncomingWebhook {
 
+  /**
+   * Human readable name for the webhook channel.
+   */
   @NonNull
   private String channel;
 
+  /**
+   * URL users can visit to manage the webhook.
+   */
   @NonNull
   @JsonProperty("configuration_url")
   private String configurationUrl;
 
+  /**
+   * Webhook URL that Slack posts events to.
+   */
   @NonNull
   private String url;
 }
