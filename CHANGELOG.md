@@ -1,5 +1,11 @@
 # magicbell-java-user-client
 
+## 0.5.0
+
+### Minor Changes
+
+- [#19](https://github.com/magicbell/magicbell-java-user-client/pull/19) [`d26f684`](https://github.com/magicbell/magicbell-java-user-client/commit/d26f684204b72809dd82abb2a15d2ff66cc24b74) Thanks [@MagicBella](https://github.com/MagicBella)! - Automatic minor version bump for changes in `magicbell-java-user-client`.
+
 ## 0.4.0
 
 ### Minor Changes
