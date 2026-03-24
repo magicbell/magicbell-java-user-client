@@ -8,6 +8,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * State indicator styling for unseen notifications.
+ */
 @Data
 @Builder
 @With
@@ -16,6 +19,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class UnseenState {
 
+  /**
+   * Color for the unseen state indicator.
+   */
   @NonNull
   private String color;
 }

@@ -2,7 +2,7 @@
 
 **Properties**
 
-| Name  | Type              | Required | Description |
-| :---- | :---------------- | :------- | :---------- |
-| data  | List\<ApnsToken\> | ❌       |             |
-| links | Links             | ❌       |             |
+| Name  | Type                            | Required | Description |
+| :---- | :------------------------------ | :------- | :---------- |
+| data  | List<[ApnsToken](ApnsToken.md)> | ❌       |             |
+| links | [Links](Links.md)               | ❌       |             |

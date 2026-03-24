@@ -8,6 +8,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Badge styling for unseen notification counts.
+ */
 @Data
 @Builder
 @With
@@ -16,6 +19,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class UnseenBadge {
 
+  /**
+   * Badge background color.
+   */
   @NonNull
   private String backgroundColor;
 }

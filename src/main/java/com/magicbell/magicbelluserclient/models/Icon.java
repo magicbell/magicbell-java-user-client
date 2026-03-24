@@ -8,6 +8,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Launcher icon styling overrides.
+ */
 @Data
 @Builder
 @With
@@ -16,9 +19,15 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class Icon {
 
+  /**
+   * CSS color used for the icon border.
+   */
   @NonNull
   private String borderColor;
 
+  /**
+   * Width of the launcher icon (any CSS length).
+   */
   @NonNull
   private String width;
 }

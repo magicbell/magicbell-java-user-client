@@ -4,6 +4,6 @@ Obtained directly from the incoming_webhook object in the installation response 
 
 **Properties**
 
-| Name | Type   | Required | Description |
-| :--- | :----- | :------- | :---------- |
-| url  | String | ✅       |             |
+| Name | Type   | Required | Description                                 |
+| :--- | :----- | :------- | :------------------------------------------ |
+| url  | String | ✅       | The URL for the incoming webhook from Slack |

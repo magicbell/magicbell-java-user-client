@@ -19,6 +19,9 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class SlackTokenPayloadWebhook {
 
+  /**
+   * The URL for the incoming webhook from Slack
+   */
   @NonNull
   private String url;
 }

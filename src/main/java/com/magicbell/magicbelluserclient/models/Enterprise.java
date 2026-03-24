@@ -16,9 +16,15 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class Enterprise {
 
+  /**
+   * Enterprise grid identifier.
+   */
   @NonNull
   private String id;
 
+  /**
+   * Enterprise grid name.
+   */
   @NonNull
   private String name;
 }

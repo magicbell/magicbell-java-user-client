@@ -8,6 +8,9 @@ import lombok.ToString;
 import lombok.With;
 import lombok.extern.jackson.Jacksonized;
 
+/**
+ * Header styling for the inbox modal.
+ */
 @Data
 @Builder
 @With
@@ -16,18 +19,33 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class Header {
 
+  /**
+   * Header background color.
+   */
   @NonNull
   private String backgroundColor;
 
+  /**
+   * Border radius applied to the header container.
+   */
   @NonNull
   private String borderRadius;
 
+  /**
+   * CSS font family for the header title.
+   */
   @NonNull
   private String fontFamily;
 
+  /**
+   * Font size used in the header.
+   */
   @NonNull
   private String fontSize;
 
+  /**
+   * Header text color.
+   */
   @NonNull
   private String textColor;
 }

@@ -2,9 +2,9 @@ package com.example;
 
 import com.magicbell.magicbelluserclient.MagicbellUserClient;
 import com.magicbell.magicbelluserclient.config.MagicbellUserClientConfig;
-import com.magicbell.magicbelluserclient.exceptions.ApiException;
-import com.magicbell.magicbelluserclient.models.GetInAppInboxTokensParameters;
+import com.magicbell.magicbelluserclient.exceptions.ApiError;
 import com.magicbell.magicbelluserclient.models.InboxTokenResponseCollection;
+import com.magicbell.magicbelluserclient.models.ListInboxTokensParameters;
 
 public class Main {
 
@@ -13,17 +13,17 @@ public class Main {
 
     MagicbellUserClient magicbellUserClient = new MagicbellUserClient(config);
 
-    GetInAppInboxTokensParameters requestParameters = GetInAppInboxTokensParameters.builder()
-      .limit(10L)
+    ListInboxTokensParameters requestParameters = ListInboxTokensParameters.builder()
+      .limit(8L)
       .startingAfter("starting_after")
       .endingBefore("ending_before")
       .build();
 
     try {
-      InboxTokenResponseCollection response = magicbellUserClient.channels.getInAppInboxTokens(requestParameters);
+      InboxTokenResponseCollection response = magicbellUserClient.channels.listInboxTokens(requestParameters);
 
       System.out.println(response);
-    } catch (ApiException e) {
+    } catch (ApiError e) {
       e.printStackTrace();
     }
 

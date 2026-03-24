@@ -16,12 +16,21 @@ import lombok.extern.jackson.Jacksonized;
 @Jacksonized
 public class InboxConfigPayload {
 
+  /**
+   * Image overrides for assets used in the inbox UI.
+   */
   @JsonInclude(JsonInclude.Include.ALWAYS)
   private Images images;
 
+  /**
+   * Locale code (ISO language tag) used to localize built-in strings.
+   */
   @JsonInclude(JsonInclude.Include.ALWAYS)
   private String locale;
 
+  /**
+   * Visual customization options for the hosted inbox widget.
+   */
   @JsonInclude(JsonInclude.Include.ALWAYS)
   private Theme theme;
 
